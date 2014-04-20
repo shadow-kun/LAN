@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5.0" method="upgrade">
+	<name>COM_LAN</name>
+	<creationDate>2014-04-19</creationDate>
+	<author>Shadow Reaper</author>
+	<authorEmail>shadowreaper@shadowreaper.net</authorEmail>
+	<authorUrl>http://www.shadowreaper.net</authorUrl>
+	<copyright>Daniel Johnson, 2014</copyright>
+	<license>GPL v2.0</license>
+	<version>0.0.0</version>
+	<description>COM_LAN_DESCRIPTION</description>
+	
+	<install>
+  		<sql>
+    		<file charset="utf8" driver="mysql">install.mysql.sql</file>
+  		</sql>
+	</install>
+	
+	<files folder="site">
+		<folder>assets</folder>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>languages</folder>
+		<folder>models</folder>
+		<folder>tables</folder>
+		<folder>views</folder>
+		<filename>index.html</filename>
+		<filename>lan.php</filename>
+		<filename>router.php</filename>
+	</files> 
+
+	<scriptfile>install.php</scriptfile>
+	
+	<languages folder="site">
+		<language tag="en-GB">languages/en-GB/en-GB.com_lan.ini</language>
+	</languages>
+	
+	<administration>
+
+		<files folder="admin">
+			<folder>controllers</folder>
+			<folder>languages</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<filename>lan.php</filename>
+			<filename>index.html</filename>
+			<filename>install.mysql.sql</filename>
+		</files>  
+
+	</administration>
+</extension>
