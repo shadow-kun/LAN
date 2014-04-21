@@ -6,6 +6,7 @@
 		{
 			$app = JFactory::getApplication();
 			$layout = $app->input->get('layout');
+			$params = $app->getParams();
 			
 			/*$id = $app->input->get('id');
 			$view = $app->input->get('view');*/
@@ -15,6 +16,13 @@
 			
 			switch($layout)
 			{	
+				case "create":
+				
+					/*$state = $this->get('State');
+					$item = $this->getItem();*/
+					$this->form = $app->input->get('Form');
+					
+					break;
 				case "list":
 				default:
 					//$this->teams = $teamsModel->listItems();

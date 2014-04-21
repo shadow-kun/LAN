@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<fields name = "request">
+		<fieldset name="request">
+			<field
+				name="team_name"
+				type="text"
+				description="COM_LAN_TEAM_FORM_CREATE_DESC_ABOUT"
+				label="COM_LAN_TEAM_FORM_CREATE_LBL_ABOUT"
+			/>
+		</fieldset>
+	</fields>
+</metadata>
+					

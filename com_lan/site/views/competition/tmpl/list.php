@@ -2,7 +2,7 @@
 	<h2 class="page-header"><?php echo JText::_('COM_LAN_COMPETITION_LIST'); ?></h2>
 </div>
 <div class="row-fluid">
-	<div class="media well well-small span5">
+	<div class="media well well-small span6">
 		<div class="media-body">
 			<h3 class="media-heading">
 				<a href="?option=com_lan&view=competition&layout=competition&id=1">League of Legends - 5 vs. 5</a>
@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	
-	<div class="media well well-small span5">
+	<div class="media well well-small span6">
 		<div class="media-body">
 			<h3 class="media-heading">
 				<a href="?option=com_lan&view=competition&layout=competition&id=1">Counter Strike Source - 6 vs. 6</a>
@@ -31,7 +31,7 @@
 			<p><a href="?option=com_lan&view=competition&layout=competition&id=1"><?php echo JText::_('COM_LAN_COMPETITION_ENTERING_WITHDRAW_TEAM'); ?></p>
 		</div>
 	</div>
-	<div class="media well well-small span5">
+	<div class="media well well-small span6">
 		<div class="media-body">
 			<h3 class="media-heading">
 				<a href="?option=com_lan&view=competition&layout=competition&id=1">Flatout II</a>
@@ -45,7 +45,7 @@
 			<p><a href="?option=com_lan&view=competition&layout=competition&id=1"><?php echo JText::_('COM_LAN_COMPETITION_ENTERING_WITHDRAW_USER'); ?></p>
 		</div>
 	</div>
-	<div class="media well well-small span5">
+	<div class="media well well-small span6">
 		<div class="media-body">
 			<h3 class="media-heading">
 				<a href="?option=com_lan&view=competition&layout=competition&id=1">Microsoft Paint</a>

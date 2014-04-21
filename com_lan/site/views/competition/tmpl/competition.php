@@ -5,6 +5,14 @@
 	</div>
 	<div class="media well well-small span6">
 		<div class="media-body">
+			<h3><?php echo JText::_('COM_LAN_COMPETITION_ABOUT'); ?></h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet luctus quam. Phasellus ac libero risus. 
+			Fusce interdum, ante ac pretium suscipit, mi tellus aliquam massa, sed fermentum velit risus ac orci. 
+			Cras rutrum sapien nibh, eget consectetur tortor molestie non. Morbi fermentum pellentesque velit sed pellentesque. </p>
+		</div>
+	</div>
+	<div class="media well well-small span6">
+		<div class="media-body">
 			<h3 class="media-heading"><?php echo JText::_('COM_LAN_COMPETITION_DETAILS'); ?></h3>
 			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_TYPE'); ?></strong>: Single Elimination</p>
 			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_RULES'); ?></strong></p>
@@ -19,7 +27,20 @@
 		</div>
 	</div>
 	
-	<div class="media well well-small span5">
+	<div class="media well well-small span6">
+		<div class="media-body">
+			<h3 class="media-heading">
+				<?php echo JText::_('COM_LAN_COMPETITION_ENTRIES_CURRENT'); ?>
+			</h3>
+			<ul>
+				<li><a href="?option=com_lan&view=team&layout=team&id=1">Team 1</a></li>
+				<li><a href="?option=com_lan&view=team&layout=team&id=2">Team 2</a></li>
+			</ul>
+			<p><a href="?option=com_lan&view=competition&layout=competition&id=1"><?php echo JText::_('COM_LAN_COMPETITION_ENTERING_SIGNUP_TEAM'); ?></p>
+		</div>
+	</div>
+	
+	<div class="media well well-small span6">
 		<div class="media-body">
 			<h3 class="media-heading">
 				<?php echo JText::_('COM_LAN_COMPETITION_PRIZES_TITLE'); ?>
@@ -42,18 +63,6 @@
 					<td>Kudos</td>
 				</tr>
 			</table>
-		</div>
-	</div>
-	<div class="media well well-small span5">
-		<div class="media-body">
-			<h3 class="media-heading">
-				<?php echo JText::_('COM_LAN_COMPETITION_ENTRIES_CURRENT'); ?>
-			</h3>
-			<ul>
-				<li><a href="?option=com_lan&view=team&layout=team&id=1">Team 1</a></li>
-				<li><a href="?option=com_lan&view=team&layout=team&id=2">Team 2</a></li>
-			</ul>
-			<p><a href="?option=com_lan&view=competition&layout=competition&id=1"><?php echo JText::_('COM_LAN_COMPETITION_ENTERING_SIGNUP_TEAM'); ?></p>
 		</div>
 	</div>
 </div>
