@@ -20,7 +20,7 @@
 		<folder>assets</folder>
 		<folder>controllers</folder>
 		<folder>helpers</folder>
-		<folder>languages</folder>
+		<folder>language</folder>
 		<folder>models</folder>
 		<folder>tables</folder>
 		<folder>views</folder>
@@ -32,20 +32,26 @@
 	<scriptfile>install.php</scriptfile>
 	
 	<languages folder="site">
-		<language tag="en-GB">languages/en-GB/en-GB.com_lan.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.com_lan.ini</language>
+		
 	</languages>
 	
 	<administration>
 
 		<files folder="admin">
 			<folder>controllers</folder>
-			<folder>languages</folder>
+			<folder>language</folder>
 			<folder>models</folder>
 			<folder>views</folder>
 			<filename>lan.php</filename>
 			<filename>index.html</filename>
 			<filename>install.mysql.sql</filename>
 		</files>  
-
+		
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_lan.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_lan.sys.ini</language>
+		</languages>
+		
 	</administration>
 </extension>

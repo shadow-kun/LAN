@@ -54,6 +54,12 @@
 				
 				<p><a href=""><?php echo JText::_('COM_LAN_TEAM_EDIT_MEMBERS_ADD'); ?></a></p>
 			</div>
+			<div class="media well well-small span6">
+				<h3><?php echo JText::_('COM_LAN_TEAM_COMPETITIONS'); ?></h3>
+				<ul>
+					<li><a href="?option=com_lan&view=competition&layout=competition&id=1">League of Legends - 5 vs. 5</a> <a href="">(<?php echo JText::_('COM_LAN_COMPETITION_ENTERING_WITHDRAW_TEAM_SHORT'); ?>)</a> </li>
+				<ul>
+		</div>
 		</div>
 	</div>
 <input type="submit" value="<?php echo JText::_('COM_LAN_TEAM_EDIT_SUBMIT'); ?>">

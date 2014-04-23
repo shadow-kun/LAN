@@ -15,13 +15,15 @@
 		function __construct()
 		{
 			parent::__construct();
+			
+			//$this->_team_id = $app->input->get('_team_id',null);
 		}
 		
 		function getItem()
 		{
-			$_team = parent::getItem();
+			$_team_id = parent::getItem();
 
-			return $_team;
+			return $_team_id;
 		}
   
 		protected function _buildQuery()
@@ -59,7 +61,7 @@
 			$query->group("t.team_name");
 		}
      
-		function getTeams()
+		function getTeam($id)
 		{
 			
 		}

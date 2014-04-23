@@ -5,17 +5,21 @@
 		function render()
 		{
 			$app = JFactory::getApplication();
+			$id = $app->input->get('id');
 			$layout = $app->input->get('layout');
 			$params = $app->getParams();
 			
-			/*$id = $app->input->get('id');
-			$view = $app->input->get('view');*/
  
 			//retrieve task list from model
 			$teamsModel = new LANModelsTeam();
 			
 			switch($layout)
-			{	
+			{
+				case "team":
+					$this->_teamsListView = LANHelpersView::load('Team','_entry','phtml');
+					//$this->team = getTeam($id,$view,FALSE);
+					
+					
 				case "create":
 				
 					/*$state = $this->get('State');
