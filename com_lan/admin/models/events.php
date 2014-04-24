@@ -43,7 +43,7 @@
 		protected function getListQuery()
 		{	
 			$db		= $this->getDbo();
-			$query	= $this->getQuery(true);
+			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
 			$query->select(
@@ -55,25 +55,25 @@
 			$query->from('#__lan_events AS a');
 			
 			//Join over the language
-			$query->select('l.title AS language_title');
+			$query->select('l.title AS langugage_title');
 			$query->join('LEFT', '`#__languages` AS l ON l.lang_code = a.language');
 			
 			
 			//Join over the users for the checked out user.
 			$query->select('uc.name AS editor');
-			$query->join('LEFT', '`#__users AS uc ON uc.id = uc.checked_out');
+			$query->join('LEFT', '`#__users` AS uc ON uc.id = a.checked_out');
 			
 			//Join over the asset groups
 			$query->select('ag.title AS access_level');
-			$query->join('LEFT', '`#__viewlevels AS ag ON ag.id = a.access');
+			$query->join('LEFT', '#__viewlevels AS ag ON ag.id = a.access');
 			
 			// Join over the categories.
 			$query->select('c.title AS category_title');
-			$query->join('LEFT', '`#__categories AS c ON c.id = a.category_id');
+			$query->join('LEFT', '#__categories AS c ON c.id = a.category_id');
 			
 			// Join over the users for the author.
 			$query->select('ua.name AS author_name');
-			$query->join('LEFT', '`#__users AS ua.id = a.created_user_id');
+			$query->join('LEFT', '#__users AS ua ON ua.id = a.created_user_id');
 			
 			// Add the list ordering clause.
 			$orderCol 		= $this->state->get('list.ordering');
@@ -82,7 +82,7 @@
 			{
 				$orderCol = 'category_title ' . $orderDirn . ', a.ordering';
 			}
-			$query->order($db->getEscaped($orderCol . ' ' . $orderDirn));
+			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
 			//echo nl2br(str_replace('#__','joom_',$query));
 			return $query;
