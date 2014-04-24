@@ -16,6 +16,27 @@
 	
 	class LANController extends JControllerLegacy
 	{
-	
+		/**
+		 * @var		String		Sets the default view for the component.
+		 * @since	0.0
+		 */
+		 
+		 protected $default_view = 'events';
+		 
+		/**
+		 * Override the display method for the controller   $cachable = false, $urlparams = Array
+		 *
+		 * @return	void
+		 * @since 	0.0
+		 */  
+		 
+		function display ($cachable = false, $urlparams = Array())
+		{
+			// Load the component helper.
+			require_once (JPATH_COMPONENT.'/helpers/lan.php');
+			
+			// Display the view
+			parent::display();
+		}
 	}
 ?>
