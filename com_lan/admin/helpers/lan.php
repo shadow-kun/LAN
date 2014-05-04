@@ -17,6 +17,32 @@
 	class LANHelper
 	{
 		/**
+		 * Configure the Linkbar.
+		 *
+		 * @param string $vName The name of the active view.
+		 *
+		 * @return void
+		 *
+		 * @since 0.0
+		 */
+		 
+		public static function addSubmenu($vName)
+		{
+		JSubMenuHelper::addEntry(
+			JText::_('COM_LAN_SUBMENU_EVENTS'),
+			'index.php?option=com_lan&view=events',
+			$vName == 'events'
+			);
+		JSubMenuHelper::addEntry(
+			JText::_('COM_LAN_SUBMENU_CATEGORIES'),
+			'index.php?option=com_categories&extension=com_lan',
+			$vName == 'categories'
+			);
+		}
+
+
+
+		/**
 		 * Gets a list of actions that can performed.
 		 *
 		 * @return	JObject

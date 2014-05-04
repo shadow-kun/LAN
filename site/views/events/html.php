@@ -16,7 +16,7 @@
 	
 	jimport('joomla.application.component.view');
 	
-	class LANViewEvents extends JViewLegacy
+	class LANViewsEventsHtml extends JViewLegacy
 	{
 		/**
 		 * @var		array		The array of the records to display in the list.

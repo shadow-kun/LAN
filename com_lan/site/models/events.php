@@ -53,15 +53,6 @@
 			parent::__construct($config);
 		}
 		
-		/**
-		* Method to auto-populate the model
-		*
-		* @param		string	$ordering	An optional ordering field.
-		* @param		string	$direction	An optional direction (asc || desc).
-		*
-		* @oackage 		LAN
-		* @subpackage	com_lan
-		*/
 		protected function populateState($ordering = 'a.title', $direction = 'asc')
 		{
 			$app = JFactory::getApplication();

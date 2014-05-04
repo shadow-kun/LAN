@@ -26,7 +26,6 @@
 		<folder>views</folder>
 		<filename>index.html</filename>
 		<filename>lan.php</filename>
-		<filename>router.php</filename>
 	</files> 
 
 	<scriptfile>install.php</scriptfile>
