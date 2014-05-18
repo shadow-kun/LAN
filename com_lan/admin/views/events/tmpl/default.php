@@ -80,7 +80,7 @@
 	<div class="clr"> </div>
 	
 	<table class="adminlist table table-striped"">
-		</thead>
+		<thead>
 			<tr>
 				<th width="1%">
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />

@@ -92,7 +92,7 @@
 			$query->select(
 				$this->getState(
 					'list.select', 'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.category_id,' . 
-					'a.published, a.access, a.created_time, a.ordering, a.language'
+					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time'
 				)
 			);
 			$query->from('#__lan_events AS a');

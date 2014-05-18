@@ -101,7 +101,7 @@
 			$query->select(
 				$this->getState(
 					'list.select', 'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.category_id,' . 
-					'a.published, a.access, a.created_time, a.ordering, a.language'
+					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max'
 				)
 			);
 			$query->from('#__lan_events AS a');
@@ -186,7 +186,7 @@
 			}
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
-			//echo nl2br(str_replace('#__','joom_',$query));
+			echo nl2br(str_replace('#__','joom_',$query));
 			return $query;
 		}
 		
