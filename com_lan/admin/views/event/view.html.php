@@ -18,6 +18,12 @@
 	class LANViewEvent extends JViewLegacy
 	{
 		/**
+		 * @var		array		The array of the player records to display in the list.
+		 * @sicne 	0.0
+		 */
+		protected $players;
+		
+		/**
 		* @var JObject The data for the record being displayed.
 		* @since 0.0
 		*/
@@ -46,6 +52,7 @@
 		{
 			// Intialiase variables.
 			$this->item		= $this->get('Item');
+			$this->players	= $this->get('Players');
 			$this->form		= $this->get('Form');
 			$this->state	= $this->get('State');
 

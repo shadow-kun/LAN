@@ -37,6 +37,9 @@
 			
 			// Display the view
 			parent::display();
+			
+			// Set the submenu
+			//LANHelper::addSubmenu('events');
 		}
 	}
 ?>

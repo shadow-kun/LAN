@@ -44,6 +44,14 @@
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
+			
+		<field name="terms"
+			type="editor"
+			label="COM_LAN_EVENT_FIELD_TERMS_LABEL"
+			description="COM_LAN_EVENT_FIELD_TERMS_DESC"
+			class="inputbox"
+			filter="safehtml"
+			buttons="true" />
 
 		<field name="note"
 			type="text"
@@ -246,7 +254,15 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-				
+			<field name="confirmations_override"
+				type="radio"
+				label="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_LABEL"
+				description="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="-1">Closed</option>
+				<option value="0">Automatic</option>
+				<option value="1">Open</option>
+			</field>	
 		</fieldset>
 
 		<fieldset name="advanced" label="COM_LAN_ADVANCED_PARAMS_FIELDSET_LABEL">

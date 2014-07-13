@@ -18,9 +18,22 @@
 	class LANViewEvent extends JViewLegacy
 	{
 		/**
+		 * @var		array		The array of the player records to display in the list.
+		 * @sicne 	0.0
+		 */
+		protected $players;
+		
+		/**
 		* @var JObject The data for the record being displayed.
 		* @since 0.0
 		*/
+		protected $currentPlayer;
+		
+		/**
+		* @var JObject The data for the record being displayed.
+		* @since 0.0
+		*/
+		
 		protected $item;
 
 		/**
@@ -44,11 +57,51 @@
 		
 		public function display($tpl = null)
 		{
-			// Intialiase variables.
-			$this->item		= $this->get('Item');
-			$this->form		= $this->get('Form');
-			$this->state	= $this->get('State');
-
+			// Initialise variables.
+			$this->item				= $this->get('Item');
+			$this->players			= $this->get('Players');
+			$this->currentPlayer	= $this->get('CurrentPlayer');
+			$this->form				= $this->get('Form');
+			$this->state			= $this->get('State');
+			
+			$message = JRequest::getVar('id',NULL,'POST');
+			$app = JFactory::getApplication();
+			
+			// Checks to see if a specific value has been passed via POST
+			if(null !== JRequest::getVar('register',NULL,'POST'))
+			{
+				if(!isset($this->currentPlayer->status))
+				{
+					$this->get('SavePlayerEvent');
+				}
+				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
+			}
+			elseif(null !== JRequest::getVar('confirm',NULL,'POST'))
+			{
+				if((int) $this->currentPlayer->status == 1)
+				{
+					$this->get('ConfirmPlayerEvent');
+				}
+				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
+			}
+			elseif(null !== JRequest::getVar('cancel',NULL,'POST'))
+			{
+				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
+			}
+			elseif(null !== JRequest::getVar('confirmDelete',NULL,'POST'))
+			{
+				if(isset($this->currentPlayer->status))
+				{
+					if($this->currentPlayer->status == 'Confirmed')
+					{	
+						$this->get('UnconfirmPlayerEvent');
+					}
+					$this->get('DeletePlayerEvent');
+				}
+				
+				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
+			}
+	
 			// Check for errors.
 			if (count($errors = $this->get('Errors'))) 
 			{
@@ -56,7 +109,17 @@
 				return false;
 			}
 
+			
+			$pathway = $app->getPathway();
+			$pathway->addItem($this->escape($this->item->title), JRoute::_('index.php?option=com_lan&view=event&id=' . $this->item->id));
+			
+
 			parent::display();
+		}
+		
+		protected function addToolbar()
+		{
+			JToolbarHelper::confirm('lan.confirm', 'COM_LAN_EVENT_REGISTRATION_CONFIRM_TRUE');
 		}
 	}
 ?>

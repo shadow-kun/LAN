@@ -17,6 +17,7 @@
 	*/
 	class LANModelEvent extends JModelAdmin
 	{
+		
 		/**
 		* Method to get the Event form.
 		*
@@ -79,8 +80,53 @@
 					$result->modified_time = null;
 				}
 			}
-
+			
+			
 			return $result;
+		}
+		
+		public function getPlayers($pk = null)
+		{			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+			
+			//Join over the events.
+			//$query->select('e.event AS event');
+			//$query->join('LEFT', '`#__lan_events` AS e ON e.id = p.event');
+			
+			//Join over the users.
+			$query->select('u.username AS username');
+			$query->join('LEFT', '#__users AS u ON u.id = p.user');
+			
+			// Selects the event that is required.
+			$id = (int) JRequest::getVar('id');
+			$query->where('p.event = ' . $id);
+			
+			// Add the list ordering clause.
+			$orderCol 		= $this->state->get('list.ordering');
+			$orderDirn		= $this->state->get('list.direction');
+			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
+			{
+				$orderCol = 'id ' . $orderDirn . ', p.ordering';
+			}*/
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			
+			//$query->order('id');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			
+			return $result;
+		}
+		
+		public function getPlayersStats($pk = null)
+		{			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
 		}
 
 		/**
@@ -164,10 +210,12 @@
 				{
 					$db	= JFactory::getDbo();
 					$query	= $db->getQuery(true);
+					
 					$query->select('MAX(ordering)');
-					$query->from('#__lan_events');
-					$query->where('category_id = '.(int) $table->category_id);
-
+					$query->from('#__lan_events AS a');
+					
+					$query->where('a.category_id = '.(int) $table->category_id);
+					
 					$max = (int) $db->setQuery($query)->loadResult();
 
 					if ($error = $db->getErrorMsg()) 
@@ -208,5 +256,17 @@
 				// Put array back together, comma delimited.
 				$this->metakey = implode(', ', $newKeys);
 			}
+		}
+		
+		/**
+		* Build an SQL query  to load the list data.
+		*
+		* @return 		JDatabaseQuery
+		* @since		0.0
+		*/
+		
+		protected function getPlayerListQuery()
+		{	
+			
 		}
 	}

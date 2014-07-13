@@ -78,8 +78,8 @@
 					$query = $db->getQuery(true)
 					->select(
 						$this->getState(
-							'item.select', 'a.id, a.title, a.alias, a.category_id, a.body, a.published, a.language, a.params, a.details, a.players_max, a.players_current, ' .
-							'a.created_user_id, a.created_time, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time'
+							'item.select', 'a.id, a.title, a.alias, a.category_id, a.body, a.terms, a.published, a.language, a.params, a.details, a.players_max, a.players_current, ' .
+							'a.players_confirmed, a.created_user_id, a.created_time, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time, a.details'
 						)
 					);
 					
@@ -114,7 +114,7 @@
 
 					// Convert parameter fields to objects.
 					$registry = new JRegistry;
-					$registry->loadString($data->details);
+					$registry->loadString($data->params);
 
 					$data->params = clone $this->getState('params');
 					$data->params->merge($registry);
@@ -144,5 +144,208 @@
 			return $this->_item[$pk];
 		}
 		
+		public function getPlayers($pk = null)
+		{			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+			
+			//Join over the users.
+			$query->select('u.username AS username');
+			$query->join('LEFT', '#__users AS u ON u.id = p.user');
+			
+			// Selects the event that is required.
+			$query->where('p.event = ' . JRequest::getVar('id'));
+			
+			// Add the list ordering clause.
+			$orderCol 		= $this->state->get('list.ordering');
+			$orderDirn		= $this->state->get('list.direction');
+			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
+			{
+				$orderCol = 'id ' . $orderDirn . ', p.ordering';
+			}*/
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			
+			$query->order('id');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			
+			return $result;
+		}
+		
+		public function getCurrentPlayer($pk = null)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+						
+			// Selects the event that is required.
+			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('p.user = ' . JFactory::getUser()->id);
+			
+			// Selects only non cancelled entries. (Innactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+			
+			return $result;
+		}
+		
+		public function getSavePlayerEvent()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Sets columns
+			$colums = array('id', 'event', 'user', 'status', 'params');
+			
+			// Sets values
+			$values = array('NULL',JRequest::getVar('id',NULL,'GET'), $user->id, '1', 'NULL');
+			
+			// Prepare Insert Query $db->quoteName('unconfirmed')
+			$query  ->insert($db->quoteName('#__lan_players'))
+					->columns($db->quoteName($colums))
+					->values(implode(',', $values));
+			
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			
+			$query	= $db->getQuery(true);
+			
+			$currentPlayers = $this->items->a.players_current;
+			
+			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+		}
+		
+		public function getConfirmPlayerEvent()
+		{
+			
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Gets data to update
+			$fields = $db->quoteName('status') . ' = 2';
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_players'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			/************************************************/
+			
+			$query	= $db->getQuery(true);
+			
+			$confirmedPlayers = $this->items->a.players_confirmed;
+			
+			$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+		}
+		
+		public function getUnconfirmPlayerEvent()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			$query	= $db->getQuery(true);
+			
+			$confirmedPlayers = $this->items->a.players_confirmed;
+			$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+		}
+		
+		public function getDeletePlayerEvent()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			$currentStatus = $this->currentPlayer->status;
+			
+			// Sets the conditions of the delete of the user with the event
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
+			
+			$query->delete($db->quoteName('#__lan_players'));
+			$query->where($conditions);
+						
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			$query	= $db->getQuery(true);
+			
+			$currentPlayers = $this->items->a.players_current;
+			$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+		}
 		
 	}

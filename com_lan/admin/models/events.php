@@ -186,7 +186,7 @@
 			}
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
-			echo nl2br(str_replace('#__','joom_',$query));
+			//echo nl2br(str_replace('#__','joom_',$query));
 			return $query;
 		}
 		

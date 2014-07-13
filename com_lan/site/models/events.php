@@ -34,6 +34,8 @@
 			{
 				$config['filter_fields'] = array(
 				'id', 'a.id',
+				'summary', 'a.summary',
+				'body', 'a.body',
 				'title', 'a.title',
 				'alias', 'a.alias',
 				'checked_out', 'a.checked_out',
@@ -91,8 +93,8 @@
 			// Select the required fields from the table.
 			$query->select(
 				$this->getState(
-					'list.select', 'a.id, a.title, a.alias, a.checked_out, a.checked_out_time, a.category_id,' . 
-					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time'
+					'list.select', 'a.id, a.title, a.alias, a.summary, a.body, a.checked_out, a.checked_out_time, a.category_id, a.players_confirmed, ' . 
+					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time, a.params'
 				)
 			);
 			$query->from('#__lan_events AS a');
@@ -147,7 +149,8 @@
 			} 
 			else if ($published === '') 
 			{
-				$query->where('(a.published = 0 OR a.published = 1)');
+				// Shows published and Archived Events
+				$query->where('(a.published = 1 or a.published = 2)');
 			}
 			 
 			// Filter by a single or group of categories.

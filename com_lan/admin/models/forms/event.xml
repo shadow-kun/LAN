@@ -37,10 +37,26 @@
 			class="inputbox"
 			size="45" />
 
+		<field name="summary"
+			type="editor"
+			label="COM_LAN_EVENT_FIELD_SUMMARY_LABEL"
+			description="COM_LAN_EVENT_FIELD_SUMMARY_DESC"
+			class="inputbox"
+			filter="safehtml"
+			buttons="false" />
+			
 		<field name="body"
 			type="editor"
 			label="COM_LAN_EVENT_FIELD_BODY_LABEL"
 			description="COM_LAN_EVENT_FIELD_BODY_DESC"
+			class="inputbox"
+			filter="safehtml"
+			buttons="true" />
+			
+		<field name="terms"
+			type="editor"
+			label="COM_LAN_EVENT_FIELD_TERMS_LABEL"
+			description="COM_LAN_EVENT_FIELD_TERMS_DESC"
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
@@ -216,28 +232,19 @@
 			
 	</fieldset>
 
-	<fields name="details">
-		<fieldset name="details" label="COM_LAN_EVENT_DETAILS_FIELDSET_LABEL">
-			<field name="location"
-				type="text"
-				label="COM_LAN_EVENT_FIELD_DETAILS_LOCATION_LABEL"
-				description="COM_LAN_EVENT_FIELD_DETAILS_LOCATION_DESC"
-				class="inputbox"
-				size="10"
-				/>
-			
-			<field name="venue"
-				type="text"
-				label="COM_LAN_EVENT_FIELD_DETAILS_VENUE_LABEL"
-				description="COM_LAN_EVENT_FIELD_DETAILS_VENUE_DESC"
-				class="inputbox"
-				size="10"
-				/>
-		</fieldset>
-	</fields>
+	
 	
 	<fields name="params">
 		<fieldset name="basic" label="COM_LAN_BASIC_PARAMS_FIELDSET_LABEL">
+			<field name="confirmations_override"
+				type="radio"
+				label="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_LABEL"
+				description="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="-1">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_CLOSED</option>
+				<option value="0">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_AUTO</option>
+				<option value="1">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_OPEN</option>
+			</field>
 			<field name="show_title"
 				type="list"
 				label="JGLOBAL_SHOW_TITLE_LABEL"
@@ -246,16 +253,23 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-				
 		</fieldset>
-
-		<fieldset name="advanced" label="COM_LAN_ADVANCED_PARAMS_FIELDSET_LABEL">
-			<field name="layout"
-				type="componentlayout"
-				label="JFIELD_ALT_LAYOUT_LABEL"
-				description="JFIELD_ALT_COMPONENT_LAYOUT_DESC"
-				extension="COM_LAN"
-				view="event" />
+		<fieldset name="location" label="COM_LAN_EVENT_LOCATION_FIELDSET_LABEL">
+			<field name="location"
+				type="text"
+				label="COM_LAN_EVENT_FIELD_LOCATION_LOCATION_LABEL"
+				description="COM_LAN_EVENT_FIELD_LOCATION_LOCATION_DESC"
+				class="inputbox"
+				size="10"
+				/>
+			
+			<field name="venue"
+				type="text"
+				label="COM_LAN_EVENT_FIELD_LOCATION_VENUE_LABEL"
+				description="COM_LAN_EVENT_FIELD_LOCATION_VENUE_DESC"
+				class="inputbox"
+				size="10"
+				/>
 		</fieldset>
 	</fields>
 
