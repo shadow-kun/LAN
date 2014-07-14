@@ -60,13 +60,13 @@
 			<div class="span4 form-vertical">
 				
 				<div class="control-group ">
-					<div class="control-label"><?php echo $this->form->getLabel('competition_start_time'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('competition_start_time'); ?></div>
+					<div class="control-label"><?php echo $this->form->getLabel('competition_start'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('competition_start'); ?></div>
 				</div>
 				
 				<div class="control-group ">
-					<div class="control-label"><?php echo $this->form->getLabel('competition_end_time'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('competition_end_time'); ?></div>
+					<div class="control-label"><?php echo $this->form->getLabel('competition_end'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('competition_end'); ?></div>
 				</div>
 				
 				<div class="control-group ">

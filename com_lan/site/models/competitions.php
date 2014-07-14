@@ -49,6 +49,8 @@
 				'created_user_id', 'a.created_user_id',
 				'modified_time', 'a.modified_time',
 				'modified_user_id', 'a.modified_user_id',
+				'competition_start', 'a.competition_start',
+				'competition_end', 'a.competition_end'
 				);
 			}
 		 
@@ -94,7 +96,7 @@
 			$query->select(
 				$this->getState(
 					'list.select', 'a.id, a.title, a.alias, a.body, a.checked_out, a.checked_out_time, a.category_id, ' . 
-					'a.published, a.access, a.created_time, a.ordering, a.language, a.params'
+					'a.published, a.access, a.created_time, a.ordering, a.language, a.params, a.competition_start, a.competition_end'
 				)
 			);
 			$query->from('#__lan_competitions AS a');

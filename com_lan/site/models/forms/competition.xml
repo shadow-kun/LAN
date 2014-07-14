@@ -36,11 +36,11 @@
 			description="JFIELD_ALIAS_DESC"
 			class="inputbox"
 			size="45" />
-			
+
 		<field name="body"
 			type="editor"
-			label="COM_LAN_COMPETITION_FIELD_BODY_LABEL"
-			description="COM_LAN_COMPETITION_FIELD_BODY_DESC"
+			label="COM_LAN_EVENT_FIELD_BODY_LABEL"
+			description="COM_LAN_EVENT_FIELD_BODY_DESC"
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
@@ -142,8 +142,8 @@
 			class="readonly"
 			size="20"
 			readonly="true"
-			filter="unset" />
-			
+			filter="unset" />		
+
 		<field name="competition_start"
 			type="text"
 			label="COM_LAN_COMPETITION_FIELD_COMPETITION_START_LABEL"
@@ -164,62 +164,17 @@
 			required="true"
 			/>
 	</fieldset>
-	
+
 	<fields name="params">
-		<fieldset name="details" label="COM_LAN_COMPETITION_PARAMS_DETAILS_FIELDSET_LABEL">
+		<fieldset name="basic" label="COM_LAN_BASIC_PARAMS_FIELDSET_LABEL">
 			<field name="show_title"
 				type="list"
 				label="JGLOBAL_SHOW_TITLE_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_SHOW_TITLE_DESC">
+				description="COM_LAN_PARAM_SHOW_TITLE_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-			<field name="competition_official"
-				type="list"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_OFFICIAL_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_OFFICIAL_DESC">
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_LAN_COMPETITION_FIELD_PARAM_OFFICIAL_OPTION_NO</option>
-				<option value="1">COM_LAN_COMPETITION_FIELD_PARAM_OFFICIAL_OPTION_YES</option>
-			</field>
-			<field name="competition_start"
-				type="text"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_START_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_START_DESC"
-				class="inputbox"
-				size="45" />
-			<field name="competition_end"
-				type="text"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_END_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_END_DESC"
-				class="inputbox"
-				size="45" />
-			<field name="competition_team"
-				type="list"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_TEAM_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_TEAM_DESC">
-				<option value="0">COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_INDIVIDUAL</option>
-				<option value="1">COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_TEAM</option>
-			</field>
-			<field name="competition_tournament"
-				type="list"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_DESC">
-				<option value="">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_NONE</option>
-				<option value="0">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_TOURNAMENT</option>
-				<option value="1">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SINGLE_ELIMINATION</option>
-				<option value="2">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_DOUBLE_ELIMINATION</option>
-				<option value="3">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SWISS</option>
-				<option value="4">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_ROUND_ROBIN</option>
-				<option value="5">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SUBMISSION</option>
-			</field>
-			<field name="competition_organisers"
-				type="text"
-				label="COM_LAN_COMPETITION_FIELD_PARAM_ORGANISERS_LABEL"
-				description="COM_LAN_COMPETITION_FIELD_PARAM_ORGANISERS_DESC"
-				class="inputbox"
-				size="45" />
 		</fieldset>
 	</fields>
 </form>

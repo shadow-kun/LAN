@@ -26,7 +26,11 @@
 			?>
 			<div class="media well well-small span12">
 				<div class="media-body">
-					<h2><a href="<?php echo JRoute::_('index.php?option=com_lan&view=competitions&id=' . $item->id); ?>"><?php echo $this->escape($item->title); ?></a></h2>
+					<h2><a href="<?php echo JRoute::_('index.php?option=com_lan&view=competition&id=' . $item->id); ?>"><?php echo $this->escape($item->title); ?></a></h2>
+					<?php 
+						$tokens = explode('<hr id="system-readmore" />',$item->body);
+						echo $tokens[0];
+					?>
 					<?php if(json_decode($item->params)->competition_team === 1) : ?>
 						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_TEAMS_CURRENT'); ?></strong> - 
 						<?php if(isset(json_decode($item->params)->competition_limit)) : 
@@ -41,10 +45,6 @@
 						<?php echo json_decode($item->params)->competition_team; ?>
 						</p>
 					<?php endif; ?>
-					<?php 
-						$tokens = explode('<hr id="system-readmore" />',$item->body);
-						echo $tokens[0];
-					?>
 				</div>
 			</div>
 			<div class="clr"></div>
