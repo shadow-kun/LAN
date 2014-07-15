@@ -32,13 +32,13 @@
 						echo $tokens[0];
 					?>
 					<?php if(json_decode($item->params)->competition_team === 1) : ?>
-						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_TEAMS_CURRENT'); ?></strong> - 
+						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_PLAYERS_CURRENT_LABEL'); ?></strong> - 
 						<?php if(isset(json_decode($item->params)->competition_limit)) : 
 							echo ' / ' . (int) json_decode($item->params)->competition_limit;
 						endif; ?>
 						</p>
 					<?php else : ?>
-						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_PLAYERS_CURRENT'); ?></strong> - 
+						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_TEAMS_CURRENT_LABEL'); ?></strong> - 
 						<?php if(isset(json_decode($item->params)->competition_limit)) : 
 							echo ' / ' . (int) json_decode($item->params)->competition_limit;
 						endif; ?>
