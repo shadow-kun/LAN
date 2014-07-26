@@ -35,13 +35,13 @@
 		} else { 
 			if(isset($this->currentPlayer->status))
 			{
-				echo '<p><a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=unregister&id=' . $this->item->id) . '">';
-				echo JText::_('COM_LAN_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
+				echo '<p><a href="' .  JRoute::_('index.php?option=com_lan&view=competition&layout=unregister&id=' . $this->item->id) . '">';
+				echo JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER', true) . '</a> ';
 			}
 			else
 			{
-				echo '<p><a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=register&id=' . $this->item->id) . '">';
-				echo JText::_('COM_LAN_EVENT_SUMMARY_REGISTER', true) . '</a>';
+				echo '<p><a href="' .  JRoute::_('index.php?option=com_lan&view=competition&layout=register&id=' . $this->item->id) . '">';
+				echo JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER', true) . '</a>';
 			}
 		} ?></p>
 		

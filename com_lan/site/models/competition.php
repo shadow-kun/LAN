@@ -150,15 +150,15 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->select('p.id AS id, p.competition, p.status AS status, p.params');
+			$query->from('#__lan_competition_players AS p');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
 			$query->join('LEFT', '#__users AS u ON u.id = p.user');
 			
 			// Selects the event that is required.
-			$query->where('p.event = ' . JRequest::getVar('id'));
+			$query->where('p.competition = ' . JRequest::getVar('id'));
 			
 			// Add the list ordering clause.
 			$orderCol 		= $this->state->get('list.ordering');
@@ -182,11 +182,11 @@
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->select('p.id AS id, p.competition, p.status AS status, p.params');
+			$query->from('#__lan_competition_players AS p');
 						
-			// Selects the event that is required.
-			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			// Selects the competition that is required.
+			$query->where('p.competition = ' . JRequest::getVar('id',NULL));
 			
 			// Selects current user.
 			$query->where('p.user = ' . JFactory::getUser()->id);
