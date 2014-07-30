@@ -46,4 +46,5 @@
 			<div class="clr"></div>
 		<?php endforeach; ?>
 	</div>
+	<?php echo JHtml::_( 'form.token' ); ?>
 </form>

@@ -61,7 +61,7 @@ class LANTableCompetition extends JTable
 	{
 		// Check for valid name.
 		if (trim($this->title) === '') {
-			$this->setError(JText::_('COM_LAN_ERROR_EVENT_TITLE'));
+			$this->setError(JText::_('COM_LAN_ERROR_COMPETITION_TITLE'));
 			return false;
 		}
 

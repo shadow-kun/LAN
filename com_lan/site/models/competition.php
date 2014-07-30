@@ -150,7 +150,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.competition, p.status AS status, p.params');
+			$query->select('p.id AS id, p.competition, p.params as params');
 			$query->from('#__lan_competition_players AS p');
 			
 			//Join over the users.
@@ -182,7 +182,7 @@
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.competition, p.status AS status, p.params');
+			$query->select('p.id AS id, p.competition, p.params');
 			$query->from('#__lan_competition_players AS p');
 						
 			// Selects the competition that is required.
@@ -191,7 +191,7 @@
 			// Selects current user.
 			$query->where('p.user = ' . JFactory::getUser()->id);
 			
-			// Selects only non cancelled entries. (Innactive as of current)
+			// Selects only non cancelled entries. (Inactive as of current)
 			
 			// Runs query
 			$result = $db->setQuery($query)->loadObject();

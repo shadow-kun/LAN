@@ -4,16 +4,26 @@
 	 
 	// import Joomla controller library
 	jimport('joomla.application.component.controller');
-	 
-	 
+	
 	class LANControllerCompetition extends JControllerLegacy
 	{
-		public function submit($id = null)
+		
+		public function execute($task)
 		{
-			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-			
-			echo 'yo!';
-			return true;
+			$app = JFactory::getApplication();
+			/*
+			if($task == 'competition')
+			{
+				$this->setRedirect(JRoute::_('index.php?com_lan&view=events', true));
+			}
+			else 
+			{
+				$this->setRedirect(JRoute::_('index.php?com_lan&view=' & $task, true));
+			}*/
+			echo '<p>xfgxfggf' . $task . '</p>';
+			parent::execute($task);
 		}
+		
+		
 	}
 ?>

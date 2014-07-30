@@ -175,6 +175,31 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
+			<field name="competition_team"
+				type="list"
+				label="COM_LAN_COMPETITION_FIELD_PARAM_TEAM_LABEL"
+				description="COM_LAN_COMPETITION_FIELD_PARAM_TEAM_DESC">
+				<option value="0">COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_INDIVIDUAL</option>
+				<option value="1">COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_TEAM</option>
+			</field>
+			<field name="competition_tournament"
+				type="list"
+				label="COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_LABEL"
+				description="COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_DESC">
+				<option value="">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_NONE</option>
+				<option value="0">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_TOURNAMENT</option>
+				<option value="1">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SINGLE_ELIMINATION</option>
+				<option value="2">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_DOUBLE_ELIMINATION</option>
+				<option value="3">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SWISS</option>
+				<option value="4">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_ROUND_ROBIN</option>
+				<option value="5">COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SUBMISSION</option>
+			</field>
+			<field name="competition_organisers"
+				type="text"
+				label="COM_LAN_COMPETITION_FIELD_PARAM_ORGANISERS_LABEL"
+				description="COM_LAN_COMPETITION_FIELD_PARAM_ORGANISERS_DESC"
+				class="inputbox"
+				size="45" />
 		</fieldset>
 	</fields>
 </form>

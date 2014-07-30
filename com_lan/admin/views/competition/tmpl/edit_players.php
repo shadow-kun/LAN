@@ -24,7 +24,7 @@
 			<th>
 				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
 			</th>
-			<th width="10%">
+			<th width="10%" class="center">
 				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
 			<th width="1%">
@@ -50,6 +50,11 @@
 			</td>
 			<td class="left">
 				<?php echo $this->escape($player->username); ?>
+			</td>
+			<td class="center">
+				<?php if(isset(json_decode($player->params)->status)) :
+					echo $this->escape(json_decode($player->params)->status); 
+				endif; ?>
 			</td>
 			<td class="center">
 				<?php echo (int) $p + 1; ?>

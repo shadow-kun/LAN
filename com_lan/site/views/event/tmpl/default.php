@@ -85,4 +85,5 @@
 			</div>
 		</div>
 	</div>
+	<?php echo JHtml::_( 'form.token' ); ?>
 </form>
