@@ -109,7 +109,7 @@
 
 					if (empty($data))
 					{
-						return JError::raiseError(404, JText::_('COM_LAN_ERROR_COMPETITION_NOT_FOUND') . (int) $pk);
+						return JError::raiseError(404, JText::_('COM_LAN_ERROR_COMPETITION_NOT_FOUND'));
 					}
 
 					// Convert parameter fields to objects.

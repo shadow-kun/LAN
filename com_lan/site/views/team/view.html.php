@@ -57,14 +57,18 @@
 		
 		public function display($tpl = null)
 		{
+			$layout = JRequest::getVar('layout');
 			// Initialise variables.
+			
 			$this->item				= $this->get('Item');
-			$this->players			= $this->get('Players');
-			$this->currentPlayer	= $this->get('CurrentPlayer');
+			if($layout != 'add')
+			{
+				$this->players			= $this->get('Players');
+				$this->currentPlayer	= $this->get('CurrentPlayer');
+			}
 			$this->form				= $this->get('Form');
 			$this->state			= $this->get('State');
 			
-			$message = JRequest::getVar('id',NULL,'POST');
 			$app = JFactory::getApplication();
 			
 			// Check for errors.
@@ -74,9 +78,10 @@
 				return false;
 			}
 			
+			/*
 			$pathway = $app->getPathway();
 			$pathway->addItem($this->escape($this->item->title), JRoute::_('index.php?option=com_lan&view=team&id=' . $this->item->id));
-			
+			*/
 
 			parent::display();
 		}

@@ -23,7 +23,7 @@
 		 * @var        string
 		 */
 		protected $_context = 'com_lan.team';
-		
+				
 		protected function populateState()
 		{
 			$app = JFactory::getApplication('site');
@@ -107,22 +107,24 @@
 
 					$data = $db->loadObject();
 
-					if (empty($data))
+					if (empty($data) and $pk != null)
 					{
-						return JError::raiseError(404, JText::_('COM_LAN_ERROR_TEAM_NOT_FOUND') . (int) $pk);
+						return JError::raiseError(404, JText::_('COM_LAN_ERROR_TEAM_NOT_FOUND'));
 					}
-
-					// Convert parameter fields to objects.
-					$registry = new JRegistry;
-					$registry->loadString($data->params);
-
-					$data->params = clone $this->getState('params');
-					$data->params->merge($registry);
 					
-					$registry = new JRegistry;
-					//$registry->loadString($data->metadata);
-					$data->metadata = $registry;
-					
+					if($pk != null)
+					{
+						// Convert parameter fields to objects.
+						$registry = new JRegistry;
+						$registry->loadString($data->params);
+
+						$data->params = clone $this->getState('params');
+						$data->params->merge($registry);
+						
+						$registry = new JRegistry;
+						//$registry->loadString($data->metadata);
+						$data->metadata = $registry;
+					}
 					$this->_item[$pk] = $data;
 				}
 				catch (Exception $e)
@@ -170,6 +172,7 @@
 			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
 			$query->order('id');
+			
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();
 			

@@ -16,6 +16,7 @@
 
 <form action="<?php echo JRoute::_('index.php?option=com_lan&view=teams');?>" method="post" name="adminForm" id="adminForm">
 	<div class="row-fluid">
+		<div><button name="selection" class="btn btn-primary" value="team_new"><?php echo JText::_('COM_LAN_TEAMS_SUMMARY_NEW_LABEL');?></button></div>
 		<?php foreach ($this->items as $i => $item) :
 				$item->max_ordering = 0;
 				$ordering	= ($listOrder == 'a.ordering'); 
@@ -36,5 +37,6 @@
 			<div class="clr"></div>
 		<?php endforeach; ?>
 	</div>
+	<input type="hidden" name="task" value="team" />
 	<?php echo JHtml::_( 'form.token' ); ?>
 </form>
