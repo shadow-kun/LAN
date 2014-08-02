@@ -150,14 +150,14 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.team, p.params as params');
+			$query->select('p.id AS id, p.team, p.status, p.params as params');
 			$query->from('#__lan_team_players AS p');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
 			$query->join('LEFT', '#__users AS u ON u.id = p.user');
 			
-			// Selects the event that is required.
+			// Selects the team that is required.
 			$query->where('p.team = ' . JRequest::getVar('id'));
 			
 			// Add the list ordering clause.
@@ -182,7 +182,7 @@
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.team, p.params');
+			$query->select('p.id AS id, p.team, p.status, p.params');
 			$query->from('#__lan_team_players AS p');
 						
 			// Selects the team that is required.

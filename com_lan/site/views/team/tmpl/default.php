@@ -101,9 +101,21 @@
 						<?php echo $this->escape($player->username); ?>
 					</td>
 					<td class="center">
-						<?php if(isset(json_decode($player->params)->status)) :
-							echo $this->escape(json_decode($player->params)->status); 
-						endif; ?>
+						<?php switch((int) $player->status)
+						{
+							case 0:
+								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_APPLYING');
+								break;
+							case 1:
+								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_MEMBER');
+								break;
+							case 2:
+								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_MODERATOR');
+								break;
+							case 4:
+								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_LEADER');
+								break;
+						} ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>

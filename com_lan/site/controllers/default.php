@@ -92,6 +92,77 @@
 					$db->query();
 					break;
 				}
+				case 'register_player_team':
+				{
+					 // Gets competition id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('p.id AS id, p.team, p.status, p.params');
+					$query->from('#__lan_team_players AS p');
+								
+					// Selects the team that is required.
+					$query->where('p.team = ' . $id);
+					
+					// Selects current user.
+					$query->where('p.user = ' . JFactory::getUser()->id);
+					
+					// Selects only non cancelled entries. (Inactive as of current)
+					
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+						
+					// Checks to see if already registered for this team
+					if(!(isset($result))) :
+					{					
+						// Sets columns
+						$colums = array('id', 'team', 'status', 'user', 'params');
+						
+						// Sets values
+						$values = array('NULL', $id, 0, $user->id, 'NULL');
+						
+						// Prepare Insert Query $db->quoteName('unconfirmed')
+						$query  ->insert($db->quoteName('#__lan_team_players'))
+								->columns($db->quoteName($colums))
+								->values(implode(',', $values));
+						
+						// Set the query and execute item
+						$db->setQuery($query);
+						$db->query();
+					} endif;					
+					break;
+				}
+				case 'unregister_player_team':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Sets the conditions of the delete of the user with the team
+					$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('user') . ' = ' .  $user->id);
+					
+					$query->delete($db->quoteName('#__lan_team_players'));
+					$query->where($conditions);
+								
+					// Set the query and execute item
+					$db->setQuery($query);
+					$db->query();
+					break;
+				}
 			}
 			parent::display($cachable, $urlparams);
 		}
