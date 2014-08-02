@@ -91,7 +91,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.team, p.params');
+			$query->select('p.id AS id, p.team, p.status, p.params');
 			$query->from('#__lan_team_players AS p');
 			
 			//Join over the competitions.

@@ -104,16 +104,16 @@
 						<?php switch((int) $player->status)
 						{
 							case 0:
-								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_APPLYING');
+								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_APPLYING');
 								break;
 							case 1:
-								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_MEMBER');
+								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MEMBER');
 								break;
 							case 2:
-								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_MODERATOR');
+								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MODERATOR');
 								break;
 							case 4:
-								echo JText::_('COM_LAN_TEAM_FIELD_PARAM_STATUS_OPTION_LEADER');
+								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_LEADER');
 								break;
 						} ?>
 					</td>
