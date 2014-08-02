@@ -76,9 +76,14 @@
 					<th>
 						<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_TEAM_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
 					</th>
-					<th width="20%">
+					<th width="15%">
 						<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_TEAM_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 					</th>
+					<?php if(isset($this->currentPlayer->status) && $this->currentPlayer->status >= 2) : ?>
+						<th width="30%">
+							<?php echo JText::_('COM_LAN_TEAM_TABLE_TEAM_PLAYERS_MANAGEMENT'); ?>
+						</th>
+					<?php endif; ?>
 				</tr>
 			</thead>
 			<tfoot>
@@ -93,35 +98,51 @@
 					$player->max_ordering = 0;
 					$ordering	= ($listOrder == 'id');
 				?>
-				<tr class="row<?php echo $p % 2; ?>">
-					<td class="left">
-						<?php echo (int) $p + 1; ?>
-					</td>
-					<td class="left">
-						<?php echo $this->escape($player->username); ?>
-					</td>
-					<td class="center">
-						<?php switch((int) $player->status)
-						{
-							case 0:
-								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_APPLYING');
-								break;
-							case 1:
-								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MEMBER');
-								break;
-							case 2:
-								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MODERATOR');
-								break;
-							case 4:
-								echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_LEADER');
-								break;
-						} ?>
-					</td>
-				</tr>
+					<tr class="row<?php echo $p % 2; ?>">
+						<td class="left">
+							<?php echo (int) $p + 1; ?>
+						</td>
+						<td class="left">
+							<?php echo $this->escape($player->username); ?>
+						</td>
+						<td class="left">
+							<?php switch((int) $player->status)
+								{
+									case 0:
+										echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_APPLYING');
+										break;
+									case 1:
+										echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MEMBER');
+										break;
+									case 2:
+										echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MODERATOR');
+										break;
+									case 4:
+										echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_LEADER');
+										break;
+								} ?>
+						</td>
+						<?php if(isset($this->currentPlayer->status) && $this->currentPlayer->status >= 2) : ?>
+							<td class="left">
+								<?php if($player->status == 0) :
+									echo '<button name="selection" class="btn" value="team_status_reject#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_REJECT_LABEL') . '</button> 
+										  <button name="selection" class="btn btn-primary" value="team_status_approve#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_APPROVE_LABEL') . '</button>';
+								elseif ($player->status == 1) :
+									echo '<button name="selection" class="btn" value="team_status_remove#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_REMOVE_LABEL') . '</button>';
+									if($this->currentPlayer->status == 4) :
+										echo '<button name="selection" class="btn" value="team_status_moderator#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_MODERATOR_LABEL') . '</button>';
+									endif;
+								elseif ($player->status == 2 && $this->currentPlayer->status == 4) :
+									echo '<button name="selection" class="btn" value="team_status_remove#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_REMOVE_LABEL') . '</button>';
+									echo '<button name="selection" class="btn" value="team_status_member#' . $player->id . '" >' . JText::_('COM_LAN_TEAM_STATUS_MEMBER_LABEL') . '</button>';
+								endif; ?>
+							</td>
+						<?php endif; ?>
+					</tr>
 				<?php endforeach; ?>
 			</tbody>
 		</table>
-		<input type="hidden" name="task" value="register" />
+		<input type="hidden" name="task" value="team" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 	</div>
 </form>

@@ -15,6 +15,7 @@
 			JSession::checkToken() or die( 'Invalid Token' );
 			$selection = JRequest::getVar('selection');
 			
+				
 			switch($selection)
 			{
 				case 'register_player_competition':
@@ -92,6 +93,20 @@
 					$db->query();
 					break;
 				}
+				
+			}
+			parent::display($cachable, $urlparams);
+		}
+		
+		public function team($cachable = false, $urlparams = null)
+		{
+			JSession::checkToken() or die( 'Invalid Token' );
+			$selection = JRequest::getVar('selection');
+			
+				
+			$data = explode("#" , $selection);
+			switch($data[0])
+			{
 				case 'register_player_team':
 				{
 					 // Gets competition id
@@ -141,6 +156,8 @@
 					break;
 				}
 				case 'unregister_player_team':
+				case 'team_status_reject': 
+				case 'team_status_remove':
 				{
 					// Gets team id
 					$id 	= JRequest::getVar('id');
@@ -153,7 +170,16 @@
 					$query	= $db->getQuery(true);
 					
 					// Sets the conditions of the delete of the user with the team
-					$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('user') . ' = ' .  $user->id);
+					if(isset($data[1])) :
+					{
+						$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+					}
+					else :
+					{
+						$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('user') . ' = ' .  $user->id);
+					}
+					endif;
+					
 					
 					$query->delete($db->quoteName('#__lan_team_players'));
 					$query->where($conditions);
@@ -163,7 +189,65 @@
 					$db->query();
 					break;
 				}
+				case 'team_status_approve':
+				case 'team_status_member':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Gets data to update
+					$fields = $db->quoteName('status') . ' = 1';
+					
+					// Sets the conditions of which event and which player to update
+					$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+					
+					// Executes Query
+					$query->update($db->quoteName('#__lan_team_players'));
+					$query->set($fields);
+					$query->where($conditions);
+					
+					$db->setQuery($query);
+					
+					$db->query();
+					break;
+				}
+				case 'team_status_moderator':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Gets data to update
+					$fields = $db->quoteName('status') . ' = 2';
+					
+					// Sets the conditions of which event and which player to update
+					$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+					
+					// Executes Query
+					$query->update($db->quoteName('#__lan_team_players'));
+					$query->set($fields);
+					$query->where($conditions);
+					
+					$db->setQuery($query);
+					
+					$db->query();
+					break;
+				}
 			}
+			
 			parent::display($cachable, $urlparams);
 		}
 		
