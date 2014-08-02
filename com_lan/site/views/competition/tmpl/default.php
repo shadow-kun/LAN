@@ -43,7 +43,7 @@
 				<?php echo $this->escape(json_decode($this->item->params)->competition_organisers); ?> </p>
 		<?php endif; ?>
 		
-		<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TEAM_LABEL', true); ?></strong> - 
+		<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TEAM_LABEL', true); ?></strong> - 		
 			<?php switch((int) json_decode($this->item->params)->competition_team)
 				{
 					case 0: 

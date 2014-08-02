@@ -15,7 +15,7 @@
 	
 	$app = JFactory::getApplication();
 	$pathway = $app->getPathway();
-	$pathway->addItem(JText::_('COM_LAN_TEAM_PLAYERS_TITLE', true), JRoute::_('index.php?option=com_lan&view=team&layout=players&id=' . $this->item->id));
+	$pathway->addItem(JText::_('COM_LAN_EVENTS_PLAYERS_TITLE', true), JRoute::_('index.php?option=com_lan&view=event&layout=players&id=' . $this->item->id));
 ?>	
 <form action="<?php /*echo JRoute::_('index.php?option=com_lan&view=event&id='.(int) $this->item->id); */?>"
 	method="post" name="adminForm" id="event-register-form" class="form-validate">

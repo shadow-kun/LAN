@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_LAN_EVENT_VIEW_DEFAULT_TITLE">
+                <message>
+                        <![CDATA[COM_LAN_EVENT_VIEW_DEFAULT_DESC]]>
+                </message>
+        </layout>
+		<fields
+            name="request"
+            addfieldpath="/administrator/components/com_lan/models/fields"
+			>
+                <fieldset name="request">
+                        <field
+                                name="id"
+                                type="event"
+                                label="COM_LAN_COMPETITION_FIELD_EVENT_LABEL"
+                                description="COM_LAN_COMPETITION_FIELD_EVENT_DESC"
+                        />
+                </fieldset>
+        </fields>
+</metadata>

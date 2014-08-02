@@ -36,7 +36,7 @@
 			description="JFIELD_ALIAS_DESC"
 			class="inputbox"
 			size="45" />
-			
+
 		<field name="body"
 			type="editor"
 			label="COM_LAN_TEAM_FIELD_BODY_LABEL"
@@ -142,15 +142,16 @@
 			class="readonly"
 			size="20"
 			readonly="true"
-			filter="unset" />
+			filter="unset" />		
+
 	</fieldset>
-	
+
 	<fields name="params">
-		<fieldset name="details" label="COM_LAN_TEAM_PARAMS_DETAILS_FIELDSET_LABEL">
+		<fieldset name="basic" label="COM_LAN_BASIC_PARAMS_FIELDSET_LABEL">
 			<field name="show_title"
 				type="list"
 				label="JGLOBAL_SHOW_TITLE_LABEL"
-				description="COM_LAN_TEAM_FIELD_PARAM_SHOW_TITLE_DESC">
+				description="COM_LAN_PARAM_SHOW_TITLE_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
