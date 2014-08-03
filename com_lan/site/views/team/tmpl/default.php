@@ -37,7 +37,7 @@
 		<!-- Need to have a restrict access cause here -->
 		
 		<div class="row-fluid">
-			<div class="span8">
+			<div class="span12">
 				<?php $tokens = explode('<hr id="system-readmore" />',$this->item->body);
 					if(count($tokens) === 1)
 					{
@@ -57,7 +57,23 @@
 		} else { 
 			if(isset($this->currentPlayer->id))
 			{
-				echo '<p><button name="selection" class="btn btn-primary" value="unregister_player_team" >' . JText::_('COM_LAN_TEAM_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
+				if($this->currentPlayer->status == 4)
+				{
+					echo '<p><button name="selection" class="btn btn-primary" value="team_edit_details" >' . JText::_('COM_LAN_TEAM_SUMMARY_EDIT_TEAM_LABEL') . '</button> ';
+					echo '<button name="selection" class="btn" value="team_edit_leader" >' . JText::_('COM_LAN_TEAM_SUMMARY_EDIT_LEADER_LABEL') . '</button> ';
+					echo '<button name="selection" class="btn" value="team_delete" >' . JText::_('COM_LAN_TEAM_SUMMARY_DELETE_LABEL') . '</button></p>';
+				}
+				elseif($this->currentPlayer->status >= 2)
+				{
+					echo '<p><button name="selection" class="btn btn-primary" value="team_edit_details" >' . JText::_('COM_LAN_TEAM_SUMMARY_EDIT_TEAM_LABEL') . '</button> ';
+					echo '<button name="selection" class="btn" value="unregister_player_team" >' . JText::_('COM_LAN_TEAM_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
+				}
+				else
+				{
+					echo '<p><button name="selection" class="btn btn-primary" value="unregister_player_team" >' . JText::_('COM_LAN_TEAM_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
+				}
+				
+				
 		
 			}
 			else

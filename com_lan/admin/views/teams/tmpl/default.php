@@ -14,7 +14,7 @@
 	$listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=competitions');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_lan&view=teams');?>" method="post" name="adminForm" id="adminForm">
 	<div id="j-main-container">
 <?php
 		// Search tools bar

@@ -27,18 +27,18 @@
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=team&layout=add'); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_lan&view=team&layout=edit&id=' . JRequest::getVar('id')); ?>"
 	method="post" name="adminForm" id="team-form" class="form-validate">
 		<div class="form-horizontal"> <!--class="width-60 fltlft"-->
 		
 			<div class="row-fluid">
 				<div class="span8">
 					<fieldset class="adminform">
-						<div><?php echo JText::_('COM_LAN_TEAM_ADD_TITLE_LABEL');?><input type="text" name="title" placeholder="<?php echo JText::_('COM_LAN_TEAM_ADD_TITLE_DESC'); ?>" /></div>
-						<div><?php echo $editor->display('body', null, '100%', '350', '55', '20', false); ?></div>
+						<div><?php echo JText::_('COM_LAN_TEAM_EDIT_TITLE_LABEL');?><input type="text" name="title" value="<?php echo $this->item->title; ?>" /></div>
+						<div><?php echo $editor->display('body', $this->item->body, '100%', '350', '55', '20', false); ?></div>
 					</fieldset>
 					<div><button name="selection" class="btn" value="cancel"><?php echo JText::_('COM_LAN_TEAM_CANCEL_LABEL');?></button>
-					<button name="selection" class="btn btn-primary" value="team_add"><?php echo JText::_('COM_LAN_TEAM_ADD_SUBMIT_LABEL');?></button></div>
+					<button name="selection" class="btn btn-primary" value="team_edit_details_confirm"><?php echo JText::_('COM_LAN_TEAM_EDIT_SUBMIT_LABEL');?></button></div>
 				</div>
 				
 			</div>

@@ -170,17 +170,61 @@
 					$db		= JFactory::getDbo();
 					$query	= $db->getQuery(true);
 					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+										
 					// Sets the conditions of the delete of the user with the team
 					if(isset($data[1])) :
 					{
-						$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+						$access = $result->status;
+						
+						$query	= $db->getQuery(true);
+					
+						// Select the required fields from the table.
+						$query->select('a.id AS id, a.status AS status');
+						$query->from('#__lan_team_players AS a');
+									
+						// Selects current user.
+						$query->where('a.id = ' . (int) $data[1]);
+						
+						// Selects team created timestamp.
+						$query->where('a.team = ' . $id);
+									
+						// Runs query
+						$result = $db->setQuery($query)->loadObject();
+						$db->query();
+						
+						if(!(isset($result->status)))
+						{
+							return JError::raiseError(403, JText::_('COM_LAN_ERROR_PLAYER_NOT_FOUND'));
+						}
+						// Checks to see if correct this user has the correct permissions to perform this operation.
+						if($result->status < 2 || $result->status == 2 && $access == 4)
+						{
+							$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+						}
+						else 
+						{
+							return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+						}
 					}
 					else :
 					{
 						$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('user') . ' = ' .  $user->id);
 					}
 					endif;
-					
+					$query	= $db->getQuery(true);
 					
 					$query->delete($db->quoteName('#__lan_team_players'));
 					$query->where($conditions);
@@ -203,20 +247,43 @@
 					$db		= JFactory::getDbo();
 					$query	= $db->getQuery(true);
 					
-					// Gets data to update
-					$fields = $db->quoteName('status') . ' = 1';
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
 					
-					// Sets the conditions of which event and which player to update
-					$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
-					
-					// Executes Query
-					$query->update($db->quoteName('#__lan_team_players'));
-					$query->set($fields);
-					$query->where($conditions);
-					
-					$db->setQuery($query);
-					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
 					$db->query();
+					
+					if(($result->status >= 2 && $data[0] = 'team_status_approve') || ($result->status == 4))
+					{
+						$query	= $db->getQuery(true);
+						
+						// Gets data to update
+						$fields = $db->quoteName('status') . ' = 1';
+						
+						// Sets the conditions of which event and which player to update
+						$conditions = array($db->quoteName('team') . ' = ' . $id, $db->quoteName('id') . ' = ' . (int) $data[1]);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__lan_team_players'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
 					break;
 				}
 				case 'team_status_moderator':
@@ -313,6 +380,253 @@
 					$db->query();
 					
 					$this->setRedirect(JRoute::_('index.php?option=com_lan&view=team&id=' . $id, false));
+					break;
+				}
+				case 'team_delete':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+					
+					if($result->status == 4)
+					{
+						// Gets data to update
+						$fields = $db->quoteName('published') . ' = -2';
+						
+						// Sets the conditions of which event and which player to update
+						$conditions = array($db->quoteName('id') . ' = ' . (int) $id);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__lan_teams'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+						
+						$this->setRedirect(JRoute::_('index.php?option=com_lan&view=teams', false));
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
+					break;
+				}
+				case 'team_edit_details':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+					
+					if($result->status == 4)
+					{
+						$this->setRedirect(JRoute::_('index.php?option=com_lan&view=team&layout=edit&id=' . JRequest::getVar('id'), false));
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
+					break;
+				}
+				case 'team_edit_details_confirm':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+					
+					if($result->status == 4)
+					{
+						$query	= $db->getQuery(true);
+					
+						// Gets data to update
+						$fields = array($db->quoteName('title') . ' = ' . $db->quote(JRequest::getVar('title')), $db->quoteName('body') . ' = ' . $db->quote(JRequest::getVar('body')));
+						
+						// Sets the conditions of which event and which player to update
+						$conditions = array($db->quoteName('id') . ' = ' . $id);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__lan_teams'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+						$this->setRedirect(JRoute::_('index.php?option=com_lan&view=team&id=' . JRequest::getVar('id'), false));
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
+					break;
+				}
+				case 'team_edit_leader':
+				{
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+					
+					if($result->status == 4)
+					{
+						$this->setRedirect(JRoute::_('index.php?option=com_lan&view=team&layout=leader&id=' . JRequest::getVar('id'), false));
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
+					break;
+				}
+				case 'team_new_leader_confirm':
+				{
+					// Gets new team leader
+					$teamLeader = JRequest::getVar('teamLeader');
+					
+					// Gets team id
+					$id 	= JRequest::getVar('id');
+					
+					// Gets current user info
+					$user	= JFactory::getUser();
+					
+					// Gets database connection
+					$db		= JFactory::getDbo();
+					$query	= $db->getQuery(true);
+					
+					// Select the required fields from the table.
+					$query->select('a.id AS id, a.status AS status');
+					$query->from('#__lan_team_players AS a');
+								
+					// Selects current user.
+					$query->where('a.user = ' . JFactory::getUser()->id);
+					
+					// Selects team created timestamp.
+					$query->where('a.team = ' . $id);
+								
+					// Runs query
+					$result = $db->setQuery($query)->loadObject();
+					$db->query();
+					
+					if($result->status == 4)
+					{
+						$query	= $db->getQuery(true);
+						
+						// Gets data to update
+						$fields = $db->quoteName('status') . ' = 1';
+						
+						// Sets the conditions of which event and which player to update
+						$conditions = array($db->quoteName('id') . ' = ' . $result->id);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__lan_team_players'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						$db->query();
+						
+						$query	= $db->getQuery(true);
+						
+						// Gets data to update
+						$fields = $db->quoteName('status') . ' = 4';
+						
+						// Sets the conditions of which event and which player to update
+						$conditions = array($db->quoteName('id') . ' = ' . (int) $teamLeader);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__lan_team_players'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						$db->query();
+						
+						
+						$this->setRedirect(JRoute::_('index.php?option=com_lan&view=team&id=' . $id, false));
+					}
+					else 
+					{
+						return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+					}
 					break;
 				}
 				case 'cancel':
