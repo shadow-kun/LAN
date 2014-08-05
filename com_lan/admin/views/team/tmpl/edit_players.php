@@ -27,6 +27,9 @@
 			<th width="10%" class="center">
 				<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
+			<th width="20%" class="center">
+				<?php echo JText::_('COM_LAN_TEAM_TABLE_PLAYERS_CONTROLS'); ?>
+			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
 			</th>
@@ -67,6 +70,12 @@
 						echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_LEADER');
 						break;
 				} ?>
+			</td>
+			<td class="left">
+				<button type="submit" class="btn">
+					<?php echo JText::_('COM_LAN_TEAM_FIELD_CONTROLS_OPTION_REMOVE_TITLE'); ?></button> 
+				<button type="submit" class="btn">
+					<?php echo JText::_('COM_LAN_TEAM_FIELD_CONTROLS_OPTION_MODERATOR_TITLE'); ?></button> 
 			</td>
 			<td class="center">
 				<?php echo (int) $p + 1; ?>
