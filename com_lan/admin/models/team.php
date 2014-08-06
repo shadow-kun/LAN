@@ -95,7 +95,7 @@
 			$query->from('#__lan_team_players AS p');
 			
 			//Join over the competitions.
-			$query->select('t.id AS terams');
+			$query->select('t.id AS team');
 			$query->join('LEFT', '`#__lan_teams` AS t ON t.id = p.team');
 			
 			//Join over the users.

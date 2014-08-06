@@ -89,6 +89,6 @@
 		</div>
 	</div>
 
-	<input type="hidden" name="task" value="" />
+	<input type="hidden" name="task" value="team" />
 	<?php echo JHtml::_('form.token'); ?>
 </form>

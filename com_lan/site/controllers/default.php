@@ -194,6 +194,10 @@
 						// Select the required fields from the table.
 						$query->select('a.id AS id, a.status AS status');
 						$query->from('#__lan_team_players AS a');
+						
+						//Join over the users.
+						$query->select('u.username AS username');
+						$query->join('LEFT', '#__users AS u ON u.id = p.user');
 									
 						// Selects current user.
 						$query->where('a.id = ' . (int) $data[1]);

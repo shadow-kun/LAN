@@ -19,6 +19,6 @@
 	 
 	class LANControllerTeam extends JControllerForm
 	{
-	
+		
 	}
 ?>

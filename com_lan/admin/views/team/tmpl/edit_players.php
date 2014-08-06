@@ -27,8 +27,8 @@
 			<th width="10%" class="center">
 				<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
-			<th width="20%" class="center">
-				<?php echo JText::_('COM_LAN_TEAM_TABLE_PLAYERS_CONTROLS'); ?>
+			<th width="10%" class="center">
+				<?php echo JText::_('COM_LAN_TEAM_TABLE_PLAYERS_OPTIONS'); ?>
 			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
@@ -72,10 +72,26 @@
 				} ?>
 			</td>
 			<td class="left">
-				<button type="submit" class="btn">
-					<?php echo JText::_('COM_LAN_TEAM_FIELD_CONTROLS_OPTION_REMOVE_TITLE'); ?></button> 
-				<button type="submit" class="btn">
-					<?php echo JText::_('COM_LAN_TEAM_FIELD_CONTROLS_OPTION_MODERATOR_TITLE'); ?></button> 
+				<?php if($player->status != 4) : ?>
+					<select name="player_status_change#<?php echo $player->id; ?>" onchange="this.form.submit()">
+						<option value=""><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_SELECT_TITLE'); ?></option>
+						<?php if($player->status == 0)
+						{ ?>
+							<option value="approve"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_APPROVE_TITLE'); ?></option>
+							<option value="reject"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_REJECT_TITLE'); ?></option>
+						<?php } else 
+						{
+							if($player->status == 1) 
+							{ ?>
+								<option value="moderator"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_MODERATOR_TITLE'); ?></option>
+							<?php } else { ?>
+								<option value="member"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_MEMBER_TITLE'); ?></option>
+							<?php } ?>
+							<option value="leader"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_LEADER_TITLE'); ?></option>
+							<option value="remove"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_REMOVE_TITLE'); ?></option>
+						<?php } ?>
+					</select>
+				<?php endif; ?>
 			</td>
 			<td class="center">
 				<?php echo (int) $p + 1; ?>
