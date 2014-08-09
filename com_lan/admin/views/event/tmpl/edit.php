@@ -68,8 +68,99 @@
 				</div>
 				
 				<div class="control-group ">
+					<div class="control-label"></div>
+					<div class="controls">
+						<select name="jform[event_start_hour]" class="span2">
+							<?php for($h = 0; $h < 24; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_start_hour)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									 echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									 echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select> : <select name="jform[event_start_minute]" class="span2">
+							<?php for($h = 0; $h < 60; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_start_minute)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group ">
 					<div class="control-label"><?php echo $this->form->getLabel('event_end_time'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('event_end_time'); ?></div>
+					
+				</div>
+				
+				<div class="control-group ">
+					<div class="control-label"></div>
+					<div class="controls">
+						<select name="jform[event_end_hour]" class="span2">
+							<?php for($h = 0; $h < 24; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_end_hour)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									 echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									 echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select> : <select name="jform[event_end_minute]" class="span2">
+							<?php for($h = 0; $h < 60; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_end_minute)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select>
+					</div>
 				</div>
 				
 				<?php echo $this->loadTemplate('location'); ?>

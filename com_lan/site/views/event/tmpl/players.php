@@ -18,19 +18,19 @@
 	$pathway->addItem(JText::_('COM_LAN_EVENTS_PLAYERS_TITLE', true), JRoute::_('index.php?option=com_lan&view=event&layout=players&id=' . $this->item->id));
 ?>	
 <form action="<?php /*echo JRoute::_('index.php?option=com_lan&view=event&id='.(int) $this->item->id); */?>"
-	method="post" name="adminForm" id="event-register-form" class="form-validate">
+	method="post" name="adminForm" id="event-players-form" class="form-validate">
 	
 	<h2><a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&id=' . $this->item->id); ?>"><?php echo $this->escape($this->item->title); ?></a> <strong> - </strong> 
-		<a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&layout=register&id=' . $this->item->id); ?>"><?php echo JText::_('COM_LAN_EVENTS_PLAYERS_TITLE', true) ?></a></h2>
+		<a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&layout=players&id=' . $this->item->id); ?>"><?php echo JText::_('COM_LAN_EVENTS_PLAYERS_TITLE', true) ?></a></h2>
 		
 	<div class="row-fluid">
-		<div class="span8">
+		<div class="span12">
 			<!-- Player Listing To Be Inserted Here -->
 			<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_LIST', true) ?></h3>
 			<table class="list table table-striped">
 				<thead>
 					<tr>
-						<th width="1%">
+						<th width="15%">
 							<?php echo JHTML::_('grid.sort', 'COM_LAN_EVENT_TABLE_PLAYERS_ORDER', 'id', $listDirn, $listOrder); ?>
 						</th>
 						<th>
@@ -55,7 +55,21 @@
 					?>
 					<tr class="row<?php echo $p % 2; ?>">
 						<td class="left">
-							<?php echo (int) $p + 1; ?>
+							<?php 
+								if($player->status == 4)
+								{
+									echo 'Pre-Paid ' . ($p + 1) . ':'; 
+								} 
+								else if(($p + $this->item->players_prepay) <= $this->item->players_max)
+								{
+									echo 'Player ' . ((int) $p + $this->item->players_prepay) . ':';
+								}
+								else
+								{
+									echo 'Waiting ' . ($p - ($this->item->players_max - $this->item->players_prepay)) . ':';
+								}
+									
+							?>
 						</td>
 						<td class="left">
 							<?php echo $this->escape($player->username); ?>
@@ -71,10 +85,10 @@
 									echo JText::_('COM_LAN_EVENT_PLAYERS_CONFIRMED', true);
 									break;
 								case 3: 
-									echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true);
+									echo JText::_('COM_LAN_EVENT_PLAYERS_PAID', true);
 									break;
 								case 4:
-									echo JText::_('COM_LAN_EVENT_PLAYERS_PAID', true);
+									echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true);
 									break;
 							}
 							?>

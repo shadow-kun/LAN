@@ -55,7 +55,7 @@
 			$this->players	= $this->get('Players');
 			$this->form		= $this->get('Form');
 			$this->state	= $this->get('State');
-
+			
 			// Check for errors.
 			if (count($errors = $this->get('Errors'))) 
 			{

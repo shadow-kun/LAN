@@ -56,21 +56,25 @@
 				<input type="hidden" name="player_status_current#<?php $player->id; ?>" value="<?php $player->status; ?>" />
 				<select name="player_status_change#<?php echo $player->id; ?>" >
 					<option value="1" 
-						<?php if((int) $player->status == 1) :
-							echo 'selected'; endif; ?>
+						<?php if((int) $player->status == 1) : 
+							echo 'selected'; 
+							endif; ?>
 						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_UNCONFIRMED', true); ?></option>
 					<option value="2" 
 						<?php if((int) $player->status == 2) :
-							echo 'selected'; endif; ?>
+							echo 'selected'; 
+							endif; ?>
 						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_CONFIRMED', true); ?></option>
 					<option value="3" 
 						<?php if((int) $player->status == 3) :
-							echo 'selected'; endif; ?>
-						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true); ?></option>
-					<option value="4" 
-						<?php if((int) $player->status == 2) :
-							echo 'selected'; endif; ?>
+							echo 'selected'; 
+							endif; ?>
 						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_PAID', true); ?></option>
+					<option value="4" 
+						<?php if((int) $player->status == 4) :
+							echo 'selected'; 
+							endif; ?>
+						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true); ?></option>
 					<option value="-2" ><?php echo JText::_('COM_LAN_EVENT_PLAYERS_REMOVE', true); ?></option>
 				</select>
 			</td>

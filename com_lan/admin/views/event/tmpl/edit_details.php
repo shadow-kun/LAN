@@ -19,9 +19,10 @@
 		</div>
 		
 		<div class="control-group ">
-			<div class="control-label"><?php echo $this->form->getLabel('event_end_time'); ?></div>
-			<div class="controls"><?php echo $this->form->getInput('event_end_time'); ?></div>
+			<div class="control-label "><?php echo $this->form->getLabel('event_end_time'); ?></div>
+			<div class="controls "><?php echo $this->form->getInput('event_end_time'); ?></div>
 		</div>
+		
 		
 		<?php foreach ($this->form->getFieldset($name) as $field) : ?>
 			<div class="control-group ">

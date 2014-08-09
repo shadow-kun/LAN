@@ -169,7 +169,7 @@
 			}*/
 			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
-			$query->order('id');
+			$query->order('status DESC');
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();
 			

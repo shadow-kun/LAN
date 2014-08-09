@@ -21,6 +21,8 @@
 	{
 		public function save ($key = null, $urlVar = null)
 		{
+			parent::save($key, $urlVar);
+			
 			$app            = JFactory::getApplication();
 			$model          = $this->getModel();
 			$table          = $model->getTable();
@@ -155,7 +157,26 @@
 			}			
 			endforeach;
 			
-			parent::save($key, $urlVar);
+			
+			$query	= $db->getQuery(true);
+			
+			$event_start_date = $data['event_start_time'] . ' ' . $data['event_start_hour'] . ':' . $data['event_start_minute'] . ':00';
+			$event_end_date = $data['event_end_time'] . ' ' . $data['event_end_hour'] . ':' . $data['event_end_minute'] . ':00';
+			
+			// Sets data to be updated
+			$query->set($db->quoteName('event_start_time') . ' = ' . $db->quote($event_start_date));
+			$query->set($db->quoteName('event_end_time') . ' = ' . $db->quote($event_end_date));
+			
+			$query->where($db->quoteName('id') . ' = ' . $db->quote($event));
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_events'));
+			
+			// Set the query and execute item
+			$db->setQuery($query);							
+			$db->query();
+			
+			$app->enqueueMessage($event_end_date);
 		}
 	}
 ?>

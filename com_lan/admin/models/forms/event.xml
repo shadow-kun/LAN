@@ -211,22 +211,20 @@
 			filter="unset" />
 		
 		<field name="event_start_time"
-			type="text"
+			type="calendar"
 			label="COM_LAN_EVENT_FIELD_EVENT_START_TIME_LABEL"
 			description="COM_LAN_EVENT_FIELD_EVENT_START_TIME_DESC"
-			default="0000-00-00 00:00:00"
-			class="inputbox"
-			size="10"
+			default="2014-01-01"
+			format="%Y-%m-%d"
 			required="true"
 			/>		
 		
 		<field name="event_end_time"
-			type="text"
+			type="calendar"
 			label="COM_LAN_EVENT_FIELD_EVENT_END_TIME_LABEL"
 			description="COM_LAN_EVENT_FIELD_EVENT_END_TIME_DESC"
-			default="0000-00-00 00:00:00"
-			class="inputbox"
-			size="10"
+			default="2014-01-01"
+			format="%Y-%m-%d"
 			required="true"
 			/>
 			
@@ -249,9 +247,9 @@
 			<option value="2">
 				COM_LAN_EVENT_PLAYERS_CONFIRMED</option>
 			<option value="3">
-				COM_LAN_EVENT_PLAYERS_PREPAID</option>
-			<option value="4">
 				COM_LAN_EVENT_PLAYERS_PAID</option>
+			<option value="4">
+				COM_LAN_EVENT_PLAYERS_PREPAID</option>
 		</field>
 			
 	</fieldset>

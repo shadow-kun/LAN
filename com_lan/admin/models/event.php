@@ -79,8 +79,15 @@
 				{
 					$result->modified_time = null;
 				}
+				
+				// gets hours and minutes for drop down boxes
+				$result->event_start_hour = substr($result->event_start_time, 11, 2);
+				$result->event_start_minute = substr($result->event_start_time, 14, 2);
+				
+				// gets hours and minutes for drop down boxes
+				$result->event_end_hour = substr($result->event_end_time, 11, 2);
+				$result->event_end_minute = substr($result->event_end_time, 14, 2);
 			}
-			
 			
 			return $result;
 		}
@@ -115,7 +122,7 @@
 			}*/
 			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
-			//$query->order('id');
+			$query->order('p.user');
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();
 			
