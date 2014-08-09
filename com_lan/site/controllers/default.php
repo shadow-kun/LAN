@@ -51,7 +51,7 @@
 					if(!(isset($result))) :
 					{					
 						//Sets JSON Params data
-						$params = "'" . json_encode(array('status' => 'Signed Up')) . "'";
+						$params = $db->quote(json_encode(array('status' => 1)));
 						
 						
 						// Sets columns

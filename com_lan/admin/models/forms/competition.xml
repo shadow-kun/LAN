@@ -163,6 +163,11 @@
 			size="10"
 			required="true"
 			/>
+			
+		<field name="add_user"
+			type="user"
+			label="COM_LAN_COMPETITION_FIELD_PLAYERS_ADD_USER_LABEL"
+			description="COM_LAN_COMPETITION_FIELD_PLAYERS_ADD_USER_DESC" />
 	</fieldset>
 	
 	<fields name="params">
