@@ -101,6 +101,10 @@
 			<div class="span8">
 				<!-- Player Listing To Be Inserted Here -->
 				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+				<div class="control-group ">
+					<div class="control-label"><?php echo $this->form->getLabel('add_user'); ?></div>
+					<div class="controls" ><?php echo $this->form->getInput('add_user'); ?> <?php echo $this->form->getInput('add_user_status'); ?></div>
+				</div>
 				<?php echo $this->loadTemplate('players'); ?>
 			</div>
 			

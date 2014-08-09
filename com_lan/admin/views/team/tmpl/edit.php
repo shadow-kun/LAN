@@ -78,7 +78,7 @@
 				<h3><?php echo JText::_('COM_LAN_TEAM_SUBHEADING_PLAYERS_LIST', true) ?></h3>
 				<div class="control-group " onchange="this.form.submit()">
 					<div class="control-label"><?php echo $this->form->getLabel('add_user'); ?></div>
-					<div name="add_user" class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
+					<div class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
 				</div>
 				<?php echo $this->loadTemplate('players'); ?>
 			</fieldset>

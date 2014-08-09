@@ -230,6 +230,30 @@
 			required="true"
 			/>
 			
+		<field name="add_user"
+			type="user"
+			label="COM_LAN_EVENT_FIELD_PLAYERS_ADD_USER_LABEL"
+			description="COM_LAN_EVENT_FIELD_PLAYERS_ADD_USER_DESC" />
+			
+			
+		<field name="add_user_status"
+			type="list"
+			label="COM_LAN_TEAM_FIELD_ADD_USER_STATUS_LABEL"
+			description="COM_LAN_TEAM_FIELD_ADD_USER_STATUS_DESC"
+			default="1"
+			class="inputbox"
+			filter="intval"
+			size="1">
+			<option value="1">
+				COM_LAN_EVENT_PLAYERS_UNCONFIRMED</option>
+			<option value="2">
+				COM_LAN_EVENT_PLAYERS_CONFIRMED</option>
+			<option value="3">
+				COM_LAN_EVENT_PLAYERS_PREPAID</option>
+			<option value="4">
+				COM_LAN_EVENT_PLAYERS_PAID</option>
+		</field>
+			
 	</fieldset>
 
 	
