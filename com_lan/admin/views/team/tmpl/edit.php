@@ -76,6 +76,10 @@
 			<fieldset class="adminform">
 				<!-- Player Listing To Be Inserted Here -->
 				<h3><?php echo JText::_('COM_LAN_TEAM_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+				<div class="control-group " onchange="this.form.submit()">
+					<div class="control-label"><?php echo $this->form->getLabel('add_user'); ?></div>
+					<div name="add_user" class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
+				</div>
 				<?php echo $this->loadTemplate('players'); ?>
 			</fieldset>
 		</div>
@@ -83,7 +87,6 @@
 		<div class="span4">
 			<fieldset class="adminform">
 			<?php echo JHtml::_('sliders.start','event-sliders-'.$this->item->id, array('useCookie' => 1)); ?>
-
 			<?php echo $this->loadTemplate('params'); ?>
 			</fieldset>
 		</div>

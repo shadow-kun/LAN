@@ -200,6 +200,8 @@
 				}
 			} endforeach;
 			
+			// Adds user specified in user class
+			JFactory::getApplication()->enqueueMessage(JRequest::getVar(''));
 			
 			// Display the view
 			parent::display();

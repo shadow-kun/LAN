@@ -143,6 +143,11 @@
 			size="20"
 			readonly="true"
 			filter="unset" />
+			
+		<field name="add_user"
+			type="user"
+			label="COM_LAN_TEAM_FIELD_ADD_USER_LABEL"
+			description="COM_LAN_TEAM_FIELD_ADD_USER_DESC" />
 	</fieldset>
 	
 	<fields name="params">
