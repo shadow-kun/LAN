@@ -15,6 +15,8 @@
 	
 	$listOrder	= $this->escape($this->state->get('list.ordering'));
 	$listDirn	= $this->escape($this->state->get('list.direction'));
+	
+	$params = json_decode($this->item->params);
 ?>
 <script>
 	Joomla.submitbutton = function(task)
@@ -38,13 +40,13 @@
 		<strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_END_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->item->competition_end))); ?></p>
 		
-		<?php if(isset(json_decode($this->item->params)->competition_organisers)) : ?>
+		<?php if(isset($params->competition_organisers)) : ?>
 			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_ORGANISERS_LABEL', true); ?></strong> - 
-				<?php echo $this->escape(json_decode($this->item->params)->competition_organisers); ?> </p>
+				<?php echo $this->escape($params->competition_organisers); ?> </p>
 		<?php endif; ?>
 		
 		<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TEAM_LABEL', true); ?></strong> - 		
-			<?php switch((int) json_decode($this->item->params)->competition_team)
+			<?php switch((int) $params->competition_team)
 				{
 					case 0: 
 						echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_INDIVIDUAL');
@@ -54,10 +56,11 @@
 						break;
 				}
 			?></p>
+		<p><?php echo $params->competition_team; ?></p>
 		
-		<?php if(isset(json_decode($this->item->params)->competition_tournament)) : ?>
+		<?php if(isset($params->competition_tournament)) : ?>
 			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TOURNAMENT_LABEL', true); ?></strong> - 
-				<?php switch((int) json_decode($this->item->params)->competition_tournament)
+				<?php switch((int) $params->competition_tournament)
 					{
 						case 0: 
 							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_TOURNAMENT');
@@ -81,8 +84,7 @@
 				?></p>
 		<?php endif; ?>
 		
-		<!-- Need to have a restrict access cause here -->
-		
+		<?php /* Seperate teams / players competitions from this point onwards */ ?>
 		<?php if(JFactory::getUser()->guest) { 
 			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
 			echo JText::_('COM_LAN_COMPETITION_SUMMARY_LOGIN', true) . '</a>';
