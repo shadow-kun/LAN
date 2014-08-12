@@ -186,22 +186,22 @@
 			$query->from('#__lan_competition_teams AS a');
 			
 			//Join over the users.
-		//	$query->select('t.title AS name');
-		//	$query->join('LEFT', '#__lan_teams AS t ON t.id = a.team');
+			$query->select('t.title AS name');
+			$query->join('LEFT', '#__lan_teams AS t ON t.id = a.team');
 			
 			// Selects the event that is required.
-		//	$query->where('a.competition = ' . JRequest::getVar('id'));
+			$query->where('a.competition = ' . JRequest::getVar('id'));
 			
 			// Add the list ordering clause.
-		//	$orderCol 		= $this->state->get('list.ordering');
-		//	$orderDirn		= $this->state->get('list.direction');
+			$orderCol 		= $this->state->get('list.ordering');
+			$orderDirn		= $this->state->get('list.direction');
 			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
 			{
 				$orderCol = 'id ' . $orderDirn . ', p.ordering';
 			}*/
 			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
-		//	$query->order('id');
+			$query->order('name');
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();
 			
