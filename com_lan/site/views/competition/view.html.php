@@ -31,6 +31,12 @@
 		
 		/**
 		* @var JObject The data for the record being displayed.
+		* @since 0.1
+		*/
+		protected $teams;
+		
+		/**
+		* @var JObject The data for the record being displayed.
 		* @since 0.0
 		*/
 		
@@ -60,6 +66,7 @@
 			// Initialise variables.
 			$this->item				= $this->get('Item');
 			$this->players			= $this->get('Players');
+			$this->teams			= $this->get('Teams');
 			$this->currentPlayer	= $this->get('CurrentPlayer');
 			$this->form				= $this->get('Form');
 			$this->state			= $this->get('State');

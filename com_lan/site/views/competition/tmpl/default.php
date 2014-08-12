@@ -56,7 +56,6 @@
 						break;
 				}
 			?></p>
-		<p><?php echo $params->competition_team; ?></p>
 		
 		<?php if(isset($params->competition_tournament)) : ?>
 			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TOURNAMENT_LABEL', true); ?></strong> - 
@@ -84,21 +83,8 @@
 				?></p>
 		<?php endif; ?>
 		
-		<?php /* Seperate teams / players competitions from this point onwards */ ?>
-		<?php if(JFactory::getUser()->guest) { 
-			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
-			echo JText::_('COM_LAN_COMPETITION_SUMMARY_LOGIN', true) . '</a>';
-		} else { 
-			if(isset($this->currentPlayer->id))
-			{
-				echo '<p><button name="selection" class="btn btn-primary" value="unregister_player_competition" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
 		
-			}
-			else
-			{ 
-				echo '<p><button name="selection" class="btn btn-primary" value="register_player_competition" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . '</button></p>';
-			}
-		} ?></p>
+			
 		
 		<div class="row-fluid">
 			<div class="span8">
@@ -115,49 +101,16 @@
 			</div>
 		</div>
 		
-		<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_PLAYERS_LIST', true) ?></h3>
-		<table class="list table table-striped">
-			<thead>
-				<tr>
-					<th width="1%">
-						<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_COMPETITION_PLAYERS_ORDER', 'id', $listDirn, $listOrder); ?>
-					</th>
-					<th>
-						<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_COMPETITION_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
-					</th>
-					<th width="20%">
-						<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_COMPETITION_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
-					</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<td colspan="15">
-						<?php //echo $this->pagination->getListFooter(); ?>
-					</td>
-				</tr>
-			</tfoot>
-			<tbody>
-				<?php foreach ($this->players as $p => $player) :
-					$player->max_ordering = 0;
-					$ordering	= ($listOrder == 'id');
-				?>
-				<tr class="row<?php echo $p % 2; ?>">
-					<td class="left">
-						<?php echo (int) $p + 1; ?>
-					</td>
-					<td class="left">
-						<?php echo $this->escape($player->username); ?>
-					</td>
-					<td class="center">
-						<?php if(isset(json_decode($player->params)->status)) :
-							echo $this->escape(json_decode($player->params)->status); 
-						endif; ?>
-					</td>
-				</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
+		<?php /* Seperate teams / players competitions from this point onwards */ ?>
+		
+		<?php if($params->competition_team == 1)
+		{
+			echo $this->loadTemplate('teams');
+		}
+		else
+		{
+			echo $this->loadTemplate('players');
+		} ?>
 		<input type="hidden" name="task" value="register" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 	</div>
