@@ -41,7 +41,7 @@
 		// Teams in control of
 		if(count($teams->registered) == 1)
 		{
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . ': ' . $teams->registered->name . '</p>';
+			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . ': ' . $teams->registered[0]->name . '</p>';
 		}
 		elseif(count($teams->registered) > 1)
 		{
@@ -56,7 +56,7 @@
 		// Teams in control of
 		if(count($teams->unregistered) == 1)
 		{
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . ': ' . $teams->unregistered->name . '</p>';
+			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . ': ' . $teams->unregistered[0]->name . '</p>';
 		}
 		elseif(count($teams->unregistered) > 1)
 		{
