@@ -6,6 +6,10 @@
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
+	jimport('joomla.application.component.helper');
+	 
+	$listOrder	= $this->escape($this->state->get('list.ordering'));
+	$listDirn	= $this->escape($this->state->get('list.direction'));
 	 
 	 ?>
 	 <?php if(JFactory::getUser()->guest) { 
