@@ -37,6 +37,12 @@
 		
 		/**
 		* @var JObject The data for the record being displayed.
+		* @since 0.1
+		*/
+		protected $currentTeams;
+		
+		/**
+		* @var JObject The data for the record being displayed.
 		* @since 0.0
 		*/
 		
@@ -68,6 +74,7 @@
 			$this->players			= $this->get('Players');
 			$this->teams			= $this->get('Teams');
 			$this->currentPlayer	= $this->get('CurrentPlayer');
+			$this->currentTeams		= $this->get('CurrentTeams');
 			$this->form				= $this->get('Form');
 			$this->state			= $this->get('State');
 			

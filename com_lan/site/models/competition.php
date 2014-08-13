@@ -232,4 +232,44 @@
 			return $result;
 		}
 		
+		public function getCurrentTeams($pk = null)
+		{
+			/* Function Purpose: To gather teams that the current user has the permissions to act on behalf
+			 *
+			 * Permission Levels: Team Leader, Team Moderator
+			 */
+			
+			// Get current data on team status on the current user.
+			//
+			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+
+			// Join over the team names
+			$query->select('t.title AS name, t.id AS id')
+				->from('#__lan_teams AS t');
+			
+			// Select the required fields from the table.
+			$query->select('ct.id AS entryid')
+				->join('LEFT', '#__lan_competition_teams AS ct ON ct.team = t.id');
+			
+			// Join the user current status in each team
+			$query->join('LEFT', '#__lan_team_players AS tp on tp.team = t.id');
+
+			// Selects the competition that is required.
+			//$query->where('ct.competition = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('tp.user = ' . JFactory::getUser()->id);
+			
+			// Selects only users of moderator status and above.
+			$query->where('tp.status >= 2');
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			return $result;
+		}		
 	}
