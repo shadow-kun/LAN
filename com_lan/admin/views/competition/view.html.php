@@ -53,6 +53,7 @@
 			// Intialiase variables.
 			$this->item		= $this->get('Item');
 			$this->players	= $this->get('Players');
+			$this->teams	= $this->get('Teams');
 			$this->form		= $this->get('Form');
 			$this->state	= $this->get('State');
 

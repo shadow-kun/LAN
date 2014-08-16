@@ -14,7 +14,7 @@
 	
 	
 ?>
-<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_TEAMS_LIST', true) ?></h3>
 <div class="control-group ">
 	<div class="control-label "><?php echo $this->form->getLabel('add_user'); ?></div>
 	<div class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
@@ -26,10 +26,10 @@
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 			</th>
 			<th>
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_TEAMS_NAME', 'name', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%" class="center">
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_TEAMS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
@@ -44,24 +44,24 @@
 		</tr>
 	</tfoot>
 	<tbody>
-		<?php foreach ($this->players as $p => $player) :
-			$player->max_ordering = 0;
+		<?php foreach ($this->teams as $t => $team) :
+			$team->max_ordering = 0;
 			$ordering	= ($listOrder == 'id');
 		?>
 		<tr class="row<?php echo $p % 2; ?>">
 			<td class="center">
-				<?php echo JHtml::_('grid.id', $p, $player->id); ?>
+				<?php echo JHtml::_('grid.id', $t, $team->id); ?>
 			</td>
 			<td class="left">
-				<?php echo $this->escape($player->username); ?>
+				<?php echo $this->escape($team->name); ?>
 			</td>
 			<td class="center">
-				<?php if(isset(json_decode($player->params)->status)) :
-					echo $this->escape(json_decode($player->params)->status); 
+				<?php if(isset(json_decode($team->params)->status)) :
+					echo $this->escape(json_decode($team->params)->status); 
 				endif; ?>
 			</td>
 			<td class="center">
-				<?php echo (int) $p + 1; ?>
+				<?php echo (int) $t + 1; ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

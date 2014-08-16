@@ -86,12 +86,12 @@
 		<div class="span8">
 			<fieldset class="adminform">
 				<!-- Player Listing To Be Inserted Here -->
-				<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_PLAYERS_LIST', true) ?></h3>
-				<div class="control-group ">
-					<div class="control-label "><?php echo $this->form->getLabel('add_user'); ?></div>
-					<div class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
-				</div>
-				<?php echo $this->loadTemplate('players'); ?>
+				<?php if($this->item->params['competition_team'] == 1)
+				{
+					echo $this->loadTemplate('teams'); 
+				} else {
+					echo $this->loadTemplate('players'); 
+				} ?>
 			</fieldset>
 		</div>
 		

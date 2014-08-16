@@ -121,6 +121,42 @@
 			
 			return $result;
 		}
+		
+		public function getTeams($pk = null)
+		{			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('ct.id AS id, ct.competition, ct.params');
+			$query->from('#__lan_competition_teams AS ct');
+			
+			//Join over the competitions.
+			$query->join('LEFT', '`#__lan_competitions` AS c ON c.id = ct.competition');
+			
+			//Join over the users.
+			$query->select('t.title AS name');
+			$query->join('LEFT', '#__lan_teams AS t ON t.id = ct.team');
+			
+			// Selects the competition that is required.
+			$id = (int) JRequest::getVar('id');
+			$query->where('ct.competition = ' . $id);
+			
+			// Add the list ordering clause.
+			$orderCol 		= $this->state->get('list.ordering');
+			$orderDirn		= $this->state->get('list.direction');
+			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
+			{
+				$orderCol = 'id ' . $orderDirn . ', p.ordering';
+			}*/
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			
+			$query->order('id');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			
+			return $result;
+		}
 
 		/**
 		* A protected method to get a set of ordering conditions.

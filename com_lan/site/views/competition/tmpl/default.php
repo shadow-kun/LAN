@@ -132,5 +132,5 @@
 		} ?>
 		<?php echo JHtml::_( 'form.token' ); ?>
 	</div>
-	<input id="task" type="textbox" name="task" value="" />
+	<input id="task" type="hidden" name="task" value="" />
 </form>
