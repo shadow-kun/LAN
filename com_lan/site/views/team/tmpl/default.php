@@ -17,14 +17,16 @@
 	$listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 <script>
-	Joomla.submitbutton = function(task)
+	//Joomla.submitbutton = function(task)
 	{
 		var form = document.id(team-register-form);
 		alert(task);
 		if (task == 'cancel' ) {
-			Joomla.submitform(task, form);
+			//Joomla.submitform(task, form);
 		}
 	}
+	
+	
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_lan&view=team&id='.(int) $this->item->id); ?>"

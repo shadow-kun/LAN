@@ -18,12 +18,12 @@
 	} else {
 		if(isset($this->currentPlayer->id))
 		{
-			echo '<p><button name="selection" class="btn btn-primary" value="unregister_player_competition" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
+			echo '<p><button name="selection" class="btn btn-primary" value="unregister_player_competition" onclick="unregisterPlayer()">' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
 	
 		}
 		else
 		{ 
-			echo '<p><button name="selection" class="btn btn-primary" value="register_player_competition" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . '</button></p>';
+			echo '<p><button name="selection" class="btn btn-primary" value="register_player_competition" onclick="registerPlayer()" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . '</button></p>';
 		}
 	} ?>
 	

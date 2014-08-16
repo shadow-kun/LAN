@@ -10,6 +10,7 @@
 		
 		public function execute($task)
 		{
+			parent::execute($task);
 			$app = JFactory::getApplication();
 			/*
 			if($task == 'competition')
@@ -21,9 +22,13 @@
 				$this->setRedirect(JRoute::_('index.php?com_lan&view=' & $task, true));
 			}*/
 			echo '<p>xfgxfggf' . $task . '</p>';
-			parent::execute($task);
 		}
 		
-		
+		public function save($task)
+		{
+			$app = JFactory::getApplication();
+			
+			$app->enqueueMessage('Test', 'message');
+		}
 	}
 ?>

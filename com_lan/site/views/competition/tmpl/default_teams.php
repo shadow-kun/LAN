@@ -34,40 +34,50 @@
 				$teams->unregistered[] = $team;
 			}
 		}
-				
+
+		// Removes first null element from the stack.	
 		array_shift($teams->registered);
 		array_shift($teams->unregistered);
 		
-		// Teams in control of
+		
+		echo '<div class="unregister-team">';
+		// Teams in control of that are registered for the competition
 		if(count($teams->registered) == 1)
 		{
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . ': ' . $teams->registered[0]->name . '</p>';
+			echo '<p><button name="selection" class="btn btn-primary" value="unregister_team_competition" onclick="unregisterTeam()" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . ' ' . $teams->registered[0]->name . '</button></p>';
+			echo '<input type="hidden" name="unregisterTeamid" value="' . $teams->registered[0]->id . '" />';
 		}
 		elseif(count($teams->registered) > 1)
 		{
 			// Shows entered teams into this competition
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . ': <select name="teamUnregister">';
+			echo '<p><select name="unregisterTeamid">';
 			foreach ($teams->registered as $t => $team) :
-				echo '<option value="' . $team->teamid . '" >' . $team->name . '</option>';
+				echo '<option value="' . $team->id . '" >' . $team->name . '</option>';
 			endforeach;
-			echo '</select></p>';
+			echo '</select>';
+			echo ' <button name="selection" class="btn btn-primary" value="unregister_team_competition" onclick="unregisterTeam()" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_UNREGISTER_LABEL') . '</button></p>';
 		}
+		echo '</div>';
 		
-		// Teams in control of
+		echo '<div class="register-team">';
+		// Teams in control of that are un-registered for the competition
 		if(count($teams->unregistered) == 1)
 		{
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . ': ' . $teams->unregistered[0]->name . '</p>';
+			echo '<p><button name="selection" class="btn btn-primary" value="register_team_competition" onclick="registerTeam()">' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . ' ' . $teams->unregistered[0]->name . '</button></p>';
+			echo '<input type="hidden" name="registerTeamid" value="' . $teams->unregistered[0]->id . '" />';
 		}
 		elseif(count($teams->unregistered) > 1)
 		{
 			// Shows non-entered teams into this competition
-			echo '<p>' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . ': <select name="teamRegister">';
+			echo '<p><select name="registerTeamid">';
 			
 			foreach ($teams->unregistered as $t => $team) :
-				echo '<option value="' . $team->teamid . '" >' . $team->name . '</option>';
+				echo '<option value="' . $team->id . '" >' . $team->name . '</option>';
 			endforeach;
-			echo '</select></p>';
+			echo '</select>';
+			echo ' <button name="selection" class="btn btn-primary" value="register_team_competition" onclick="registerTeam()" >' . JText::_('COM_LAN_COMPETITION_SUMMARY_REGISTER_LABEL') . '</button></p>';
 		}
+		echo '</div>';
 		
 	} ?>
 	<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_TEAMS_LIST', true) ?></h3>

@@ -19,14 +19,33 @@
 	$params = json_decode($this->item->params);
 ?>
 <script>
-	Joomla.submitbutton = function(task)
+	function registerTeam()
 	{
-		var form = document.id(competition-register-form);
-		alert(task);
-		if (task == 'cancel' ) {
-			Joomla.submitform(task, form);
-		}
+		var form = document.id("ompetition-form");
+		document.getElementById("task").value = "competitionRegisterTeam";
+		Joomla.submitform("competitionRegisterTeam", form);
 	}
+	
+	function unregisterTeam()
+	{
+		var form = document.id("ompetition-form");
+		document.getElementById("task").value = "competitionUnregisterTeam";
+		Joomla.submitform("competitionUnregisterTeam", form);
+	}
+	function registerPlayer()
+	{
+		var form = document.id("ompetition-form");
+		document.getElementById("task").value = "competitionRegisterPlayer";
+		Joomla.submitform("competitionRegisterPlayer", form);
+	}
+	
+	function unregisterPlayer()
+	{
+		var form = document.id("ompetition-form");
+		document.getElementById("task").value = "competitionUnregisterPlayer";
+		Joomla.submitform("competitionUnregisterPlayer", form);
+	}
+	
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_lan&view=competition&id='.(int) $this->item->id); ?>"
@@ -111,7 +130,7 @@
 		{
 			echo $this->loadTemplate('players');
 		} ?>
-		<input type="hidden" name="task" value="register" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 	</div>
+	<input id="task" type="textbox" name="task" value="" />
 </form>
