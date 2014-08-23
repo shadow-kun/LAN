@@ -54,6 +54,11 @@
 			{
 				echo '<p><a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=unregister&id=' . $this->item->id) . '">';
 				echo JText::_('COM_LAN_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
+				if($this->item->params->get('prepay') > 0 && $this->currentPlayer->status <= 2) 
+				{
+					echo '<a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=prepay&id=' . $this->item->id) . '">';
+					echo JText::_('COM_LAN_EVENT_SUMMARY_PREPAY', true) . '</a>';
+				}	
 				if($this->item->params->get('confirmations_override') > 0 && $this->currentPlayer->status == 1) 
 				{
 					echo '<a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=confirm&id=' . $this->item->id) . '">';

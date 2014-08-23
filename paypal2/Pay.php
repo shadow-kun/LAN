@@ -1,5 +1,5 @@
 <?php 
-$path = '../../lib';
+$path = '';
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 require_once('PPBootStrap.php');
 
@@ -98,6 +98,9 @@ class Pay
 			// for the payment. Construct redirectURL as follows,
 			// `redirectURL=https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey="
 			// + $response->payKey`
+			$redirectURL = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_ap-payment&paykey=' . $response->payKey;
+			echo $redirectURL;
+			header('Location: ' . $redirectURL);			
 		}
 		// ### Error Values
 		// Access error values from error list using getter methods
@@ -108,4 +111,5 @@ class Pay
 		return $response;
 	}
 }
+
 
