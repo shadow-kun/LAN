@@ -171,6 +171,15 @@
 				$query->where('a.language = '.$db->quote($language));
 			}
 			
+			// Filter on player currently in teams
+			$layout = JRequest::getVar('layout');
+			if ($layout == 'myteams')
+			{
+				
+				$query->join('LEFT', '#__lan_team_players AS t ON t.team = a.id');
+				$query->where('t.user = ' . (int) JFactory::getUser()->id);
+			}
+			
 			// Add the list ordering clause.
 			$orderCol 		= $this->state->get('list.ordering');
 			$orderDirn		= $this->state->get('list.direction');
