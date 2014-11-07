@@ -348,4 +348,84 @@
 			$db->query();
 		}
 		
+		public function getSendTicket()
+		{
+			
+			$mailer = JFactory::getMailer();
+			$config = JFactory::getConfig();
+			$user = JFactory::getUser();
+						
+			// Gets User Data
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+						
+			// Selects the event that is required.
+			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('p.user = ' . JFactory::getUser()->id);
+			
+			// Selects only non cancelled entries. (Innactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+			
+			// Adds external classes
+			include('qrcode.php');
+			include('barcode.php');  
+				
+			// Gathers sender information from joomla
+			$sender = array( 
+				$config->get('config.mailfrom'),
+				$config->get('config.fromname'));
+			 
+			$mailer->setSender($sender);
+			
+			// Sends email to the users address
+			$recipient = $user->email;
+ 
+			$mailer->addRecipient($recipient);
+			
+			// Subject of the email
+			$mailer->setSubject($db->escape($this->item->title) . 'Event Registration Ticket');
+			
+			// Body of the email
+			QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/images/qrcodes/ticket' . $result->id .'.png');
+			
+			$im     = imagecreatetruecolor(200, 100);  
+			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
+			$white  = ImageColorAllocate($im,0xff,0xff,0xff);  
+			imagefilledrectangle($im, 0, 0, 200, 100, $white);  
+			$data 	= Barcode::gd($im, $black, 100, 50, 0, "code128", $result->id, 2, 50);
+
+			// Output the image to browser
+			header('Content-Type: image/gif');
+
+			imagegif($im, JPATH_COMPONENT . '/images/barcodes/ticket' . $result->id . '.gif');
+			imagedestroy($im);
+			
+				
+			$body = '<h2>' . $db->escape($this->item->title) . 'Event Registration Ticket</h2>'
+					. '<div>A message to our dear readers'
+					. '<img src="' . JURI::root() . '/components/com_lan/images/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="' . JURI::root() . '/components/com_lan/images/barcodes/ticket' . $result->id . '.gif" /></div>';
+			$mailer->isHTML(true);
+			$mailer->Encoding = 'base64';
+			$mailer->setBody($body);
+			
+			
+			// Sends the email
+			$send = $mailer->Send();
+			if ( $send !== true ) {
+				echo 'Error sending email: ' . $send->__toString();
+			} else {
+				echo 'Mail sent';
+			}
+		}
+		
 	}

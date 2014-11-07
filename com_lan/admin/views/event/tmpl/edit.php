@@ -182,6 +182,12 @@
 					<?php echo $this->form->getInput('terms'); ?>
 				</fieldset>
 			</div>
+			<div class="span3">
+				<fieldset class="adminform">
+					<?php echo $this->form->getLabel('terms_global'); ?>
+					<?php echo $this->form->getInput('terms_global'); ?>
+				</fieldset>
+			</div>
 		</div>
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>

@@ -73,6 +73,7 @@
 				if(!isset($this->currentPlayer->status))
 				{
 					$this->get('SavePlayerEvent');
+					$this->get('SendTicket');
 				}
 				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
 			}

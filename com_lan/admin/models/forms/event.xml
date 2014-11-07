@@ -60,6 +60,20 @@
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
+		
+		<field name="terms_global"
+			type="radio"
+			label="COM_LAN_EVENT_FIELD_TERMS_GLOBAL_LABEL"
+			description="COM_LAN_EVENT_FIELD_TERMS_GLOBAL_DESC"
+			default="0"
+			class="inputbox"
+			filter="intval"
+			size="1">
+			<option value="0">
+				COM_LAN_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
+			<option value="1">
+				COM_LAN_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
+		</field>
 
 		<field name="note"
 			type="text"

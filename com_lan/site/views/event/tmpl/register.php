@@ -36,7 +36,16 @@
 	<h3 class="center"><?php echo JText::_('COM_LAN_EVENT_REGISTRATION_HEADING_TERMS', true) ?></h3>
 	
 	<div class="row-fluid">
-		<?php echo $this->item->terms ?>
+		<?php if($this->item->terms_global == 1)
+		{
+			echo $this->item->terms; 
+		}
+		else
+		{
+		
+			echo $app->getParams('com_lan')->get('terms');
+		}
+		?>
 		</br >
 	</div>
 				
