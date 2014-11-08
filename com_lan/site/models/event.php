@@ -202,45 +202,48 @@
 		
 		public function getSavePlayerEvent()
 		{
-			// Gets current user info
-			$user	= JFactory::getUser();
 			
-			// Gets database connection
-			$db		= $this->getDbo();
-			$query	= $db->getQuery(true);
-			
-			// Sets columns
-			$colums = array('id', 'event', 'user', 'status', 'params');
-			
-			// Sets values
-			$values = array('NULL',JRequest::getVar('id',NULL,'GET'), $user->id, '1', 'NULL');
-			
-			// Prepare Insert Query $db->quoteName('unconfirmed')
-			$query  ->insert($db->quoteName('#__lan_players'))
-					->columns($db->quoteName($colums))
-					->values(implode(',', $values));
-			
-			// Set the query and execute item
-			$db->setQuery($query);
-			$db->query();
-			
-			
-			$query	= $db->getQuery(true);
-			
-			$currentPlayers = $this->items->a.players_current;
-			
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
+			{
+				// Gets current user info
+				$user	= JFactory::getUser();
+				
+				// Gets database connection
+				$db		= $this->getDbo();
+				$query	= $db->getQuery(true);
+				
+				// Sets columns
+				$colums = array('id', 'event', 'user', 'status', 'params');
+				
+				// Sets values
+				$values = array('NULL',JRequest::getVar('id',NULL,'GET'), $user->id, '1', 'NULL');
+				
+				// Prepare Insert Query $db->quoteName('unconfirmed')
+				$query  ->insert($db->quoteName('#__lan_players'))
+						->columns($db->quoteName($colums))
+						->values(implode(',', $values));
+				
+				// Set the query and execute item
+				$db->setQuery($query);
+				$db->query();
+				
+				$query	= $db->getQuery(true);
+				
+				$currentPlayers = $this->items->a.players_current;
+				
+				$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
 
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
-			
-			$query->update($db->quoteName('#__lan_events'));
-			$query->set($fields);
-			$query->where($conditions);
-			
-			$db->setQuery($query);
-			
-			$db->query();
+				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+				
+				$query->update($db->quoteName('#__lan_events'));
+				$query->set($fields);
+				$query->where($conditions);
+				
+				$db->setQuery($query);
+				
+				$db->query();
+			}
 		}
+		
 		
 		public function getConfirmPlayerEvent()
 		{
@@ -355,6 +358,8 @@
 			$config = JFactory::getConfig();
 			$user = JFactory::getUser();
 						
+			$app = JFactory::getApplication();
+			
 			// Gets User Data
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
@@ -379,6 +384,9 @@
 			include('qrcode.php');
 			include('barcode.php');  
 				
+			// Get event details
+			$item = $this->getItem();
+			
 			// Gathers sender information from joomla
 			$sender = array( 
 				$config->get('config.mailfrom'),
@@ -392,8 +400,7 @@
 			$mailer->addRecipient($recipient);
 			
 			// Subject of the email
-			$mailer->setSubject($db->escape($this->item->title) . 'Event Registration Ticket');
-			
+			$mailer->setSubject($db->escape($item->title) . ' - Registration Ticket');
 			// Body of the email
 			QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/images/qrcodes/ticket' . $result->id .'.png');
 			
@@ -409,11 +416,21 @@
 			imagegif($im, JPATH_COMPONENT . '/images/barcodes/ticket' . $result->id . '.gif');
 			imagedestroy($im);
 			
+			$body = $app->getParams('com_lan')->get('emailregistration');
 				
-			$body = '<h2>' . $db->escape($this->item->title) . 'Event Registration Ticket</h2>'
+			/*$body = '<h2>' . $db->escape($this->item->title) . 'Event Registration Ticket</h2>'
 					. '<div>A message to our dear readers'
 					. '<img src="' . JURI::root() . '/components/com_lan/images/qrcodes/ticket' . $result->id . '.png" />'
-					. '<img src="' . JURI::root() . '/components/com_lan/images/barcodes/ticket' . $result->id . '.gif" /></div>';
+					. '<img src="' . JURI::root() . '/components/com_lan/images/barcodes/ticket' . $result->id . '.gif" /></div>';*/
+					
+			/* Needs to re-code images to ensure a full unc path */
+			$body = str_ireplace('src="', 'src="' . JURI::root() . '/', $body);
+			
+			/* Replaces braketed wildcards with appropriate text */
+			$body = str_ireplace('{name}', $user->name, $body);
+			$body = str_ireplace('{event}', $db->escape($item->title), $body);
+			
+			
 			$mailer->isHTML(true);
 			$mailer->Encoding = 'base64';
 			$mailer->setBody($body);

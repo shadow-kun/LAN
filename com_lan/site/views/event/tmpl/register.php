@@ -51,7 +51,7 @@
 				
 	<p class="center"><input type="submit" name="cancel" class="btn" value="<?php echo JText::_('COM_LAN_EVENT_REGISTRATION_CONFIRM_FALSE'); ?>" />
 		<input type="submit" name="register" class="btn btn-primary" value="<?php echo JText::_('COM_LAN_EVENT_REGISTRATION_CONFIRM_AGREE'); ?>" /></p> 
-		
+	<p><?php echo $this->item->players_current . ' / ' . $this->item->players_max; ?></p>	
 	<input type="hidden" name="option" value="com_lan" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="view" value="event" />

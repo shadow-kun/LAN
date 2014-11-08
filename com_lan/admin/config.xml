@@ -48,7 +48,7 @@
 		description="COM_LAN_CONFIG_FIELDSET_EMAILS_DESC"
 		>
 		
-		<field name="registration"
+		<field name="emailregistration"
 			type="editor"
 			label="COM_LAN_CONFIG_FIELDSET_EMAILS_FIELD_REGISTRATION_LABEL"
 			description="COM_LAN_CONFIG_FIELDSET_EMAILS_FIELD_REGISTRATION_DESC"

@@ -43,7 +43,7 @@
 		<p><strong><?php echo JText::_('COM_LAN_EVENTS_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($this->item->players_current); ?> / <?php echo $this->escape($this->item->players_confirmed); ?> / <?php echo $this->escape($this->item->players_max); ?><br />
 			<strong><?php echo JText::_('COM_LAN_EVENTS_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($this->item->players_prepaid); ?> / <?php echo $this->escape($this->item->players_prepay); ?></p>
 		
-		<p><?php 
+		<p><?php /*
 				include('qrcode.php');
 				QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/images/qrcodes/010_merged.png');
 				
@@ -63,13 +63,16 @@
 				echo '<img src="' . JURI::root() . '/components/com_lan/images/qrcodes/010_merged.gif' . '">';
 				
 			// displaying
-			echo '<img src="./components/com_lan/images/qrcodes/010_merged.png' . '" />'; ?><p>
+			echo '<img src="./components/com_lan/images/qrcodes/010_merged.png' . '" />'; */?><p>
 		<!-- Need to have a restrict access cause here -->
 		
 		<?php if(JFactory::getUser()->guest) { 
 			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
 			echo JText::_('COM_LAN_EVENT_SUMMARY_LOGIN', true);
 		} else { 
+			
+			$app = JFactory::getApplication('site');
+			$waitlist = $this->item->params->get('waitlist_override');
 			
 			if(isset($this->currentPlayer->status))
 			{
@@ -85,6 +88,10 @@
 					echo '<a href="' .  JRoute::_('index.php?option=com_lan&view=event&layout=confirm&id=' . $this->item->id) . '">';
 					echo JText::_('COM_LAN_EVENT_SUMMARY_CONFIRM', true) . '</a>';
 				}	 
+			}
+			else if((isset($waitlist) && $waitlist == 0 || (!(isset($waitlist)) && $app->getParams('com_lan')->get('waitlist') == 0)) && ($this->item->players_current >= $this->item->players_max))
+			{
+				echo '<p>' . JText::_('COM_LAN_EVENT_SUMMARY_FULL', true);
 			}
 			else
 			{

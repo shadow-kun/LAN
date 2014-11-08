@@ -72,8 +72,15 @@
 			{
 				if(!isset($this->currentPlayer->status))
 				{
-					$this->get('SavePlayerEvent');
-					$this->get('SendTicket');
+					
+					$app = JFactory::getApplication('site');
+					$waitlist = $this->item->params->get('waitlist_override');
+			
+					if((isset($waitlist) && $waitlist == 1 || (!(isset($waitlist)) && $app->getParams('com_lan')->get('waitlist') == 1)) || ($this->item->players_current < $this->item->players_max))
+					{
+						$this->get('SavePlayerEvent');
+						$this->get('SendTicket');
+					}
 				}
 				$app->redirect(JRoute::_('index.php?option=' . $this->option . '&view=event&id=' . $this->item->id , false));
 			}
