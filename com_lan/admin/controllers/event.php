@@ -24,9 +24,11 @@
 			parent::save($key, $urlVar);
 			
 			$app            = JFactory::getApplication();
+			
+			
 			$model          = $this->getModel();
 			$table          = $model->getTable();
-			$event			= JRequest::getVar('id');
+			$event			= $app->input->getInt('id');
 			$data           = JRequest::getVar('jform', array(), 'post', 'array');
 			
 			// Gets current user info
@@ -35,7 +37,6 @@
 			// Gets database connection
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);			
-			
 			
 			
 			if(!(empty($data['add_user'])))
@@ -114,6 +115,9 @@
 			$result = $db->setQuery($query)->loadObjectList();
 			$db->query();
 			
+			
+			
+			
 			foreach ($result as $p => $player) :
 			{
 				$status = JRequest::getVar('player_status_change#' . $player->id);
@@ -157,6 +161,109 @@
 			}			
 			endforeach;
 			
+			// Creates the groups if it doesn't exist
+			JModelLegacy::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_users/models/', 'UsersModel' );
+
+			$groupModel = JModelLegacy::getInstance( 'Group', 'UsersModel' );
+
+			
+			// Refreshes query
+			$query	= $db->getQuery(true);
+			
+			// Gets current event
+			$query->select('e.params AS params');
+			$query->from('#__lan_events AS e');
+			
+			$query->where('id = ' . $event);
+			$result = $db->setQuery($query)->loadResult();
+			
+			$db->query();
+			// Creates Params Array
+			$params = json_decode($result, true);
+			
+			// Refreshes query
+			$query	= $db->getQuery(true);
+			
+			// Gets current event name
+			$query->select('e.title AS title');
+			$query->from('#__lan_events AS e');
+			
+			$query->where('id = ' . $event);
+			$eventName = $db->setQuery($query)->loadResult();
+			
+			$db->query();
+				
+			if(empty($params['usergroup']))
+			{
+				
+				// Finds root user group for LAN! Party
+				$query	= $db->getQuery(true);
+				
+				$query->select('ug.id AS id');
+				$query->from('#__usergroups AS ug');
+				
+				$query->where($db->quoteName('ug.title') . ' = ' . $db->quote("LAN Party! Event Groups"));
+				$result = $db->setQuery($query)->loadResult();
+				
+				$db->query();
+				
+				$app->enqueueMessage(serialize($data), 'error');
+				$app->enqueueMessage($app->input->getInt('id'), 'warning');
+				$groupData = array(
+				'title' => $eventName,
+				'parent_id' => $result,
+				'id' => 0 );
+
+				$groupModel->save( $groupData );
+				
+				$query	= $db->getQuery(true);
+				
+				$query->select('ug.id AS id');
+				$query->from('#__usergroups AS ug');
+				
+				$query->where('ug.title = "' . $eventName . '"');
+				$result = $db->setQuery($query)->loadResult();
+								
+				$db->query();
+				
+				// Creates Checked-In Group
+				/*$groupData = array(
+				'title' => 'Checked-In Users',
+				'parent_id' => $result,
+				'id' => 0 );
+
+				$groupModel->save( $groupData );
+				
+				// Creates Paid Group
+				$groupData = array(
+				'title' => 'Paid Users',
+				'parent_id' => $result,
+				'id' => 0 );
+
+				$groupModel->save( $groupData );
+				
+				// Creates Registered Group 
+				$groupData = array(
+				'title' => 'Registered Users',
+				'parent_id' => $result,
+				'id' => 0 );
+
+				$groupModel->save( $groupData );*/
+				
+				$usergroup = array('usergroup' => $result);
+				$params = array_merge($params, $usergroup);
+				
+			}	
+			else 
+			{
+				$groupData = array(
+				'title' => $eventName,
+				'id' => $params['usergroup'] );
+
+				$groupModel->save( $groupData );
+				
+				$usergroup = null;
+			}
 			
 			$query	= $db->getQuery(true);
 			
@@ -167,6 +274,13 @@
 			$query->set($db->quoteName('event_start_time') . ' = ' . $db->quote($event_start_date));
 			$query->set($db->quoteName('event_end_time') . ' = ' . $db->quote($event_end_date));
 			
+			// If usergroup has been added
+			if(isset($usergroup))
+			{
+				$query->set($db->quoteName('params') . ' = ' . $db->quote(json_encode($params)));
+			}
+				
+			//$app->enqueueMessage(var_dump($params));
 			$query->where($db->quoteName('id') . ' = ' . $db->quote($event));
 			
 			// Executes Query
@@ -176,7 +290,9 @@
 			$db->setQuery($query);							
 			$db->query();
 			
-			$app->enqueueMessage($event_end_date);
+			// Get event info
+			
+			
 		}
 	}
 ?>

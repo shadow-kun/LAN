@@ -330,6 +330,10 @@
 				description="COM_LAN_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
 				default="your@email.here"
 				size="10" />
+			
+			<field name="usergroup"
+				type="hidden"
+				filter="unset" /> 
 		</fieldset>
 		<fieldset name="location" label="COM_LAN_EVENT_LOCATION_FIELDSET_LABEL">
 			<field name="location"

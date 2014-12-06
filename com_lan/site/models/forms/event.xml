@@ -273,6 +273,10 @@
 				extension="COM_LAN"
 				view="event" />
 		</fieldset>
+		
+		<field name="usergroup"
+			type="hidden"
+			filter="unset" />
 	</fields>
 
 </form>

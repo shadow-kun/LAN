@@ -418,10 +418,13 @@
 			
 			$body = $app->getParams('com_lan')->get('emailregistration');
 				
-			/*$body = '<h2>' . $db->escape($this->item->title) . 'Event Registration Ticket</h2>'
-					. '<div>A message to our dear readers'
-					. '<img src="' . JURI::root() . '/components/com_lan/images/qrcodes/ticket' . $result->id . '.png" />'
-					. '<img src="' . JURI::root() . '/components/com_lan/images/barcodes/ticket' . $result->id . '.gif" /></div>';*/
+			$body = $body . '<br />' . '<h2>' . $db->escape($item->title) . ' - Event Registration Ticket</h2>'
+					. '<div><p><strong>Username: </strong>' . JFactory::getUser()->username . '<br />' 
+					. '<strong>Name: </strong>' . JFactory::getUser()->name . '<br />'
+					. '<strong>Event Name: </strong>' . $db->escape($item->title) . '<br />'
+					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
+					. '<p><img src="components/com_lan/images/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="components/com_lan/images/barcodes/ticket' . $result->id . '.gif" /></p></div>';
 					
 			/* Needs to re-code images to ensure a full unc path */
 			$body = str_ireplace('src="', 'src="' . JURI::root() . '/', $body);

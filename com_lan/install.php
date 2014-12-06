@@ -11,6 +11,46 @@
     */
     function install($parent)
     {
+		
+		JModelLegacy::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_users/models/', 'UsersModel' );
+
+		/******************************************************/
+		/* Creates Root User Group */
+		
+		$groupModel = JModelLegacy::getInstance( 'Group', 'UsersModel' );
+
+		$groupData = array(
+			'title' => "LAN Party! Event Groups",
+			'parent_id' => 2,
+			'id' => 0 );
+
+		$groupModel->save( $groupData );
+		
+		/******************************************************/
+		/* Creates User Views */
+		$levelModel = JModelLegacy::getInstance( 'Level', 'UsersModel' );
+
+		$levelData = array(
+			'title' => "LAN Party! Registered",
+			'id' => 0 ,
+			'rules' => '[8]');
+			
+		$levelModel->save( $levelData );	
+		
+		$levelData = array(
+			'title' => "LAN Party! Paid",
+			'id' => 0 ,
+			'rules' => '[8]');
+			
+		$levelModel->save( $levelData );
+		
+		$levelData = array(
+			'title' => "LAN Party! Checked-In",
+			'id' => 0 ,
+			'rules' => '[8]');
+			
+		$levelModel->save( $levelData );
+		
 		echo JText::_('COM_LAN_INSTALL_SUCCESSFULL');
     }
 	
