@@ -7,6 +7,7 @@
 	*/
 
 	jimport('joomla.application.component.view');
+	jimport('joomla.access.access');
 
 	/**
 	* Event view.
@@ -15,25 +16,8 @@
 	* @subpackage com_event
 	* @since 0.0
 	*/
-	class LANViewTeam extends JViewLegacy
+	class LANViewCheckin extends JViewLegacy
 	{
-		/**
-		 * @var		array		The array of the player records to display in the list.
-		 * @sicne 	0.0
-		 */
-		protected $players;
-		
-		/**
-		* @var JObject The data for the record being displayed.
-		* @since 0.0
-		*/
-		protected $currentPlayer;
-		
-		/**
-		* @var JObject The data for the record being displayed.
-		* @since 0.0
-		*/
-		
 		protected $item;
 
 		/**
@@ -47,8 +31,8 @@
 		* @since 0.0
 		*/
 		protected $state;
-		
 
+		protected $groupCheckedIn;
 		/**
 		* Prepare and display the Event view.
 		*
@@ -62,12 +46,8 @@
 			// Initialise variables.
 			
 			$this->item				= $this->get('Item');
-			if($layout == 'qrcode')
-			{
-				//$this->players		= $this->get('Players');
-				//$this->currentPlayer	= $this->get('CurrentPlayer');
-				
-			}
+			
+			$this->groupCheckedIn 	= $this->get('CheckedInGroup');
 			$this->form				= $this->get('Form');
 			$this->state			= $this->get('State');
 			
@@ -79,13 +59,13 @@
 				JError::raiseError(500, implode("\n", $errors));
 				return false;
 			}
-
+			
 			parent::display();
 		}
 		
 		protected function addToolbar()
 		{
-			JToolbarHelper::confirm('lan.confirm', 'COM_LAN_TEAM_REGISTRATION_CONFIRM_TRUE');
+		
 		}
 	}
 ?>

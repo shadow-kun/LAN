@@ -402,7 +402,7 @@
 			// Subject of the email
 			$mailer->setSubject($db->escape($item->title) . ' - Registration Ticket');
 			// Body of the email
-			QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/images/qrcodes/ticket' . $result->id .'.png');
+			QRcode::png(JURI::root() . '/?option=com_lan&view=checkin&layout=qrcode&id=' . $result->id , JPATH_COMPONENT . '/images/qrcodes/ticket' . $result->id .'.png');
 			
 			$im     = imagecreatetruecolor(200, 100);  
 			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
