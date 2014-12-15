@@ -22,7 +22,7 @@
 		 *
 		 * @var        string
 		 */
-		protected $_context = 'com_lan.team';
+		protected $_context = 'com_lan.checkin';
 				
 		protected function populateState()
 		{
@@ -30,7 +30,7 @@
 
 			// Load state from the request.
 			$pk = $app->input->getInt('id');
-			$this->setState('checkin.id', $pk);
+			$this->setState('checkIn.id', $pk);
 			
 			$offset = $app->input->getUInt('limitstart');
 			$this->setState('list.offset', $offset);
@@ -63,7 +63,7 @@
 		{
 			$user	= JFactory::getUser();
 
-			$pk = (!empty($pk)) ? $pk : (int) $this->getState('checkin.id');
+			$pk = (!empty($pk)) ? $pk : (int) $this->getState('checkIn.id');
 
 			if ($this->_item === null)
 			{

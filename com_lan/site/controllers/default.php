@@ -11,6 +11,36 @@
 	 */
 	class LANController extends JControllerLegacy
 	{
+		public function eventCheckIn($cachable = false, $urlparams = null)
+		{
+			JSession::checkToken() or die( 'Invalid Token' );
+			$app = JFactory::getApplication();
+			/*
+			// Gets competition id
+			$id 	= JRequest::getVar('id');
+			
+			// Get model
+			$model = JController::getModel('Checkin');
+			
+			// Gets database connection
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+		
+			$group -> $this->get('CheckedInGroup');*/
+			
+			$app->enqueueMessage('Test Valid', 'error');
+			/*
+			$query->select('*');
+			$query->from('#__lan_competition_playerss');
+			
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();*/
+			
+			parent::display($cachable, $urlparams);
+		}
+		
 		public function competitionRegisterTeam($cachable = false, $urlparams = null)
 		{
 			JSession::checkToken() or die( 'Invalid Token' );
