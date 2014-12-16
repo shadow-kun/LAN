@@ -11,6 +11,9 @@
 	 */
 	class LANController extends JControllerLegacy
 	{
+	
+		/* All Sections Below are to be re-written into standard joomla 3.X Format
+		 -*/
 		public function eventCheckIn($cachable = false, $urlparams = null)
 		{
 			JSession::checkToken() or die( 'Invalid Token' );
