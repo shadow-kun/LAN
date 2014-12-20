@@ -1,7 +1,7 @@
 <?php // no direct access
     defined( '_JEXEC' ) or die( 'Restricted access' );
      
-    class EventsModelsDefault extends JModelBase
+    class EventsModelsDefault extends JModelDatabase
     {
 		var $__state_set 		= null;
 		var $_total 			= null;
@@ -32,6 +32,15 @@
 			{
 				$this->id = $ids;
 			}
+		}
+		
+		protected function populateState($ordering = null, $direction = null)
+		{
+			// Initialise variables.
+			$app = JFactory::getApplication('site');
+	 
+			//Takes care of states: list. limit / start / ordering / direction
+			//parent::populateState('a.name', 'asc');
 		}
      
 		 public function store($data=null)
@@ -161,7 +170,7 @@
 			if (!$this->__state_set)
 			{
 				// Protected method to auto-populate the model state.
-				$this->populateState();
+				//$this->populateState();
      
 				// Set the model state set flag to true.
 				$this->__state_set = true;

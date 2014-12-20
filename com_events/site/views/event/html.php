@@ -24,11 +24,13 @@
 		
 		public function render()
 		{
+			$id = (int) JRequest::getInt('id');
 			$app = JFactory::getApplication();
 						
 			$this->params = JComponentHelper::getParams('com_events');
 			
-			$this->data = $this->model->getEvent();
+			$this->event = $this->model->getEvent($id);
+			$this->players = $this->model->getPlayers($id);
 			
 			//display
 			return parent::render();
