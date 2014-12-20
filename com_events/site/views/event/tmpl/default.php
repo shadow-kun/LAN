@@ -72,7 +72,7 @@
 		} else { 
 			
 			$app = JFactory::getApplication('site');
-			$waitlist = $this->event->params->get('waitlist_override');
+			$waitlist = $this->event->params->waitlist_override;
 			
 			if(isset($this->currentPlayer->status))
 			{

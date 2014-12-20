@@ -77,12 +77,10 @@
 					}
 
 					// Convert parameter fields to objects.
-					$registry = new JRegistry;
-					$registry->loadString($data->params);
+					JFactory::getApplication()->enqueueMessage('P:> ' . $data->a.params);
 /*  ---- Fix ---- */
-					//$data->params = clone $this->getState('params');
-					//$data->params->merge($registry);
 					
+					$data->params = json_decode($data->a.params);
 					$registry = new JRegistry;
 					//$registry->loadString($data->metadata);
 					$data->metadata = $registry;
