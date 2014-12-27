@@ -28,16 +28,16 @@
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->event->event_end_time))); ?></p>
 			
 			<p>
-			<?php if(isset(json_decode($this->event->params)->venue)) : ?>
+			<?php if(isset($this->event->params->venue)) : ?>
 				<strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_VENUE', true); ?></strong> - 
-				<?php echo $this->escape(json_decode($this->event->params)->location); ?>
-				<?php if(isset(json_decode($this->event->params)->venue)) : 
+				<?php echo $this->escape($this->event->params->location); ?>
+				<?php if(isset($this->event->params->venue)) : 
 					echo '<br />';
 				endif; ?>
 			<?php endif; ?>
-			<?php if(isset(json_decode($this->event->params)->location)) : ?>
+			<?php if(isset($this->event->params->location)) : ?>
 				<strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_LOCATION', true); ?></strong> - 
-				<?php echo $this->escape(json_decode($this->event->params)->location); ?></p>
+				<?php echo $this->escape($this->event->params->location); ?></p>
 			<?php endif; ?>
 			
 		<p><strong><?php echo JText::_('COM_EVENTS_EVENT_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($this->event->players_current); ?> / <?php echo $this->escape($this->event->players_confirmed); ?> / <?php echo $this->escape($this->event->players_max); ?><br />
@@ -74,16 +74,16 @@
 			$app = JFactory::getApplication('site');
 			$waitlist = $this->event->params->waitlist_override;
 			
-			if(isset($this->currentPlayer->status))
+			if(isset($this->currentUser->status))
 			{
 				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '">';
 				echo JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
-				if($this->event->params->get('prepay') > 0 && $this->currentPlayer->status <= 2) 
+				if($this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
 				{
 					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '">';
 					echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a>';
 				}	
-				if($this->event->params->get('confirmations_override') > 0 && $this->currentPlayer->status == 1) 
+				if($this->event->params->confirmations_override > 0 && $this->currentUser->status == 1) 
 				{
 					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirm&id=' . $this->event->id) . '">';
 					echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a>';
@@ -99,7 +99,7 @@
 				echo JText::_('COM_EVENTS_EVENT_SUMMARY_REGISTER', true) . '</a>';
 			}
 		} 
-		echo ' <a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=players&id=' . $this->event->id) . '">';
+		echo ' <a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=attendees&id=' . $this->event->id) . '">';
 				echo JText::_('COM_EVENTS_EVENT_SUMMARY_PLAYERS', true) . '</a>';
 		?></p>
 		

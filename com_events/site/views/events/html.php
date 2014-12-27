@@ -8,7 +8,7 @@
 	 *
 	 * @since   12.1
 	 */
-	class EventsViewsEventHtml extends JViewHtml
+	class EventsViewsEventsHtml extends JViewHtml
 	{
 		/**
 		 * Render some data
@@ -19,8 +19,6 @@
 		 * @throws  RuntimeException on database error.
 		 */
 		 
-		 
-		//protected $model;
 		
 		public function render()
 		{
@@ -30,18 +28,11 @@
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			// Gets Event Details
-			$this->event = $this->model->getEvent($id);
+			$this->events = $this->model->listEvents();
 			
-			// Gets user base information
-			$this->users = $this->model->getUsers($id);
-			
-			// Gets the current user that is logged in
-			$this->currentUser = $this->model->getCurrentUser();
-			
-			// Sets PHtml Items
-			$this->_terms = EventsHelpersView::load('event','_terms','phtml');
-			$this->_terms->event = $id;
-			
+			// Gets Current User
+			$this->user	= JFactory::getUser();
+									
 			//display
 			return parent::render();
 		}

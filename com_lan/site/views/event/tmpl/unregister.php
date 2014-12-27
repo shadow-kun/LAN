@@ -26,18 +26,23 @@
 	}
 </script>
 				
-<form action=""	method="post" name="adminForm" id="event-register-form" class="form-validate">
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=event&id='.(int) $this->event->id); ?>"
+	method="post" name="adminForm" id="event-unregister-form" class="form-validate">
 	
 	<h2><a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&id=' . $this->item->id); ?>"><?php echo $this->escape($this->item->title); ?></a> <strong> - </strong> 
 		<a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&layout=unregister&id=' . $this->item->id); ?>"><?php echo JText::_('COM_LAN_EVENTS_UNREGISTER_TITLE', true) ?></a></h2>
-	<p><?php echo JText::_('COM_LAN_EVENT_REGISTRATION_UNREGISTER_MSG_1'); ?></p>
-	<p><?php echo JText::_('COM_LAN_EVENT_REGISTRATION_UNREGISTER_MSG_2'); ?></p>
-	
-	<p class="center"><input type="submit" name="cancel" class="btn" value="<?php echo JText::_('COM_LAN_EVENT_REGISTRATION_CONFIRM_FALSE'); ?>" />
-		<input type="submit" name="confirmDelete" class="btn btn-primary" value="<?php echo JText::_('COM_LAN_EVENT_REGISTRATION_CONFIRM_TRUE'); ?>" /></p> 
+	<div id="details">
+		<p><?php echo JText::_('COM_EVENTS_EVENT_UNREGISTER_MSG'); ?></p>
 		
-	<input type="hidden" name="option" value="com_lan" />
+		
+		<div class="center">
+			<p><button class="btn " ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button> 
+				<a href="javascript:void(0);" onclick="registerEventUser()" class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_REGISTER', true); ?></a></p>
+		</div>
+		
+	<input type="hidden" name="option" value="com_events" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="view" value="event" />
+	<input type="hidden" id="eventid" name="event" value="<?php echo $this->event->id; ?>" />
     <?php echo JHtml::_('form.token'); ?>
 </form>

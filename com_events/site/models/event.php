@@ -29,10 +29,10 @@
 
 			$pk = (!empty($pk)) ? $pk : (int) $this->getState('events.id');
 
-			if ($this->_item === null)
+			/*if ($this->_item === null)
 			{
 				$this->_item = array();
-			}
+			}*/
 
 			if (!isset($this->_item[$pk]))
 			{
@@ -75,12 +75,8 @@
 					{
 						return JError::raiseError(404, JText::_('COM_LAN_ERROR_EVENT_NOT_FOUND'));
 					}
-
-					// Convert parameter fields to objects.
-					JFactory::getApplication()->enqueueMessage('P:> ' . $data->a.params);
-/*  ---- Fix ---- */
 					
-					$data->params = json_decode($data->a.params);
+					$data->params = json_decode($data->params, true);
 					$registry = new JRegistry;
 					//$registry->loadString($data->metadata);
 					$data->metadata = $registry;
@@ -106,7 +102,31 @@
 			return $this->_item[$pk];
 		}
 		
-		public function getPlayers($pk = null)
+		public function getCurrentUser($pk = null)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+						
+			// Selects the event that is required.
+			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('p.user = ' . JFactory::getUser()->id);
+			
+			// Selects only non cancelled entries. (Innactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+			
+			return $result;
+		}
+		
+		public function getUsers($pk = null)
 		{			
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
@@ -136,6 +156,89 @@
 			$result = $db->setQuery($query)->loadObjectList();
 			
 			return $result;
+		}
+		
+		
+		public function storeAttendee()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Sets columns
+			$colums = array('id', 'event', 'user', 'status', 'params');
+			
+			// Sets values
+			$values = array('NULL',JRequest::getVar('id'), $user->id, '1', 'NULL');
+			
+			// Prepare Insert Query $db->quoteName('unconfirmed')
+			$query  ->insert($db->quoteName('#__lan_players'))
+					->columns($db->quoteName($colums))
+					->values(implode(',', $values));
+			
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			$query	= $db->getQuery(true);
+			
+			$currentPlayers = $this->items->a.players_current;
+			
+			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
+		}
+		
+		public function deleteAttendee()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			$currentStatus = $this->currentPlayer->status;
+			
+			// Sets the conditions of the delete of the user with the event
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
+			
+			$query->delete($db->quoteName('#__lan_players'));
+			$query->where($conditions);
+						
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			$query	= $db->getQuery(true);
+			
+			$currentPlayers = $this->items->a.players_current;
+			$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
 		}
 	}
 	

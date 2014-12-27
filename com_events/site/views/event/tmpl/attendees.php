@@ -49,14 +49,14 @@
 					</tr>
 				</tfoot>
 				<tbody>
-					<?php foreach ($this->players as $p => $player) :
-						$player->max_ordering = 0;
+					<?php foreach ($this->users as $u => $user) :
+						$user->max_ordering = 0;
 						$ordering	= ($listOrder == 'id');
 					?>
 					<tr class="row<?php echo $p % 2; ?>">
 						<td class="left">
 							<?php 
-								if($player->status == 4)
+								if($user->status == 4)
 								{ /******* Needs Language ********/
 									echo 'Pre-Paid User ' . ($p + 1) . ':'; 
 								} 
@@ -72,11 +72,11 @@
 							?>
 						</td>
 						<td class="left">
-							<?php echo $this->escape($player->username); ?>
+							<?php echo $this->escape($user->username); ?>
 						</td>
 						<td class="center">
-							<?php /*echo (int) $this->escape($player->status); */
-							switch((int) $player->status)
+							<?php /*echo (int) $this->escape($user->status); */
+							switch((int) $user->status)
 							{
 								case 1:
 									echo JText::_('COM_EVENTS_EVENT_ATTENDEES_UNCONFIRMED', true);

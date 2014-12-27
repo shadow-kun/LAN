@@ -1,7 +1,7 @@
 <?php defined('_JEXEC') or die('Restricted access');
 	// No direct access to this file
 	
-	class EventsController extends JControllerBase
+	class EventsControllerDefault extends JControllerBase
 	{
 		/**
 		 * Method to execute the controller.
@@ -49,10 +49,5 @@
 		}
 	}
 	
-	// Instantiate the controller.
-	$controller = new EventsController;
-
-	// Print the time.
-	$controller->execute();
 ?>
 	
