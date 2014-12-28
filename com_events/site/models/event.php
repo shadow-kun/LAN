@@ -76,7 +76,7 @@
 						return JError::raiseError(404, JText::_('COM_LAN_ERROR_EVENT_NOT_FOUND'));
 					}
 					
-					$data->params = json_decode($data->params, true);
+					$data->params = json_decode($data->params);
 					$registry = new JRegistry;
 					//$registry->loadString($data->metadata);
 					$data->metadata = $registry;
@@ -158,6 +158,50 @@
 			return $result;
 		}
 		
+		public function setConfirmAttendee()
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Gets data to update
+			$fields = $db->quoteName('status') . ' = 2';
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_players'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			/************************************************/
+			
+			$query	= $db->getQuery(true);
+			
+			$confirmedPlayers = $this->items->a.players_confirmed;
+			
+			$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
+
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			$query->update($db->quoteName('#__lan_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
+		}
 		
 		public function storeAttendee()
 		{
@@ -211,7 +255,36 @@
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
+			$query->select('a.players_confirmed', 'a.players_current');
+			$query->from('#__lan_events AS a');
+				
+			$query->where('a.id = ' . (int) JRequest::getInt('id',NULL,'GET'));
+			$db->setQuery($query);
+
+			$this->event = $db->loadObject();
+			
+			$query	= $db->getQuery(true);
+			
 			$currentStatus = $this->currentPlayer->status;
+			
+			$model = new EventsModelsEvent();
+			
+			if($model->getCurrentUser()->status == 2)
+			{	
+				$confirmedPlayers = $this->event->a.players_confirmed;
+				$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
+
+				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+				
+				$query->update($db->quoteName('#__lan_events'));
+				$query->set($fields);
+				$query->where($conditions);
+				
+				$db->setQuery($query);
+				$db->query();
+				
+				$query	= $db->getQuery(true);
+			}
 			
 			// Sets the conditions of the delete of the user with the event
 			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
@@ -225,7 +298,7 @@
 			
 			$query	= $db->getQuery(true);
 			
-			$currentPlayers = $this->items->a.players_current;
+			$currentPlayers = $this->event->a.players_current;
 			$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));

@@ -73,21 +73,22 @@
 			
 			$app = JFactory::getApplication('site');
 			$waitlist = $this->event->params->waitlist_override;
-			
 			if(isset($this->currentUser->status))
 			{
-				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '">';
-				echo JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
-				if($this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
-				{
-					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '">';
-					echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a>';
-				}	
+				echo '<p>';
 				if($this->event->params->confirmations_override > 0 && $this->currentUser->status == 1) 
 				{
-					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirm&id=' . $this->event->id) . '">';
-					echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a>';
+					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirmation&id=' . $this->event->id) . '" class="btn btn-primary">';
+					echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a> ';
 				}	 
+				if((int) $this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
+				{
+					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '" class="btn">';
+					echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a> ';
+				}	
+				
+				echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '" class="btn">';
+				echo JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
 			}
 			else if((isset($waitlist) && $waitlist == 0 || (!(isset($waitlist)) && $app->getParams('com_events')->get('waitlist') == 0)) && ($this->event->players_current >= $this->event->players_max))
 			{
@@ -95,11 +96,11 @@
 			}
 			else
 			{
-				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id) . '">';
+				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id) . '" class="btn btn-primary">';
 				echo JText::_('COM_EVENTS_EVENT_SUMMARY_REGISTER', true) . '</a>';
 			}
 		} 
-		echo ' <a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=attendees&id=' . $this->event->id) . '">';
+		echo ' <a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=attendees&id=' . $this->event->id) . '" class="btn" >';
 				echo JText::_('COM_EVENTS_EVENT_SUMMARY_PLAYERS', true) . '</a>';
 		?></p>
 		
