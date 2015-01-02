@@ -26,17 +26,25 @@
 			if($view == 'event')
 			{
 				$model = new EventsModelsEvent();
-				
-				// If adding to the event is successful
-				if($model->setConfirmAttendee())
+					
+				// Gets the current user that is logged in
+				$event = $model->getEvent();
+				$currentUser = $model->getCurrentUser();
+					
+				// If the user has signed up for the event and isn't paid then allow it to be removed.
+				if(isset($currentUser->status) && ((int) $currentUser->status == 1) 
 				{
-					$return['success'] = true;
-					$eventView = EventsHelpersView::load('event','_result-confirmation-success','phtml');
-				}
-				else
-				{
-					$return['success'] = false;
-					$eventView = EventsHelpersView::load('event','_result-confirmation-failure','phtml');
+					// If adding to the event is successful
+					if($model->setConfirmAttendee())
+					{
+						$return['success'] = true;
+						$eventView = EventsHelpersView::load('event','_result-confirmation-success','phtml');
+					}
+					else
+					{
+						$return['success'] = false;
+						$eventView = EventsHelpersView::load('event','_result-confirmation-failure','phtml');
+					}
 				}
 			}
 			ob_start();

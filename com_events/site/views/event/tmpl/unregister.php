@@ -15,12 +15,25 @@
 		<a href="<?php echo JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id); ?>"><?php echo JText::_('COM_EVENTS_EVENT_UNREGISTER_TITLE', true) ?></a></h2>
 		
 	<div class="row-fluid" id="details" >
-		<p><?php echo JText::_('COM_EVENTS_EVENT_UNREGISTER_MSG', true); ?></p>
-	
-		<div class="center">
-			<p><button class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button>
-				<a href="javascript:void(0);" onclick="unregisterEventUser()" class="btn" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_UNREGISTER', true); ?></a></p>
-		</div>
+		<?php if(isset($this->currentUser->status))
+		{
+			if((int) $this->currentUser->status <= 2) 
+			{	?>
+				<p><?php echo JText::_('COM_EVENTS_EVENT_UNREGISTER_MSG', true); ?></p>
+			
+				<div class="center">
+					<p><button class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button>
+						<a href="javascript:void(0);" onclick="unregisterEventUser()" class="btn" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_UNREGISTER', true); ?></a></p>
+				</div>
+			<?php }
+			else {
+				echo '<p>' . JText::_('COM_EVENTS_EVENT_UNREGISTER_ERROR_PAID') . '</p>';
+			}
+		}
+		else
+		{
+			JError::raiseError(404, JText::_('COM_EVENTS_EVENT_UNREGISTER_ERROR_NO_REGISTRATION_FOUND'));
+		} ?>
 	</div>
 	<input type="hidden" name="option" value="com_events" />
     <input type="hidden" name="task" value="" />

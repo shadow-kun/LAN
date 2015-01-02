@@ -42,6 +42,10 @@
 			$this->_terms = EventsHelpersView::load('event','_terms','phtml');
 			$this->_terms->event = $id;
 			
+			// Sets PHtml Items
+			$this->_prepay = EventsHelpersView::load('event','_prepay_paypal','phtml');
+			$this->_prepay->event = $id;
+			
 			//display
 			return parent::render();
 		}

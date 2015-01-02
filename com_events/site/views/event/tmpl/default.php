@@ -86,9 +86,11 @@
 					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '" class="btn">';
 					echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a> ';
 				}	
-				
-				echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '" class="btn">';
-				echo JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> ';
+				if((int) $this->currentUser->status <= 2)
+				{
+					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '" class="btn">' .
+						JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> '; 
+				}
 			}
 			else if((isset($waitlist) && $waitlist == 0 || (!(isset($waitlist)) && $app->getParams('com_events')->get('waitlist') == 0)) && ($this->event->players_current >= $this->event->players_max))
 			{

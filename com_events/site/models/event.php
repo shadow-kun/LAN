@@ -313,6 +313,103 @@
 			
 			return true;
 		}
+		
+		public function sendTicket()
+		{
+			
+			$mailer = JFactory::getMailer();
+			$config = JFactory::getConfig();
+			$user = JFactory::getUser();
+						
+			$app = JFactory::getApplication();
+			
+			// Gets User Data
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->from('#__lan_players AS p');
+						
+			// Selects the event that is required.
+			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('p.user = ' . JFactory::getUser()->id);
+			
+			// Selects only non cancelled entries. (Innactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+			
+			// Adds external classes
+			include('qrcode.php');
+			include('barcode.php');  
+				
+			// Get event details
+			$item = $this->getItem();
+			
+			// Gathers sender information from joomla
+			$sender = array( 
+				$config->get('config.mailfrom'),
+				$config->get('config.fromname'));
+			 
+			$mailer->setSender($sender);
+			
+			// Sends email to the users address
+			$recipient = $user->email;
+ 
+			$mailer->addRecipient($recipient);
+			
+			// Subject of the email
+			$mailer->setSubject($db->escape($item->title) . ' - Registration Ticket');
+			// Body of the email
+			QRcode::png(JURI::root() . '/?option=com_events&view=checkin&layout=qrcode&id=' . $result->id , JPATH_COMPONENT . '/assets/qrcodes/ticket' . $result->id .'.png');
+			
+			$im     = imagecreatetruecolor(200, 100);  
+			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
+			$white  = ImageColorAllocate($im,0xff,0xff,0xff);  
+			imagefilledrectangle($im, 0, 0, 200, 100, $white);  
+			$data 	= Barcode::gd($im, $black, 100, 50, 0, "code128", $result->id, 2, 50);
+
+			// Output the image to browser
+			header('Content-Type: image/gif');
+
+			imagegif($im, JPATH_COMPONENT . '/assets/barcodes/ticket' . $result->id . '.gif');
+			imagedestroy($im);
+			
+			$body = $app->getParams('com_events')->get('emailregistration');
+				
+			$body = $body . '<br />' . '<h2>' . $db->escape($item->title) . ' - Event Registration Ticket</h2>'
+					. '<div><p><strong>Username: </strong>' . JFactory::getUser()->username . '<br />' 
+					. '<strong>Name: </strong>' . JFactory::getUser()->name . '<br />'
+					. '<strong>Event Name: </strong>' . $db->escape($item->title) . '<br />'
+					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
+					. '<p><img src="components/com_events/assets/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="components/com_events/assets/barcodes/ticket' . $result->id . '.gif" /></p></div>';
+					
+			/* Needs to re-code images to ensure a full unc path */
+			$body = str_ireplace('src="', 'src="' . JURI::root() . '/', $body);
+			
+			/* Replaces braketed wildcards with appropriate text */
+			$body = str_ireplace('{name}', $user->name, $body);
+			$body = str_ireplace('{event}', $db->escape($item->title), $body);
+			
+			
+			$mailer->isHTML(true);
+			$mailer->Encoding = 'base64';
+			$mailer->setBody($body);
+			
+			
+			// Sends the email
+			$send = $mailer->Send();
+			if ( $send !== true ) {
+				echo 'Error sending email: ' . $send->__toString();
+			} else {
+				echo 'Mail sent';
+			}
+		}
 	}
 	
 ?>
