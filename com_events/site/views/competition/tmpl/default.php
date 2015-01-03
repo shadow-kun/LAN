@@ -16,49 +16,51 @@
 	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id); ?>"><?php echo $this->escape($this->competition->title); ?></a></h2>
 					
 	<div class="form-horizontal">
-		<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_START_LABEL', true); ?></strong> - 
+		<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_START_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->competition->competition_start))); ?></br >
-		<strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_END_LABEL', true); ?></strong> - 
+		<strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_END_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->competition->competition_end))); ?></p>
 		
-		<?php if(isset($this->competition->params->competition_organisers)) : ?>
-			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_ORGANISERS_LABEL', true); ?></strong> - 
+		<?php if(!empty($this->competition->params->competition_organisers)) : ?>
+			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_ORGANISERS_LABEL', true); ?></strong> - 
 				<?php echo $this->escape($this->competition->params->competition_organisers); ?> </p>
 		<?php endif; ?>
 		
-		<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TEAM_LABEL', true); ?></strong> - 		
+		<?php /* ****** Redo into plugins ****** */ ?>
+		<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TYPE_LABEL', true); ?></strong> - 		
 			<?php switch((int) $this->competition->params->competition_team)
 				{
 					case 0: 
-						echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_INDIVIDUAL');
+						echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TYPE_OPTION_INDIVIDUAL');
 						break;
 					case 1:
-						echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TEAM_OPTION_TEAM');
+						echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TYPE_OPTION_TEAM');
 						break;
 				}
 			?></p>
 		
+		<?php /* ****** Redo into plugins ****** */ ?>
 		<?php if(isset($this->competition->params->competition_tournament)) : ?>
-			<p><strong><?php echo JText::_('COM_LAN_COMPETITION_SUMMARY_TOURNAMENT_LABEL', true); ?></strong> - 
+			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_LABEL', true); ?></strong> - 
 				<?php switch((int) $this->competition->params->competition_tournament)
 					{
 						case 0: 
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_TOURNAMENT');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_TOURNAMENT');
 							break;
 						case 1:
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SINGLE_ELIMINATION');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_SINGLE_ELIMINATION');
 							break;
 						case 2:
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_DOUBLE_ELIMINATION');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_DOUBLE_ELIMINATION');
 							break;
 						case 3:
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SWISS');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_SWISS');
 							break;
 						case 4:
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_ROUND_ROBIN');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_ROUND_ROBIN');
 							break;
 						case 5:
-							echo JText::_('COM_LAN_COMPETITION_FIELD_PARAM_TOURNAMENT_OPTION_SUBMISSION');
+							echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TOURNAMENT_OPTION_SUBMISSION');
 							break;
 					}
 				?></p>
