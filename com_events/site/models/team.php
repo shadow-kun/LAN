@@ -162,7 +162,7 @@
 		
 		/* Rework from this point onwards */
 		
-		public function setConfirmAttendee()
+		public function setTeamMemberStatus($team, $user, $status = 1)
 		{
 			// Gets current user info
 			$user	= JFactory::getUser();
@@ -172,31 +172,13 @@
 			$query	= $db->getQuery(true);
 			
 			// Gets data to update
-			$fields = $db->quoteName('status') . ' = 2';
+			$fields = $db->quoteName('status') . ' = ' . ((int) $status);
 			
 			// Sets the conditions of which event and which player to update
-			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
+			$conditions = array($db->quoteName('team') . ' = ' . ((int) $team), $db->quoteName('user') . ' = ' . ((int) $user));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_players'));
-			$query->set($fields);
-			$query->where($conditions);
-			
-			$db->setQuery($query);
-			
-			$db->query();
-			
-			/************************************************/
-			
-			$query	= $db->getQuery(true);
-			
-			$confirmedPlayers = $this->items->a.players_confirmed;
-			
-			$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
-
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
-			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__lan_team_players'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -207,44 +189,26 @@
 			return true;
 		}
 		
-		public function storeAttendee()
+		public function storeTeamMember($team, $user, $status = 0)
 		{
-			// Gets current user info
-			$user	= JFactory::getUser();
 			
 			// Gets database connection
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
 			// Sets columns
-			$colums = array('id', 'event', 'user', 'status', 'params');
+			$colums = array('id', 'team', 'status', 'user', 'params');
 			
 			// Sets values
-			$values = array('NULL',JRequest::getVar('id'), $user->id, '1', 'NULL');
+			$values = array('NULL',(int) $team, (int) $status, (int) $user, 'NULL');
 			
 			// Prepare Insert Query $db->quoteName('unconfirmed')
-			$query  ->insert($db->quoteName('#__lan_players'))
+			$query  ->insert($db->quoteName('#__lan_team_players'))
 					->columns($db->quoteName($colums))
 					->values(implode(',', $values));
 			
 			// Set the query and execute item
 			$db->setQuery($query);
-			$db->query();
-			
-			$query	= $db->getQuery(true);
-			
-			$currentPlayers = $this->items->a.players_current;
-			
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
-
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
-			
-			$query->update($db->quoteName('#__lan_events'));
-			$query->set($fields);
-			$query->where($conditions);
-			
-			$db->setQuery($query);
-			
 			$db->query();
 			
 			return true;
