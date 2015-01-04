@@ -18,14 +18,11 @@
 	method="post" name="adminForm" id="team-form" class="form-validate">
 	
 	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=team&id=' . $this->team->id); ?>"><?php echo $this->escape($this->team->title); ?></a></h2>
-					
 	<div class="form-horizontal">
 		
 		<!-- Need to have a restrict access cause here -->
 		
-		<div id="buttons" >
-			<?php echo EventsHelpersView::load('team','_buttons','phtml'); ?>
-		</div>
+		<?php echo EventsHelpersView::load('team','_buttons','phtml'); ?>
 		
 		<div class="row-fluid">
 			<div class="span12">
@@ -42,9 +39,8 @@
 			</div>
 		</div>
 		
-		<div id="details">
-			<?php echo EventsHelpersView::load('team','_players','phtml'); ?>
-		</div>
+		<?php echo EventsHelpersView::load('team','_players','phtml'); ?>
+		
 		<input type="hidden" id="teamid" name="team" value="<?php echo $this->team->id; ?>" />
 		<input type="hidden" name="task" value="team" />
 		<?php echo JHtml::_( 'form.token' ); ?>

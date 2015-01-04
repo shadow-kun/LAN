@@ -214,70 +214,21 @@
 			return true;
 		}
 		
-		public function deleteAttendee()
+		public function deleteTeamMember($team, $user)
 		{
-			// Gets current user info
-			$user	= JFactory::getUser();
-			
 			// Gets database connection
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
-			$query->select('a.players_confirmed', 'a.players_current');
-			$query->from('#__lan_events AS a');
-				
-			$query->where('a.id = ' . (int) JRequest::getInt('id',NULL,'GET'));
-			$db->setQuery($query);
-
-			$this->event = $db->loadObject();
+			$conditions = array($db->quoteName('team') . ' = ' . (int) $team, $db->quoteName('user') . ' = ' .  (int) $user);
 			
-			$query	= $db->getQuery(true);
-			
-			$currentStatus = $this->currentPlayer->status;
-			
-			$model = new EventsModelsEvent();
-			
-			if($model->getCurrentUser()->status == 2)
-			{	
-				$confirmedPlayers = $this->event->a.players_confirmed;
-				$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
-
-				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
-				
-				$query->update($db->quoteName('#__lan_events'));
-				$query->set($fields);
-				$query->where($conditions);
-				
-				$db->setQuery($query);
-				$db->query();
-				
-				$query	= $db->getQuery(true);
-			}
-			
-			// Sets the conditions of the delete of the user with the event
-			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
-			
-			$query->delete($db->quoteName('#__lan_players'));
+			$query->delete($db->quoteName('#__lan_team_players'));
 			$query->where($conditions);
-						
+									
 			// Set the query and execute item
 			$db->setQuery($query);
 			$db->query();
 			
-			$query	= $db->getQuery(true);
-			
-			$currentPlayers = $this->event->a.players_current;
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
-
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
-			
-			$query->update($db->quoteName('#__lan_events'));
-			$query->set($fields);
-			$query->where($conditions);
-			
-			$db->setQuery($query);
-			
-			$db->query();
 			
 			return true;
 		}

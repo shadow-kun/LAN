@@ -17,8 +17,9 @@
 			
 			$return = array("success" => false);
 			
-			$model = null
-			$eventView = null;
+			$model = null;
+			$renderView = null;
+			$renderButtons = null;
 			
 			// Gets current view.
 			$view = $app->input->get('view', 'event');
@@ -37,22 +38,51 @@
 					if($model->deleteAttendee())
 					{
 						$return['success'] = true;
-						$eventView = EventsHelpersView::load('event','_result-unregister-success','phtml');
+						$renderView = EventsHelpersView::load('event','_result-unregister-success','phtml');
 					}
 					else
 					{
 						$return['success'] = false;
-						$eventView = EventsHelpersView::load('event','_result-unregister-failure','phtml');
+						$renderView = EventsHelpersView::load('event','_result-unregister-failure','phtml');
 					}
 					
 				}	
 			}
+			else if($view == 'team')
+			{
+				$model = new EventsModelsTeam();
+				
+				// Gets current view.
+				$team = JRequest::getInt('id');
+				$user = (int) JFactory::getUser()->id;
+			
+				// If adding to the event is successful
+				if($model->deleteTeamMember($team, $user))
+				{
+					$return['success'] = true;
+					$renderView = EventsHelpersView::load('team','_players','phtml');
+					$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
+				}
+				else
+				{
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('team','_players','phtml');
+					
+					$return['msg'] = JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE');
+				}
+			}
 			ob_start();
-			echo $eventView->render();
+			echo $renderView->render();
 			$html = ob_get_contents();
 			ob_clean();
 			 
 			$return['html'] = $html;
+			
+			echo $renderButtons->render();
+			$html = ob_get_contents();
+			ob_clean();
+			 
+			$return['buttons'] = $html;
 			
 			echo json_encode($return);
 		}
