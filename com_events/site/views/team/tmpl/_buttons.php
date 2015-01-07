@@ -1,14 +1,14 @@
 <div id="buttons" >
 	<?php if(JFactory::getUser()->guest) { 
-		echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
-		echo JText::_('COM_EVENTS_TEAM_SUMMARY_LOGIN', true) . '</a>';
+		echo '<p><a class="btn btn-primary" href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
+		echo JText::_('COM_EVENTS_TEAM_SUMMARY_LOGIN_LABEL', true) . '</a>';
 	} else { 
 		if(isset($this->currentUser->id))
 		{
 			if($this->currentUser->status == 4)
 			{
-				echo '<p><button name="selection" class="btn btn-primary" value="team_edit_details" >' . JText::_('COM_EVENTS_TEAM_SUMMARY_EDIT_TEAM_LABEL', true) . '</button> ';
-				echo '<button name="selection" class="btn" value="team_edit_leader" >' . JText::_('COM_EVENTS_TEAM_SUMMARY_EDIT_LEADER_LABEL', true) . '</button> ';
+				echo '<p><a class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=team&layout=details&id=' . JRequest::getVar('id')) . '" >' . JText::_('COM_EVENTS_TEAM_SUMMARY_EDIT_TEAM_LABEL', true) . '</a> ';
+				echo '<a class="btn" onclick="showOptionTeamLeader()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_TEAM_SUMMARY_EDIT_LEADER_LABEL', true) . '</a> ';
 				echo '<button name="selection" class="btn" value="team_delete" >' . JText::_('COM_EVENTS_TEAM_SUMMARY_DELETE_LABEL', true) . '</button></p>';
 			}
 			elseif($this->currentUser->status >= 2)

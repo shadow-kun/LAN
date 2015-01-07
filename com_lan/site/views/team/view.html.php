@@ -64,10 +64,10 @@
 			$this->item				= $this->get('Item');
 			if($layout == 'qrcode')
 			{
-				//$this->players		= $this->get('Players');
-				//$this->currentPlayer	= $this->get('CurrentPlayer');
 				
 			}
+				$this->players		= $this->get('Players');
+				$this->currentPlayer	= $this->get('CurrentPlayer');
 			$this->form				= $this->get('Form');
 			$this->state			= $this->get('State');
 			

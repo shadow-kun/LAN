@@ -14,49 +14,63 @@
 		 
 		public function execute()
 		{
-			JSession::checkToken() or die( 'Invalid Token' );
+			//JSession::checkToken() or die( 'Invalid Token' );
 			
 			$app = JFactory::getApplication();
 			
 			$return = array("success" => false);
 			
-			// Gets current view.
-			$view = $app->input->get('view', 'event');
-			$eventView = null;
+			// Gets operation required
+			$type = JRequest::getVar('type');
+			$renderView = null;
+			$renderButtons = null;
 			
 			// Sets the model to team
 			$model = new EventsModelsTeam();
 				
-			// if calling from the event view.
-			if($view == 'team')
+			// if calling from the event view.if($type == 'showteamleader')
+			if($type == 'showteamdetails')
 			{
-					
-				// Gets the current user that is logged in
-				$event = $model->getEvent();
-				$currentUser = $model->getCurrentUser();
-					
-				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				if(isset($currentUser->status) && ((int) $currentUser->status == 1) 
+				$return['success'] = true;
+				$renderView = EventsHelpersView::load('team','_details','phtml');
+				$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
+			}
+			else if($type == 'showteamleader')
+			{
+				$return['success'] = true;
+				$renderView = EventsHelpersView::load('team','_leader','phtml');
+				$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
+			}
+			else if($type == 'updateteamleader')
+			{
+				$team		= JRequest::getInt('id');
+				$newLeader	= JRequest::getInt('user');
+				$user		= JFactory::getUser()->id;
+												
+				if($model->setTeamMemberStatus($team, $user, 1))
 				{
-					// If adding to the event is successful
-					if($model->setConfirmAttendee())
+					if($model->setTeamMemberStatus((int) $team, (int) $newLeader, 4))
 					{
 						$return['success'] = true;
-						$eventView = EventsHelpersView::load('event','_result-confirmation-success','phtml');
-					}
-					else
-					{
-						$return['success'] = false;
-						$eventView = EventsHelpersView::load('event','_result-confirmation-failure','phtml');
 					}
 				}
+				$renderView = EventsHelpersView::load('team','_players','phtml');
+				$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
 			}
+			
 			ob_start();
-			echo $eventView->render();
+			echo $renderView->render();
 			$html = ob_get_contents();
 			ob_clean();
 			 
 			$return['html'] = $html;
+			
+			
+			echo $renderButtons->render();
+			$html = ob_get_contents();
+			ob_clean();
+			 
+			$return['buttons'] = $html;
 				
 			echo json_encode($return);
 		}

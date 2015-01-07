@@ -26,6 +26,9 @@
 		{
 			$id = (int) JRequest::getInt('id');
 			$app = JFactory::getApplication();
+			
+			
+			$this->editor = JFactory::getEditor();
 						
 			$this->params = JComponentHelper::getParams('com_events');
 			
@@ -37,16 +40,9 @@
 			
 			// Gets the current user that is logged in
 			$this->currentUser = $this->model->getCurrentUser();
-			
-			// Sets PHtml Items
-			//$this->_terms = EventsHelpersView::load('event','_terms','phtml');
-			//$this->_terms->event = $id;
-			
+						
 			//display
 			return parent::render();
 		}
 	}
-
-	
-	
 ?>

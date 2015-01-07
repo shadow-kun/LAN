@@ -133,7 +133,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.team, p.status, p.params as params');
+			$query->select('p.id AS id, p.team, p.status, p.params as params, p.user as userid');
 			$query->from('#__lan_team_players AS p');
 			
 			//Join over the users.
@@ -162,11 +162,32 @@
 		
 		/* Rework from this point onwards */
 		
-		public function setTeamMemberStatus($team, $user, $status = 1)
-		{
-			// Gets current user info
-			$user	= JFactory::getUser();
+		public function setTeamDetails($team, $body)
+		{			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
 			
+			// Gets data to update
+			$fields = $db->quoteName('body') . ' = ' . $db->quote(JRequest::getVar('body'));
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('id') . ' = ' . ((int) $team));
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_teams'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
+		}
+		
+		public function setTeamMemberStatus($team, $user, $status = 1)
+		{			
 			// Gets database connection
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
