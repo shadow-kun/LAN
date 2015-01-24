@@ -109,6 +109,28 @@ function showOptionTeamDetails()
     });
 }
 
+function showOptionTeamDelete()
+{
+	var team = document.getElementById('teamid').value;
+	var attendeeInfo = {};
+	jQuery("#bookForm :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=showteamdelete&id=' + team,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.success);
+			jQuery("#details").replaceWith(data.html);
+			jQuery("#buttons").replaceWith(data.buttons);
+		}
+    });
+}
+
 function unregisterTeamMember()
 {
 	var team = document.getElementById('teamid').value;
@@ -176,25 +198,24 @@ function updateOptionTeamLeader()
     });
 }
 
-function updateOptionTeamLeader()
+function deleteTeam()
 {
 	var team = document.getElementById('teamid').value;
-	var user = document.getElementById('teamleader').value;
 	var attendeeInfo = {};
 	jQuery("#bookForm :input").each(function(idx,ele){
 		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
 	});
     
 	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=updateteamleader&id=' + team + '&user=' + user, 
+		url:'index.php?option=com_events&controller=delete&format=raw&tmpl=component&type=team&id=' + team, 
 		type:'POST',
 		data:attendeeInfo,
 		dataType:'JSON',
 		success:function(data)
 		{
 			console.log(data.success);
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
+			//jQuery("#details").replaceWith(data.html);
+			//jQuery("#buttons").replaceWith(data.buttons);
 		}
     });
 }

@@ -41,6 +41,12 @@
 				$renderView = EventsHelpersView::load('team','_leader','phtml');
 				$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
 			}
+			else if($type == 'showteamdelete')
+			{
+				$return['success'] = true;
+				$renderView = EventsHelpersView::load('team','_delete','phtml');
+				$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
+			}
 			else if($type == 'updateteamleader')
 			{
 				$team		= JRequest::getInt('id');

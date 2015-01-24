@@ -254,6 +254,59 @@
 			return true;
 		}
 		
+		public function deleteTeam($team)
+		{
+			// Gets current user info
+			$user	= JFactory::getUser();
+			
+			// Gets database connection
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('a.id AS id, a.status AS status');
+			$query->from('#__lan_team_players AS a');
+						
+			// Selects current user.
+			$query->where('a.user = ' . JFactory::getUser()->id);
+			
+			// Selects team created timestamp.
+			$query->where('a.team = ' . $team);
+						
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+			
+			if($result->status == 4)
+			{
+				
+				$query	= $db->getQuery(true);
+			
+				// Gets data to update
+				$fields = $db->quoteName('published') . ' = -2';
+				
+				// Sets the conditions of which event and which player to update
+				$conditions = array($db->quoteName('id') . ' = ' . (int) $team);
+				
+				// Executes Query
+				$query->update($db->quoteName('#__lan_teams'));
+				$query->set($fields);
+				$query->where($conditions);
+				
+				$db->setQuery($query);
+				
+				$db->query();
+				
+				//$this->setRedirect(JRoute::_('index.php?option=com_lan&view=teams', false));
+				
+				return true;
+			}
+			else 
+			{
+				return JError::raiseError(403, JText::_('COM_LAN_ERROR_FOBBIDEN'));
+			}
+		}
+		
 		public function sendTicket()
 		{
 			

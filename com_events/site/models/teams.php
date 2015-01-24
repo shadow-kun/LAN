@@ -81,16 +81,16 @@
 			 
 			// Filter by published state
 			$published = $this->getState('filter.published');
-			if (is_numeric($published)) 
+			/*if (is_numeric($published)) 
 			{
 				$query->where('a.published = ' . (int) $published);
-			} 
-			else if ($published === '') 
+			} */
+			//else if ($published === '') 
 			{
 				// Shows published and Archived Events
-				$query->where('(a.published = 1 or a.published = 2)');
+				
 			}
-			 
+			 $query->where('(a.published = 1 or a.published = 2)');
 			// Filter by a single or group of categories.
 			$categoryId = $this->getState('filter.category_id');
 			if (is_numeric($categoryId)) {
