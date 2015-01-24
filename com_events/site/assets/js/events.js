@@ -214,6 +214,7 @@ function deleteTeam()
 		success:function(data)
 		{
 			console.log(data.success);
+			window.location.replace(data.html);
 			//jQuery("#details").replaceWith(data.html);
 			//jQuery("#buttons").replaceWith(data.buttons);
 		}

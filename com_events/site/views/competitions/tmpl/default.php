@@ -23,6 +23,8 @@
 				$canEdit	= $this->user->authorise('core.edit',			'com_lan.competition.' . $competition->id);
 				$canCheckin = $this->user->authorise('core.manage',		'com_checkin') || $competition->checked_out == $user->get('id') || $competition-> checked_out == 0;
 				$canChange	= $this->user->authorise('core.edit.state',	'com_lan.competition.' . $competition->id) && $canCheckin;
+				
+				$competition->params = json_decode($competition->params, false);
 			?>
 			<div class="media well well-small">
 				<div class="media-body">
@@ -31,21 +33,23 @@
 						$tokens = explode('<hr id="system-readmore" />',$item->body);
 						echo $tokens[0];
 					?>
-					<?php if($competition->params->competition_team === 1) : ?>
-						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_TEAMS_CURRENT_LABEL'); ?></strong> - 
+					<?php if($competition->params->competition_team == 0) : ?>
+						<p><strong><?php echo JText::_('COM_EVENTS_COMPETITIONS_CURRENT_USERS_LABEL'); ?></strong> - 
+						<?php echo $this->model->getCompetitionPlayers($competition->id); ?>
 						<?php if(isset($competition->params->competition_limit)) : 
 							echo ' / ' . (int) $competition->params->competition_limit;
 						endif; ?>
 						</p>
 					<?php else : ?>
-						<p><strong><?php echo JText::_('COM_LAN_COMPETITIONS_LIST_USERS_CURRENT_LABEL'); ?></strong> - 
+						<p><strong><?php echo JText::_('COM_EVENTS_COMPETITIONS_CURRENT_TEAMS_LABEL'); ?></strong> - 
+						<?php echo $this->model->getCompetitionTeams($competition->id); ?>
 						<?php if(isset($competition->params->competition_limit)) : 
 							echo ' / ' . (int) $competition->params->competition_limit;
 						endif; ?>
-						<?php echo $competition->params->competition_team; ?>
 						</p>
 					<?php endif; ?>
 				</div>
+				
 			</div>
 			<div class="clr"></div>
 		<?php endforeach; ?>

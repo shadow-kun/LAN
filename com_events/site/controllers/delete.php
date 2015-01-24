@@ -19,11 +19,11 @@
 			$return = array("success" => false);
 			
 			// Gets current view.
-			$view = $app->input->get('view', 'event');
+			$type = $app->input->get('type', 'event');
 			$eventView = null;
 			
 			// if calling from the event view.
-			if($view == 'team')
+			if($type == 'team')
 			{
 				$model = new EventsModelsTeam();
 				
@@ -38,10 +38,8 @@
 				{
 					if($model->deleteTeam($team))
 					{
-						
-						$url = JRoute::_('index.php?option=com_events&view=teams', false); 
-						$app->redirect($url);
-						$return['success']=true;
+						$return['html'] = JRoute::_('index.php?option=com_events&view=teams');
+						$return['success'] = true;
 					}
 				}
 			}

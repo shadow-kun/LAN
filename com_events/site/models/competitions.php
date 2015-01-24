@@ -124,5 +124,35 @@
 			
 			return $result;
 		}
+		
+		public function getCompetitionPlayers($competition)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			$query->select('a.id');
+			$query->from('#__lan_competition_players AS a');
+			
+			$query->where('a.competition = ' . (int) $competition);
+			
+			$db->setQuery($query)->query();
+			return $db->getNumRows();
+			
+		}
+		
+		public function getCompetitionTeams($competition)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			$query->select('a.id');
+			$query->from('#__lan_competition_teams AS a');
+			
+			$query->where('a.competition = ' . (int) $competition);
+			
+			$db->setQuery($query)->query();
+			return $db->getNumRows();
+			
+		}
 	}
 ?>
