@@ -19,11 +19,11 @@
 			<div class="row-fluid">
 				<div class="details span8">
 					<fieldset class="adminform">
-						<div><?php echo JText::_('COM_EVENTS_TEAM_EDIT_TITLE_LABEL');?><input type="text" name="title" value="<?php echo $this->team->title; ?>" /></div>
+						<div><?php echo JText::_('COM_EVENTS_TEAM_EDIT_TITLE_LABEL');?><input type="text" name="title" value="<?php echo $this->team->title; ?>" /><br /></div>
 						<div><?php echo $this->editor->display('body', $this->team->body, '100%', '350', '55', '20', false); ?></div>
 					</fieldset>
-					<div><button class="btn" value="cancel" ><?php echo JText::_('COM_EVENTS_TEAM_BUTTON_BACK');?></button>
-					<button class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_TEAM_BUTTON_SUBMIT');?></button></div>
+					<div><button class="btn" value="cancel" ><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CANCEL_LABEL');?></button>
+					<button class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_UPDATE_TEAM_LABEL');?></button></div>
 				</div>
 			</div>
 		</div>

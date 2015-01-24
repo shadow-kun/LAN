@@ -35,7 +35,8 @@
 				
 				$team = JRequest::getInt('id');
 				$body = JRequest::getVar('body');
-				$model->setTeamDetails($team, $body);
+				$title = JRequest::getVar('title');
+				$model->setTeamDetails($team, $title, $body);
 				
 				$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false)); 
 			}

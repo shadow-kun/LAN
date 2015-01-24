@@ -162,14 +162,14 @@
 		
 		/* Rework from this point onwards */
 		
-		public function setTeamDetails($team, $body)
+		public function setTeamDetails($team, $title, $body)
 		{			
 			// Gets database connection
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
 			// Gets data to update
-			$fields = $db->quoteName('body') . ' = ' . $db->quote(JRequest::getVar('body'));
+			$fields = array($db->quoteName('body') . ' = ' . $db->quote($body), $db->quoteName('title') . ' = ' . $db->quote($title));
 			
 			// Sets the conditions of which event and which player to update
 			$conditions = array($db->quoteName('id') . ' = ' . ((int) $team));
