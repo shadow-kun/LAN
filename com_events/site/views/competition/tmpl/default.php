@@ -66,6 +66,22 @@
 				?></p>
 		<?php endif; ?>
 		
+		<?php if($this->competition->params->competition_team == 0) : ?>
+			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITIONS_CURRENT_USERS_LABEL'); ?></strong> - 
+			<?php echo $this->model->getCompetitionPlayers($this->competition->id); ?>
+			<?php if(isset($this->competition->params->competition_limit)) : 
+				echo ' / ' . (int) $this->competition->params->competition_limit;
+			endif; ?>
+			</p>
+		<?php else : ?>
+			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITIONS_CURRENT_TEAMS_LABEL'); ?></strong> - 
+			<?php echo $this->model->getCompetitionTeams($this->competition->id); ?>
+			<?php if(isset($this->competition->params->competition_limit)) : 
+				echo ' / ' . (int) $this->competition->params->competition_limit;
+			endif; ?>
+			</p>
+		<?php endif; ?>
+		
 		
 			
 		
