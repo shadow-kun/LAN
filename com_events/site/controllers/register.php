@@ -65,6 +65,39 @@
 					$return['msg'] = JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE');
 				}
 			}
+			else if($view == 'competition')
+			{
+				$model = new EventsModelsCompetition();
+				
+				// Gets current view.
+				$competition 	= JRequest::getInt('id');
+				$type 			= JRequest::getVar('type');
+				$user			= JFactory::getUser()->id;
+				
+				if($type == 'team')
+				{
+					
+				}
+				else
+				{
+					
+					// If adding to the event is successful
+					if($model->storeCompetitionUser($competition, $user))
+					{
+						$return['success'] = true;
+						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+					}
+					else
+					{
+						$return['success'] = false;
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						
+						$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+					}
+				}
+			}
 			ob_start();
 			echo $renderView->render();
 			$html = ob_get_contents();
@@ -78,7 +111,6 @@
 			ob_clean();
 			 
 			$return['buttons'] = $html;
-				
 			echo json_encode($return);
 		}
 	}

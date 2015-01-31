@@ -68,7 +68,38 @@
 					$return['success'] = false;
 					$renderView = EventsHelpersView::load('team','_players','phtml');
 					
-					$return['msg'] = JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE');
+					$return['msg'] = JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE');
+				}
+			}
+			else if($view == 'competition')
+			{
+				$model = new EventsModelsCompetition();
+				
+				// Gets current view.
+				$competition 	= JRequest::getInt('id');
+				$type 			= JRequest::getVar('type');
+				$user 			= (int) JFactory::getUser()->id;
+				
+				if($type == 'team')
+				{
+					
+				}
+				else
+				{
+					if($model->deleteCompetitionUser($competition, $user))
+					{
+						$return['success'] = true;
+						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+					}
+					else
+					{
+						$return['success'] = false;
+						$renderView = EventsHelpersView::load('competition','details','phtml');
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						
+						$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
+					}
 				}
 			}
 			ob_start();

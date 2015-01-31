@@ -65,6 +65,29 @@ function registerTeamMember()
     });
 }
 
+// unregister an attendee from an event
+function registerCompetitionUser()
+{
+	var competitionid = document.getElementById('competitionid').value;
+	var attendeeInfo = {};
+	jQuery("#bookForm :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=register&format=raw&tmpl=component&view=competition&type=user&id=' + competitionid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.view);
+			jQuery("#buttons").replaceWith(data.buttons);
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
 function showOptionTeamLeader()
 {
 	var team = document.getElementById('teamid').value;
@@ -170,6 +193,29 @@ function unregisterEventUser()
 		success:function(data)
 		{
 			console.log(data.view);
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
+// unregister an attendee from an event
+function unregisterCompetitionUser()
+{
+	var competitionid = document.getElementById('competitionid').value;
+	var attendeeInfo = {};
+	jQuery("#bookForm :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=unregister&format=raw&tmpl=component&view=competition&type=user&id=' + competitionid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.view);
+			jQuery("#buttons").replaceWith(data.buttons);
 			jQuery("#details").replaceWith(data.html);
 		}
     });

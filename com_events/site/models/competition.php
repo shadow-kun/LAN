@@ -440,6 +440,78 @@
 			return $db->getNumRows();
 			
 		}
+		
+		public function storeCompetitionUser($competition, $user)
+		{
+			$app = JFactory::getApplication();
+			
+			// Gets database connection
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.competition, p.params');
+			$query->from('#__lan_competition_players AS p');
+						
+			// Selects the competition that is required.
+			$query->where('p.competition = ' . $competition);
+			
+			// Selects current user.
+			$query->where('p.user = ' . $user);
+			
+			// Selects only non cancelled entries. (Inactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+				
+			// Checks to see if already registered for this competition
+			if(!(isset($result)))
+			{					
+				//Sets JSON Params data
+				$params = $db->quote(json_encode(array('status' => 1)));
+				
+				// Sets columns
+				$colums = array('id', 'competition', 'user', 'params');
+				
+				// Sets values
+				$values = array('NULL', $competition, $user, $params);
+				
+				// Prepare Insert Query $db->quoteName('unconfirmed')
+				$query  ->insert($db->quoteName('#__lan_competition_players'))
+						->columns($db->quoteName($colums))
+						->values(implode(',', $values));
+				
+				// Set the query and execute item
+				$db->setQuery($query);
+				$db->query();
+			}
+			
+			return true;
+			
+		}
+		
+		public function deleteCompetitionUser($competition, $user)
+		{
+			$app = JFactory::getApplication();
+			
+			// Gets database connection
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Sets the conditions of the delete of the user with the competition
+			$conditions = array($db->quoteName('competition') . ' = ' . $competition, $db->quoteName('user') . ' = ' .  $user);
+			
+			$query->delete($db->quoteName('#__lan_competition_players'));
+			$query->where($conditions);
+						
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			return true;
+		}
+		
 	}
 	
 	

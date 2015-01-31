@@ -13,7 +13,7 @@
 			
 			
 			// Gets Event Details
-			$this->comepetition = $this->model->getCompetition($id);
+			$this->competition = $this->model->getCompetition($id);
 			
 			// Gets user base information
 			$this->users = $this->model->getUsers($id);

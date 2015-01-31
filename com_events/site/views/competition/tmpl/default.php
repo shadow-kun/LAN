@@ -101,5 +101,7 @@
 		} */?>
 		<?php echo JHtml::_( 'form.token' ); ?>
 	</div>
+	
+	<input type="hidden" id="competitionid" name="competition" value="<?php echo $this->competition->id; ?>" />
 	<input id="task" type="hidden" name="task" value="" />
 </form>
