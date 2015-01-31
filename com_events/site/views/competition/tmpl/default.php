@@ -13,7 +13,7 @@
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=competition&id='.(int) $this->competition->id); ?>"
 	method="post" name="adminForm" id="competition-form" class="form-validate">
 	
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id); ?>"><?php echo $this->escape($this->competition->title); ?></a></h2>
+	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=competitions'); ?>" ><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_COMPETITIONS'); ?></a> - <a href="<?php echo JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id); ?>"><?php echo $this->escape($this->competition->title); ?></a></h2>
 					
 	<div class="form-horizontal">
 		<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_START_LABEL', true); ?></strong> - 
@@ -82,23 +82,12 @@
 			</p>
 		<?php endif; ?>
 		
-		
+		<?php echo EventsHelpersView::load('competition','_buttons','phtml'); ?>
 			
 		
-		<div class="row-fluid">
-			<div class="span8">
-				<?php $tokens = explode('<hr id="system-readmore" />',$this->competition->body);
-					if(count($tokens) === 1)
-					{
-						echo $tokens[0];
-					}
-					else
-					{
-						echo $tokens[1];
-					}
-				?>
-			</div>
-		</div>
+		<?php echo EventsHelpersView::load('competition','_details','phtml'); ?>
+		
+		
 		
 		<?php /* Seperate teams / players competitions from this point onwards */ ?>
 		

@@ -9,7 +9,6 @@
 		{
 			
 			$id = (int) JRequest::getInt('id');
-			
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			
