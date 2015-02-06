@@ -108,7 +108,7 @@
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.competition, p.params');
+			$query->select('p.id AS id, p.competition, p.params, p.status AS status');
 			$query->from('#__lan_competition_players AS p');
 						
 			// Selects the competition that is required.
@@ -132,7 +132,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.competition, p.params as params');
+			$query->select('p.id AS id, p.competition, p.params as params, p.status AS status');
 			$query->from('#__lan_competition_players AS p');
 			
 			//Join over the users.
@@ -507,6 +507,30 @@
 						
 			// Set the query and execute item
 			$db->setQuery($query);
+			$db->query();
+			
+			return true;
+		}
+		
+		public function setCompetitionEntrantStatus($competition, $user, $status = 0)
+		{			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Gets data to update
+			$fields = $db->quoteName('status') . ' = ' . ((int) $status);
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('competition') . ' = ' . ((int) $competition), $db->quoteName('user') . ' = ' . ((int) $user));
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_competition_players'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
 			$db->query();
 			
 			return true;
