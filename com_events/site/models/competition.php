@@ -126,6 +126,94 @@
 			return $result;
 		}
 		
+		public function getCurrentTeams($pk = null)
+		{
+			/* Function Purpose: To gather teams that the current user has the permissions to act on behalf
+			 *
+			 * Permission Levels: Team Leader, Team Moderator
+			 */
+			
+			// Get current data on team status on the current user.
+			//
+			
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+
+			// Join over the team names
+			$query->select('t.title AS name, t.id AS id')
+				->from('#__lan_teams AS t');
+			
+			// Select the required fields from the table.
+			$query->select('ct.id AS entryid')
+				->join('LEFT', '#__lan_competition_teams AS ct ON ct.team = t.id');
+			
+			// Join the user current status in each team
+			$query->join('LEFT', '#__lan_team_players AS tp on tp.team = t.id');
+
+			// Selects the competition that is required.
+			//$query->where('ct.competition = ' . JRequest::getVar('id',NULL));
+			
+			// Selects current user.
+			$query->where('tp.user = ' . JFactory::getUser()->id);
+			
+			// Selects only users of moderator status and above.
+			$query->where('tp.status >= 2');
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			$teams = $this->getTeams();
+			
+			foreach ($result as $t => $team)
+			{				
+				if(in_array($team->id, $teams))
+				{	
+					$result['registered'] = $result->registered + 1;
+				}
+				else
+				{
+					$result['unregistered'] = $result->unregistered + 1;
+					
+				}
+			}
+			
+			return $result;
+		}
+		
+		public function getTeams($pk = null)
+		{			
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.competition, p.params as params, p.status AS status');
+			$query->from('#__lan_competition_teams AS p');
+			
+			//Join over the users.
+			$query->select('t.title AS name');
+			$query->join('LEFT', '#__lan_teams AS t ON t.id = p.team');
+			
+			// Selects the event that is required.
+			$query->where('p.competition = ' . JRequest::getInt('id'));
+			
+			// Add the list ordering clause.
+			$orderCol 		= $this->state->get('list.ordering');
+			$orderDirn		= $this->state->get('list.direction');
+			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
+			{
+				$orderCol = 'id ' . $orderDirn . ', p.ordering';
+			}*/
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			
+			$query->order('id');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			
+			return $result;
+		}
+		
 		public function getUsers($pk = null)
 		{			
 			$db		= $this->getDb();

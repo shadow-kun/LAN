@@ -18,8 +18,14 @@
 			// Gets user base information
 			$this->users = $this->model->getUsers($id);
 			
+			// Gets team based information
+			$this->teams = $this->model->getTeams($id);
+			
 			// Gets the current user that is logged in
 			$this->currentUser = $this->model->getCurrentUser();
+			
+			// Gets the current teams that the user is logged in
+			$this->currentTeams = $this->model->getCurrentTeams();
 			
 			return parent::render();
 		}
