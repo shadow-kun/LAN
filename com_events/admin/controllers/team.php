@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -12,12 +12,12 @@
 	/**
 	 * Event Sub-Controller
 	 *
-	 * @package			LAN
-	 * @subpackage		com_lan
+	 * @package			Events Party!
+	 * @subpackage		com_events
 	 * @since			0.0
 	 */
 	 
-	class LANControllerTeam extends JControllerForm
+	class EventsControllerTeam extends JControllerForm
 	{
 		public function save ($key = null, $urlVar = null)
 		{
@@ -69,12 +69,12 @@
 					$db->query();
 					
 					// Returns a notice message stating user has been added to the team.
-					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_LAN_TEAM_MSG_PLAYER_ADDED'), 'notice');
+					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_EVENTS_TEAM_MSG_PLAYER_ADDED'), 'notice');
 				}
 				else
 				{
 					// Returns an error message stating user already in the team.
-					$app->enqueueMessage(JText::_('COM_LAN_TEAM_ERROR_USER_ALREADY_IN_TEAM'), 'error');
+					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_ERROR_USER_ALREADY_IN_TEAM'), 'error');
 				}
 			}
 			

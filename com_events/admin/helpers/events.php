@@ -1,20 +1,20 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
 	
    /**
-	* LAN Party Component Helper
+	* Events Party Component Helper
 	*
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	*/
 	
-	abstract class LANHelper
+	abstract class EventsHelper
 	{
 		/**
 		 * Configure the Linkbar.
@@ -29,9 +29,9 @@
 		public static function addSubmenu($submenu)
 		{
 			JSubMenuHelper::addEntry(
-				JText::_('COM_LAN_SUBMENU_EVENTS'),	'index.php?option=com_lan&view=events',	$submenu == 'events');
+				JText::_('COM_EVENTS_SUBMENU_EVENTS'),	'index.php?option=com_events&view=events',	$submenu == 'events');
 			JSubMenuHelper::addEntry(
-				JText::_('COM_LAN_SUBMENU_CATEGORIES'),	'index.php?option=com_categories&extension=com_lan', $submenu == 'categories');
+				JText::_('COM_EVENTS_SUBMENU_CATEGORIES'),	'index.php?option=com_categories&extension=com_events', $submenu == 'categories');
 				
 			// set some global property
 			$document = JFactory::getDocument();
@@ -39,7 +39,7 @@
 			//                               '{background-image: url(../media/com_helloworld/images/tux-48x48.png);}');
 			if ($vName == 'categories') 
 			{
-					$document->setTitle(JText::_('COM_LAN_ADMINISTRATION_CATEGORIES'));
+					$document->setTitle(JText::_('COM_EVENTS_ADMINISTRATION_CATEGORIES'));
 			}
 		}
 
@@ -62,7 +62,7 @@
 				
 			foreach ($actions as $action)
 			{
-				$result->set($action, $user->authorise($action, 'com_lan'));
+				$result->set($action, $user->authorise($action, 'com_events'));
 			}
 			
 			return $result;

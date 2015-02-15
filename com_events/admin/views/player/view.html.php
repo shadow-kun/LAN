@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -11,11 +11,11 @@
 	/**
 	* Player view.
 	*
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @since 0.0
 	*/
-	class LANViewPlayer extends JViewLegacy
+	class EventsViewPlayer extends JViewLegacy
 	{		
 		/**
 		* @var JObject The data for the record being displayed.
@@ -81,11 +81,11 @@
 			$isNew	= ($this->item->id == 0);
 			$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 			//$checkedOut = false;
-			$canDo	= LANHelper::getActions();
+			$canDo	= EventsHelper::getActions();
 
 			JToolBarHelper::title(
 				JText::_(
-					'COM_LAN_PLAYER_'.
+					'COM_EVENTS_PLAYER_'.
 					($checkedOut
 						? 'VIEW_PLAYER'
 						: ($isNew ? 'ADD_PLAYER' : 'EDIT_PLAYER')).'_TITLE',

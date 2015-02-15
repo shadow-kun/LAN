@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -14,7 +14,7 @@
 	$listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=players');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=players');?>" method="post" name="adminForm" id="adminForm">
 	<div id="j-main-container">
 <?php
 		// Search tools bar
@@ -39,7 +39,7 @@
 			</div>
 			<div class="btn-group pull-left"> <?php /*filter-select fltrt*/ ?>
 				<select name="filter_event" class="inputbox" onchange="this.form.submit()">
-					<option value=""><?php echo JText::_('COM_LAN_PLAYERS_SELECT_EVENT');?></option>
+					<option value=""><?php echo JText::_('COM_EVENTS_PLAYERS_SELECT_EVENT');?></option>
 					<?php echo JHtml::_('select.options', JHtml::_('category.options', '${OPTION_LOWER}'),
 					'value', 'text', $this->state->get('filter.event'));?>
 				</select>
@@ -57,16 +57,16 @@
 					<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 				</th>
 				<th class="center" >
-					<?php echo JHTML::_('grid.sort', 'COM_LAN_FIELD_PLAYERS_NAME_TITLE', 'event', $listDirn, $listOrder); ?>
+					<?php echo JHTML::_('grid.sort', 'COM_EVENTS_FIELD_PLAYERS_NAME_TITLE', 'event', $listDirn, $listOrder); ?>
 				</th>
 				<th class="center" width="20%">
-					<?php echo JHTML::_('grid.sort', 'COM_LAN_FIELD_PLAYERS_EVENT_TITLE', 'user', $listDirn, $listOrder); ?>
+					<?php echo JHTML::_('grid.sort', 'COM_EVENTS_FIELD_PLAYERS_EVENT_TITLE', 'user', $listDirn, $listOrder); ?>
 				</th>
 				<th class="center" width="10%">
-					<?php echo JHTML::_('grid.sort', 'COM_LAN_FIELD_PLAYERS_STATUS_TITLE', 'a.status', $listDirn, $listOrder); ?>
+					<?php echo JHTML::_('grid.sort', 'COM_EVENTS_FIELD_PLAYERS_STATUS_TITLE', 'a.status', $listDirn, $listOrder); ?>
 				</th>
 				<th class="center" width="10%">
-					<?php echo JHTML::_('grid.sort', 'COM_LAN_FIELD_PLAYERS_CHECKED_IN_TITLE', 'a.checked_in', $listDirn, $listOrder); ?>
+					<?php echo JHTML::_('grid.sort', 'COM_EVENTS_FIELD_PLAYERS_CHECKED_IN_TITLE', 'a.checked_in', $listDirn, $listOrder); ?>
 				</th>
 				<th class="center" width="1%">
 					<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
@@ -84,10 +84,10 @@
 			<?php foreach ($this->items as $i => $item) :
 				$item->max_ordering = 0;
 				$ordering	= ($listOrder == 'a.ordering');
-				$canCreate	= $user->authorise('core.create',		'com_lan.category.' . $item->event);
-				$canEdit	= $user->authorise('core.edit',			'com_lan.event.' . $item->id);
+				$canCreate	= $user->authorise('core.create',		'com_events.category.' . $item->event);
+				$canEdit	= $user->authorise('core.edit',			'com_events.event.' . $item->id);
 				$canCheckin = $user->authorise('core.manage',		'com_checkin') || $item->checked_out == $user->get('id') || $item-> checked_out == 0;
-				$canChange	= $user->authorise('core.edit.state',	'com_lan.event.' . $item->id) && $canCheckin;
+				$canChange	= $user->authorise('core.edit.state',	'com_events.event.' . $item->id) && $canCheckin;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
@@ -95,7 +95,7 @@
 				</td>
 				<td>
 					<?php if ($canCreate || $canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_lan&task=player.edit&id=' . $item->id); ?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_events&task=player.edit&id=' . $item->id); ?>">
 						<?php echo $this->escape($item->user); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->user); ?>
@@ -119,16 +119,16 @@
 					<?php switch((int) $item->status)
 					{
 						case 1:
-							echo JText::_('COM_LAN_EVENT_PLAYERS_UNCONFIRMED', true);
+							echo JText::_('COM_EVENTS_EVENT_PLAYERS_UNCONFIRMED', true);
 							break;
 						case 2: 
-							echo JText::_('COM_LAN_EVENT_PLAYERS_CONFIRMED', true);
+							echo JText::_('COM_EVENTS_EVENT_PLAYERS_CONFIRMED', true);
 							break;
 						case 3: 
-							echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true);
+							echo JText::_('COM_EVENTS_EVENT_PLAYERS_PREPAID', true);
 							break;
 						case 4:
-							echo JText::_('COM_LAN_EVENT_PLAYERS_PAID', true);
+							echo JText::_('COM_EVENTS_EVENT_PLAYERS_PAID', true);
 							break;
 					}
 					?>
@@ -138,7 +138,7 @@
 					if(!($item->checked_in)) :
 						$this->escape($item->checked_in);
 					else : 
-						echo JText::_('COM_LAN_PLAYERS_NOT_CHECKED_IN_TITLE', true);
+						echo JText::_('COM_EVENTS_PLAYERS_NOT_CHECKED_IN_TITLE', true);
 					endif;?>
 				</td>
 				<td class="center">

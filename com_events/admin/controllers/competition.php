@@ -17,7 +17,7 @@
 	 * @since			0.0
 	 */
 	 
-	class LANControllerCompetition extends JControllerForm
+	class EventsControllerCompetition extends JControllerForm
 	{
 		public function save ($key = null, $urlVar = null)
 		{
@@ -73,12 +73,12 @@
 					$db->query();
 					
 					// Returns a notice message stating user has been added to the team.
-					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_LAN_COMPETITION_MSG_ADDED'), 'notice');
+					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_EVENTS_COMPETITION_MSG_ADDED'), 'notice');
 				}
 				else
 				{
 					// Returns an error message stating user already in the team.
-					$app->enqueueMessage(JText::_('COM_LAN_COMPETITION_ERROR_USER_ALREADY_IN_COMPETITION'), 'error');
+					$app->enqueueMessage(JText::_('COM_EVENTS_COMPETITION_ERROR_USER_ALREADY_IN_COMPETITION'), 'error');
 				}
 			}
 		}

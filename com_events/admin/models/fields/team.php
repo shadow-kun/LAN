@@ -7,9 +7,9 @@
 	JFormHelper::loadFieldClass('list');
 	 
 	/**
-	 * Events Form Field class for the Events component
+	 * Teams Form Field class for the Events component
 	 */
-	class JFormFieldEvent extends JFormFieldList
+	class JFormFieldTeam extends JFormFieldList
 	{
 		/**
 		 * The field type.
@@ -28,7 +28,7 @@
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id,title');
-			$query->from('#__lan_events');
+			$query->from('#__lan_teams');
 			$db->setQuery((string)$query);
 			$messages = $db->loadObjectList();
 			$options = array();

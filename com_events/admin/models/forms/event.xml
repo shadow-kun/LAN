@@ -13,7 +13,7 @@
 
 		<field name="category_id"
 			type="category"
-			extension="COM_LAN"
+			extension="COM_EVENTS"
 			label="JCATEGORY"
 			description="JFIELD_CATEGORY_DESC"
 			default="0"
@@ -39,40 +39,40 @@
 
 		<field name="summary"
 			type="editor"
-			label="COM_LAN_EVENT_FIELD_SUMMARY_LABEL"
-			description="COM_LAN_EVENT_FIELD_SUMMARY_DESC"
+			label="COM_EVENTS_EVENT_FIELD_SUMMARY_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_SUMMARY_DESC"
 			class="inputbox"
 			filter="safehtml"
 			buttons="false" />
 			
 		<field name="body"
 			type="editor"
-			label="COM_LAN_EVENT_FIELD_BODY_LABEL"
-			description="COM_LAN_EVENT_FIELD_BODY_DESC"
+			label="COM_EVENTS_EVENT_FIELD_BODY_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_BODY_DESC"
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
 			
 		<field name="terms"
 			type="editor"
-			label="COM_LAN_EVENT_FIELD_TERMS_LABEL"
-			description="COM_LAN_EVENT_FIELD_TERMS_DESC"
+			label="COM_EVENTS_EVENT_FIELD_TERMS_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_TERMS_DESC"
 			class="inputbox"
 			filter="safehtml"
 			buttons="true" />
 		
 		<field name="terms_global"
 			type="radio"
-			label="COM_LAN_EVENT_FIELD_TERMS_GLOBAL_LABEL"
-			description="COM_LAN_EVENT_FIELD_TERMS_GLOBAL_DESC"
+			label="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_DESC"
 			default="0"
 			class="inputbox"
 			filter="intval"
 			size="1">
 			<option value="0">
-				COM_LAN_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
+				COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
 			<option value="1">
-				COM_LAN_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
+				COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
 		</field>
 
 		<field name="note"
@@ -154,8 +154,8 @@
 
 		<field name="created_time"
 			type="text"
-			label="COM_LAN_FIELD_CREATED_TIME_LABEL"
-			description="COM_LAN_FIELD_CREATED_TIME_DESC"
+			label="COM_EVENTS_FIELD_CREATED_TIME_LABEL"
+			description="COM_EVENTS_FIELD_CREATED_TIME_DESC"
 			class="readonly"
 			size="20"
 			readonly="true"
@@ -167,8 +167,8 @@
 
 		<field name="modified_time"
 			type="text"
-			label="COM_LAN_FIELD_MODIFIED_TIME_LABEL"
-			description="COM_LAN_FIELD_MODIFIED_TIME_DESC"
+			label="COM_EVENTS_FIELD_MODIFIED_TIME_LABEL"
+			description="COM_EVENTS_FIELD_MODIFIED_TIME_DESC"
 			class="readonly"
 			size="20"
 			readonly="true"
@@ -176,8 +176,8 @@
 			
 		<field name="players_current"
 			type="text"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_CURRENT_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_CURRENT_DESC"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_CURRENT_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_CURRENT_DESC"
 			default="0"
 			class="readonly"
 			size="10"
@@ -186,8 +186,8 @@
 			
 		<field name="players_confirmed"
 			type="text"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_CONFIRMED_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_CONFIRMED_DESC"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_CONFIRMED_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_CONFIRMED_DESC"
 			default="0"
 			class="readonly"
 			size="10"
@@ -196,8 +196,8 @@
 			
 		<field name="players_max"
 			type="text"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_MAX_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_MAX_DESC"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_MAX_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_MAX_DESC"
 			default="0"
 			size="10"
 			class="inputbox"
@@ -206,8 +206,8 @@
 			
 		<field name="players_prepay"
 			type="text"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_PREPAY_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_PREPAY_DESC"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAY_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAY_DESC"
 			default="0"
 			class="inputbox"
 			size="10"
@@ -216,8 +216,8 @@
 			
 		<field name="players_prepaid"
 			type="text"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_PREPAID_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_PREPAID_DESC"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAID_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAID_DESC"
 			default="0"
 			class="readonly"
 			size="10"
@@ -226,8 +226,8 @@
 		
 		<field name="event_start_time"
 			type="calendar"
-			label="COM_LAN_EVENT_FIELD_EVENT_START_TIME_LABEL"
-			description="COM_LAN_EVENT_FIELD_EVENT_START_TIME_DESC"
+			label="COM_EVENTS_EVENT_FIELD_EVENT_START_TIME_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_EVENT_START_TIME_DESC"
 			default="2014-01-01"
 			format="%Y-%m-%d"
 			required="true"
@@ -235,8 +235,8 @@
 		
 		<field name="event_end_time"
 			type="calendar"
-			label="COM_LAN_EVENT_FIELD_EVENT_END_TIME_LABEL"
-			description="COM_LAN_EVENT_FIELD_EVENT_END_TIME_DESC"
+			label="COM_EVENTS_EVENT_FIELD_EVENT_END_TIME_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_EVENT_END_TIME_DESC"
 			default="2014-01-01"
 			format="%Y-%m-%d"
 			required="true"
@@ -244,26 +244,26 @@
 			
 		<field name="add_user"
 			type="user"
-			label="COM_LAN_EVENT_FIELD_PLAYERS_ADD_USER_LABEL"
-			description="COM_LAN_EVENT_FIELD_PLAYERS_ADD_USER_DESC" />
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_ADD_USER_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_ADD_USER_DESC" />
 			
 			
 		<field name="add_user_status"
 			type="list"
-			label="COM_LAN_TEAM_FIELD_ADD_USER_STATUS_LABEL"
-			description="COM_LAN_TEAM_FIELD_ADD_USER_STATUS_DESC"
+			label="COM_EVENTS_TEAM_FIELD_ADD_USER_STATUS_LABEL"
+			description="COM_EVENTS_TEAM_FIELD_ADD_USER_STATUS_DESC"
 			default="1"
 			class="inputbox"
 			filter="intval"
 			size="1">
 			<option value="1">
-				COM_LAN_EVENT_PLAYERS_UNCONFIRMED</option>
+				COM_EVENTS_EVENT_PLAYERS_UNCONFIRMED</option>
 			<option value="2">
-				COM_LAN_EVENT_PLAYERS_CONFIRMED</option>
+				COM_EVENTS_EVENT_PLAYERS_CONFIRMED</option>
 			<option value="3">
-				COM_LAN_EVENT_PLAYERS_PAID</option>
+				COM_EVENTS_EVENT_PLAYERS_PAID</option>
 			<option value="4">
-				COM_LAN_EVENT_PLAYERS_PREPAID</option>
+				COM_EVENTS_EVENT_PLAYERS_PREPAID</option>
 		</field>
 			
 	</fieldset>
@@ -271,63 +271,63 @@
 	
 	
 	<fields name="params">
-		<fieldset name="basic" label="COM_LAN_BASIC_PARAMS_FIELDSET_LABEL">
+		<fieldset name="basic" label="COM_EVENTS_BASIC_PARAMS_FIELDSET_LABEL">
 			<field name="prepay"
 				type="radio"
-				label="COM_LAN_EVENT_PARAMS_PREPAY_LABEL"
-				description="COM_LAN_EVENT_PARAMS_PREPAY_DESC">
+				label="COM_EVENTS_EVENT_PARAMS_PREPAY_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PREPAY_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_LAN_EVENT_PARAMS_PREPAY_OPTION_DISABLE</option>
-				<option value="1">COM_LAN_EVENT_PARAMS_PREPAY_OPTION_OPTIONAL</option>
-				<option value="2">COM_LAN_EVENT_PARAMS_PREPAY_OPTION_MANDATORY</option>
+				<option value="0">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_DISABLE</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_OPTIONAL</option>
+				<option value="2">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_MANDATORY</option>
 			</field>
 			<field name="confirmations_override"
 				type="radio"
-				label="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_LABEL"
-				description="COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_DESC">
+				label="COM_EVENTS_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="-1">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_CLOSED</option>
-				<option value="0">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_AUTO</option>
-				<option value="1">COM_LAN_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_OPEN</option>
+				<option value="-1">COM_EVENTS_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_CLOSED</option>
+				<option value="0">COM_EVENTS_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_AUTO</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_CONFIRMATIONS_OVERRIDE_OPTION_OPEN</option>
 			</field>
 			<field name="waitlist_override"
 				type="radio"
-				label="COM_LAN_EVENT_PARAMS_WAITLIST_OVERRIDE_LABEL"
-				description="COM_LAN_EVENT_PARAMS_WAITLIST_OVERRIDE_DESC">
+				label="COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_LAN_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_OFF</option>
-				<option value="1">COM_LAN_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_ON</option>
+				<option value="0">COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_OFF</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_ON</option>
 			</field>
 			<field name="show_title"
 				type="list"
 				label="JGLOBAL_SHOW_TITLE_LABEL"
-				description="COM_LAN_PARAM_SHOW_TITLE_DESC">
+				description="COM_EVENTS_PARAM_SHOW_TITLE_DESC">
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
 			<field name="cost_prepay"
 				type="text"
-				label="COM_LAN_EVENT_PARAMS_COST_PREPAY_LABEL"
-				description="COM_LAN_EVENT_PARAMS_COST_PREPAY_DESC"
+				label="COM_EVENTS_EVENT_PARAMS_COST_PREPAY_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_COST_PREPAY_DESC"
 				default="0.0"
 				size="10" />
 			<field name="cost_event"
 				type="text"
-				label="COM_LAN_EVENT_PARAMS_COST_EVENT_LABEL"
-				description="COM_LAN_EVENT_PARAMS_COST_EVENT_DESC"
+				label="COM_EVENTS_EVENT_PARAMS_COST_EVENT_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_COST_EVENT_DESC"
 				default="0.0"
 				size="10" />
 			<field name="paypal_currency"
 				type="text"
-				label="COM_LAN_EVENT_PARAMS_PAYPAL_CURRENCY_LABEL"
-				description="COM_LAN_EVENT_PARAMS_PAYPAL_CURRENCY_DESC"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_DESC"
 				default="USD"
 				size="10" />
 			<field name="paypal_email"
 				type="email"
-				label="COM_LAN_EVENT_PARAMS_PAYPAL_EMAIL_LABEL"
-				description="COM_LAN_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
 				default="your@email.here"
 				size="10" />
 			
@@ -335,19 +335,19 @@
 				type="hidden"
 				filter="unset" /> 
 		</fieldset>
-		<fieldset name="location" label="COM_LAN_EVENT_LOCATION_FIELDSET_LABEL">
+		<fieldset name="location" label="COM_EVENTS_EVENT_LOCATION_FIELDSET_LABEL">
 			<field name="location"
 				type="text"
-				label="COM_LAN_EVENT_FIELD_LOCATION_LOCATION_LABEL"
-				description="COM_LAN_EVENT_FIELD_LOCATION_LOCATION_DESC"
+				label="COM_EVENTS_EVENT_FIELD_LOCATION_LOCATION_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_LOCATION_LOCATION_DESC"
 				class="inputbox"
 				size="10"
 				/>
 			
 			<field name="venue"
 				type="text"
-				label="COM_LAN_EVENT_FIELD_LOCATION_VENUE_LABEL"
-				description="COM_LAN_EVENT_FIELD_LOCATION_VENUE_DESC"
+				label="COM_EVENTS_EVENT_FIELD_LOCATION_VENUE_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_LOCATION_VENUE_DESC"
 				class="inputbox"
 				size="10"
 				/>

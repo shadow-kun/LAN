@@ -1,22 +1,22 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
 
    /**
-	* LAN Party Events HTML View
+	* Events Party! Events HTML View
 	*
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	*/
 	
 	jimport('joomla.application.component.view');
 	
-	class LANViewPlayers extends JViewLegacy
+	class EventsViewPlayers extends JViewLegacy
 	{
 		/**
 		 * @var		array		The array of the records to display in the list.
@@ -75,9 +75,9 @@
 		{
 			// Initialise variables.
 			$state	= $this->get('State');
-			$canDo	= LANHelper::getActions();
+			$canDo	= EventsHelper::getActions();
 			
-			JToolBarHelper::title(JText::_('COM_LAN_PLAYERS_TITLE'));
+			JToolBarHelper::title(JText::_('COM_EVENTS_PLAYERS_TITLE'));
 			
 			if($canDo->get('core.create')) 
 			{
@@ -107,7 +107,7 @@
 			
 			if($canDo->get('core.admin')) 
 			{
-				JToolBarHelper::preferences('com_lan');
+				JToolBarHelper::preferences('com_events');
 			}
 		}
 		

@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -14,7 +14,7 @@
 	$listDirn	= $this->escape($this->state->get('list.direction'));
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=teams');?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=teams');?>" method="post" name="adminForm" id="adminForm">
 	<div id="j-main-container">
 <?php
 		// Search tools bar
@@ -126,10 +126,10 @@
 			<?php foreach ($this->items as $i => $item) :
 				$item->max_ordering = 0;
 				$ordering	= ($listOrder == 'a.ordering');
-				$canCreate	= $user->authorise('core.create',		'com_lan.category.' . $item->category_id);
-				$canEdit	= $user->authorise('core.edit',			'com_lan.team.' . $item->id);
+				$canCreate	= $user->authorise('core.create',		'com_events.category.' . $item->category_id);
+				$canEdit	= $user->authorise('core.edit',			'com_events.team.' . $item->id);
 				$canCheckin = $user->authorise('core.manage',		'com_checkin') || $item->checked_out == $user->get('id') || $item-> checked_out == 0;
-				$canChange	= $user->authorise('core.edit.state',	'com_lan.team.' . $item->id) && $canCheckin;
+				$canChange	= $user->authorise('core.edit.state',	'com_events.team.' . $item->id) && $canCheckin;
 			?>
 			<tr class="row<?php echo $i % 2; ?>">
 				<td class="center">
@@ -140,7 +140,7 @@
 						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'teams.', $canEdit); ?>
 					<?php endif; ?>
 					<?php if ($canCreate || $canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_lan&task=team.edit&id=' . $item->id); ?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_events&task=team.edit&id=' . $item->id); ?>">
 						<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->title); ?>

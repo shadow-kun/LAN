@@ -1,13 +1,13 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	 * @package		Hello
-	 * @subpackage	com_hello
+	 * @package		Events Party!
+	 * @subpackage	com_events
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
 
 	//JHtml::addIncludePath(JPATH_COMPONENT.'helpers/html');
-	JHtml::stylesheet('com_lan/admin.css', null, true);
+	JHtml::stylesheet('com_events/admin.css', null, true);
 	JHtml::_('behavior.tooltip');
 	JHtml::_('behavior.formvalidation');
 	JHtml::_('behavior.keepalive');
@@ -26,7 +26,7 @@
 			Joomla.submitform(task, form);
 		}
 		else {
-			<?php JText::script('COM_LAN_ERROR_N_INVALID_FIELDS'); ?>
+			<?php JText::script('COM_EVENTS_ERROR_N_INVALID_FIELDS'); ?>
 			// Count the fields that are invalid.
 			var elements = form.getElements('fieldset').concat(Array.from(form.elements));
 			var invalid = 0;
@@ -38,12 +38,12 @@
 				}
 			}
 
-			alert(Joomla.JText._('COM_LAN_ERROR_N_INVALID_FIELDS').replace('%d', invalid));
+			alert(Joomla.JText._('COM_EVENTS_ERROR_N_INVALID_FIELDS').replace('%d', invalid));
 		}
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=player&layout=edit&id='.(int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=player&layout=edit&id='.(int) $this->item->id); ?>"
 	method="post" name="adminForm" id="player-form" >
 	
 	

@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -22,13 +22,13 @@
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 			</th>
 			<th>
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_TEAM_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%" class="center">
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_TEAM_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_TEAM_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%" class="center">
-				<?php echo JText::_('COM_LAN_TEAM_TABLE_PLAYERS_OPTIONS'); ?>
+				<?php echo JText::_('COM_EVENTS_TEAM_TABLE_PLAYERS_OPTIONS'); ?>
 			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
@@ -58,37 +58,37 @@
 				<?php switch((int) $player->status)
 				{
 					case 0:
-						echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_APPLYING');
+						echo JText::_('COM_EVENTS_TEAM_FIELD_STATUS_OPTION_APPLYING');
 						break;
 					case 1:
-						echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MEMBER');
+						echo JText::_('COM_EVENTS_TEAM_FIELD_STATUS_OPTION_MEMBER');
 						break;
 					case 2:
-						echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_MODERATOR');
+						echo JText::_('COM_EVENTS_TEAM_FIELD_STATUS_OPTION_MODERATOR');
 						break;
 					case 4:
-						echo JText::_('COM_LAN_TEAM_FIELD_STATUS_OPTION_LEADER');
+						echo JText::_('COM_EVENTS_TEAM_FIELD_STATUS_OPTION_LEADER');
 						break;
 				} ?>
 			</td>
 			<td class="left">
 				<?php if($player->status != 4) : ?>
 					<select name="player_status_change#<?php echo $player->id; ?>" onchange="this.form.submit()">
-						<option value=""><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_SELECT_TITLE'); ?></option>
+						<option value=""><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_SELECT_TITLE'); ?></option>
 						<?php if($player->status == 0)
 						{ ?>
-							<option value="approve"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_APPROVE_TITLE'); ?></option>
-							<option value="reject"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_REJECT_TITLE'); ?></option>
+							<option value="approve"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_APPROVE_TITLE'); ?></option>
+							<option value="reject"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_REJECT_TITLE'); ?></option>
 						<?php } else 
 						{
 							if($player->status == 1) 
 							{ ?>
-								<option value="moderator"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_MODERATOR_TITLE'); ?></option>
+								<option value="moderator"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_MODERATOR_TITLE'); ?></option>
 							<?php } else { ?>
-								<option value="member"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_MEMBER_TITLE'); ?></option>
+								<option value="member"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_MEMBER_TITLE'); ?></option>
 							<?php } ?>
-							<option value="leader"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_LEADER_TITLE'); ?></option>
-							<option value="remove"><?php echo JText::_('COM_LAN_TEAM_FIELD_OPTIONS_OPTION_REMOVE_TITLE'); ?></option>
+							<option value="leader"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_LEADER_TITLE'); ?></option>
+							<option value="remove"><?php echo JText::_('COM_EVENTS_TEAM_FIELD_OPTIONS_OPTION_REMOVE_TITLE'); ?></option>
 						<?php } ?>
 					</select>
 				<?php endif; ?>

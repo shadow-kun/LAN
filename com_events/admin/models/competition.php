@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	* @package 		LAN
-	* @subpackage 	com_lan
+	* @package 		Events Party!
+	* @subpackage 	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -11,15 +11,15 @@
 	/**
 	* Message model.
 	*
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @since 1.0
 	*/
-	class LANModelCompetition extends JModelAdmin
+	class EventsModelCompetition extends JModelAdmin
 	{
 		
 		/**
-		* Method to get the Event form.
+		* Method to get the Competition form.
 		*
 		* @param array $data An optional array of data for the form to interogate.
 		* @param boolean $loadData True if the form is to load its own data (default case), false if not.
@@ -185,7 +185,7 @@
 		* @return JTable A database object
 		* @since 0.0
 		*/
-		public function getTable($type = 'Competition', $prefix = 'LANTable', $config = array())
+		public function getTable($type = 'Competition', $prefix = 'EventsTable', $config = array())
 		{
 			return JTable::getInstance($type, $prefix, $config);
 		}

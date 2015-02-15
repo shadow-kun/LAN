@@ -17,7 +17,7 @@
 	 * @since			0.0
 	 */
 	 
-	class LANControllerCompetitions extends JControllerAdmin
+	class EventsControllerCompetitions extends JControllerAdmin
 	{
 		/**
 		 * Proxy for getModel.
@@ -30,7 +30,7 @@
 		 * @since	0.0
 		 */
 		 
-		public function getModel($name = 'Competition', $prefix = 'LANModel', $config = array('ignore_request' => true))
+		public function getModel($name = 'Competition', $prefix = 'EventsModel', $config = array('ignore_request' => true))
 		{
 			return parent::getModel($name, $prefix, $config);
 		}

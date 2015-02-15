@@ -11,10 +11,10 @@
 	* LAN Party Component Controller
 	*
 	* @package		LAN
-	* @subpackage	com_lan
+	* @subpackage	com_events
 	*/
 	
-	class LANController extends JControllerLegacy
+	class EventsController extends JControllerLegacy
 	{
 		/**
 		 * @var		String		Sets the default view for the component.
@@ -33,13 +33,12 @@
 		function display ($cachable = false, $urlparams = Array())
 		{
 			// Load the component helper.
-			require_once (JPATH_COMPONENT.'/helpers/lan.php');
+			require_once (JPATH_COMPONENT.'/helpers/events.php');
 			
 			// Display the view
 			parent::display();
 			
 			// Set the submenu
-			//LANHelper::addSubmenu('events');
 		}
 		
 		public function team($cachable = false, $urlparams = null)
@@ -47,7 +46,7 @@
 			JSession::checkToken() or die( 'Invalid Token' );
 			
 			// Load the component helper.
-			require_once (JPATH_COMPONENT.'/helpers/lan.php');
+			require_once (JPATH_COMPONENT.'/helpers/events.php');
 			
 			 // Gets competition id
 			$id 	= JRequest::getVar('id');
@@ -86,7 +85,7 @@
 						{
 							if($player->status == 4)
 							{
-								JFactory::getApplication()->enqueueMessage(JText::_('COM_LAN_TEAM_ERROR_DELETE_TEAM_LEADER'), 'error' );
+								JFactory::getApplication()->enqueueMessage(JText::_('COM_EVENTS_TEAM_ERROR_DELETE_TEAM_LEADER'), 'error' );
 								break;
 							}
 							
@@ -102,7 +101,7 @@
 							$db->query();
 							
 							//Sends a message to the user stating removal.
-							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_LAN_TEAM_MSG_PLAYER_REMOVED'));
+							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_EVENTS_TEAM_MSG_PLAYER_REMOVED'));
 							
 							break;
 						}
@@ -111,7 +110,7 @@
 						{
 							if($player->status == 4)
 							{
-								JFactory::getApplication()->enqueueMessage(JText::_('COM_LAN_TEAM_ERROR_DEMOTE_TEAM_LEADER'), 'error' );
+								JFactory::getApplication()->enqueueMessage(JText::_('COM_EVENTS_TEAM_ERROR_DEMOTE_TEAM_LEADER'), 'error' );
 								break;
 							}
 						
@@ -130,14 +129,14 @@
 							$db->query();
 							
 							//Sends a message to the user now a member.
-							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_LAN_TEAM_MSG_PLAYER_MEMBER'));
+							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_EVENTS_TEAM_MSG_PLAYER_MEMBER'));
 							break;
 						}
 						case 'moderator':
 						{
 							if($player->status == 4)
 							{
-								JFactory::getApplication()->enqueueMessage(JText::_('COM_LAN_TEAM_ERROR_DEMOTE_TEAM_LEADER'), 'error' );
+								JFactory::getApplication()->enqueueMessage(JText::_('COM_EVENTS_TEAM_ERROR_DEMOTE_TEAM_LEADER'), 'error' );
 								break;
 							}
 						
@@ -156,7 +155,7 @@
 							$db->query();
 							
 							//Sends a message to the user now a member.
-							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_LAN_TEAM_MSG_PLAYER_MODERATOR'));
+							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_EVENTS_TEAM_MSG_PLAYER_MODERATOR'));
 							break;
 						}
 						case 'leader':
@@ -193,7 +192,7 @@
 							$db->query();
 							
 							//Sends a message to the user now a member.
-							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_LAN_TEAM_MSG_PLAYER_LEADER'));
+							JFactory::getApplication()->enqueueMessage($player->username . JText::_('COM_EVENTS_TEAM_MSG_PLAYER_LEADER'));
 							break;
 						}
 					}

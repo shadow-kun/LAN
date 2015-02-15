@@ -6,8 +6,8 @@
 			type="hidden" />
 		<field name="event"
 			type="text"
-			label="COM_LAN_PLAYER_FIELD_EVENT_LABEL"
-			description ="COM_LAN_PLAYER_FIELD_EVENT_DESC"
+			label="COM_EVENTS_PLAYER_FIELD_EVENT_LABEL"
+			description ="COM_EVENTS_PLAYER_FIELD_EVENT_DESC"
 			default="0"
 			class="readonly"
 			size="10"
@@ -16,22 +16,22 @@
 			type="hidden" />
 		<field name="status"
 			type="list"
-			label="COM_LAN_PLAYER_FIELD_STATUS_LABEL"
-			description="COM_LAN_PLAYER_FIELD_STATUS_DESC"
+			label="COM_EVENTS_PLAYER_FIELD_STATUS_LABEL"
+			description="COM_EVENTS_PLAYER_FIELD_STATUS_DESC"
 			default="1"
 			class="inputbox"
 			filter="intval"
 			size="1">
 			<option value="0">
-				COM_LAN_EVENT_PLAYERS_PENDING</option>
+				COM_EVENTS_EVENT_PLAYERS_PENDING</option>
 			<option value="1">
-				COM_LAN_EVENT_PLAYERS_UNCONFIRMED</option>
+				COM_EVENTS_EVENT_PLAYERS_UNCONFIRMED</option>
 			<option value="2">
-				COM_LAN_EVENT_PLAYERS_CONFIRMED</option>
+				COM_EVENTS_EVENT_PLAYERS_CONFIRMED</option>
 			<option value="3">
-				COM_LAN_EVENT_PLAYERS_PAID</option>
+				COM_EVENTS_EVENT_PLAYERS_PAID</option>
 			<option value="4">
-				COM_LAN_EVENT_PLAYERS_PREPAID</option>
+				COM_EVENTS_EVENT_PLAYERS_PREPAID</option>
 		</field>
 		<field name="note"
 			type="text"

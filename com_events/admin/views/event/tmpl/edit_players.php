@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -23,10 +23,10 @@
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 			</th>
 			<th>
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_EVENT_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_EVENT_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%">
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_EVENT_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_EVENT_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>
@@ -59,23 +59,23 @@
 						<?php if((int) $player->status == 1) : 
 							echo 'selected'; 
 							endif; ?>
-						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_UNCONFIRMED', true); ?></option>
+						><?php echo JText::_('COM_EVENTS_EVENT_PLAYERS_UNCONFIRMED', true); ?></option>
 					<option value="2" 
 						<?php if((int) $player->status == 2) :
 							echo 'selected'; 
 							endif; ?>
-						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_CONFIRMED', true); ?></option>
+						><?php echo JText::_('COM_EVENTS_EVENT_PLAYERS_CONFIRMED', true); ?></option>
 					<option value="3" 
 						<?php if((int) $player->status == 3) :
 							echo 'selected'; 
 							endif; ?>
-						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_PAID', true); ?></option>
+						><?php echo JText::_('COM_EVENTS_EVENT_PLAYERS_PAID', true); ?></option>
 					<option value="4" 
 						<?php if((int) $player->status == 4) :
 							echo 'selected'; 
 							endif; ?>
-						><?php echo JText::_('COM_LAN_EVENT_PLAYERS_PREPAID', true); ?></option>
-					<option value="-2" ><?php echo JText::_('COM_LAN_EVENT_PLAYERS_REMOVE', true); ?></option>
+						><?php echo JText::_('COM_EVENTS_EVENT_PLAYERS_PREPAID', true); ?></option>
+					<option value="-2" ><?php echo JText::_('COM_EVENTS_EVENT_PLAYERS_REMOVE', true); ?></option>
 				</select>
 			</td>
 			<td class="center">

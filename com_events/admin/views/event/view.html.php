@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -11,11 +11,11 @@
 	/**
 	* Event view.
 	*
-	* @package LAN
-	* @subpackage com_event
+	* @package Events Party!
+	* @subpackage com_events
 	* @since 0.0
 	*/
-	class LANViewEvent extends JViewLegacy
+	class EventsViewEvent extends JViewLegacy
 	{
 		/**
 		 * @var		array		The array of the player records to display in the list.
@@ -84,7 +84,7 @@
 
 			JToolBarHelper::title(
 				JText::_(
-					'COM_LAN_EVENT_'.
+					'COM_EVENTS_EVENT_'.
 					($checkedOut
 						? 'VIEW_EVENT'
 						: ($isNew ? 'ADD_EVENT' : 'EDIT_EVENT')).'_TITLE',

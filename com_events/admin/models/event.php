@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	* @package 		LAN
-	* @subpackage 	com_lan
+	* @package 		Events Party!
+	* @subpackage 	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -11,11 +11,11 @@
 	/**
 	* Message model.
 	*
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @since 1.0
 	*/
-	class LANModelEvent extends JModelAdmin
+	class EventsModelEvent extends JModelAdmin
 	{
 		
 		/**
@@ -163,7 +163,7 @@
 		* @return JTable A database object
 		* @since 0.0
 		*/
-		public function getTable($type = 'Event', $prefix = 'LANTable', $config = array())
+		public function getTable($type = 'Event', $prefix = 'EventsTable', $config = array())
 		{
 			return JTable::getInstance($type, $prefix, $config);
 		}

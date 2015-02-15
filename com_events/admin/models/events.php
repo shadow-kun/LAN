@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -10,13 +10,13 @@
    /**
 	* Events Model
 	*
-	* @oackage 		LAN
-	* @subpackage	com_lan
+	* @oackage 		Events Party!
+	* @subpackage	com_events
 	*/
 	
 	jimport('joomla.application.component.modellist');
 	
-	class LANModelEvents extends JModelList
+	class EventsModelEvents extends JModelList
 	{
 		/**
 		* Constructor override.
@@ -59,8 +59,8 @@
 		* @param		string	$ordering	An optional ordering field.
 		* @param		string	$direction	An optional direction (asc || desc).
 		*
-		* @oackage 		LAN
-		* @subpackage	com_lan
+		* @oackage 		Events Party!
+		* @subpackage	com_events
 		*/
 		protected function populateState($ordering = 'a.title', $direction = 'asc')
 		{

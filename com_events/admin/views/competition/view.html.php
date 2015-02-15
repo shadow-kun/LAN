@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	* @package LAN
-	* @subpackage com_lan
+	* @package Events Party!
+	* @subpackage com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -11,11 +11,11 @@
 	/**
 	* Event view.
 	*
-	* @package LAN
-	* @subpackage com_event
+	* @package Events Party!
+	* @subpackage com_lan
 	* @since 0.0
 	*/
-	class LANViewCompetition extends JViewLegacy
+	class EventsViewCompetition extends JViewLegacy
 	{
 		/**
 		 * @var		array		The array of the player records to display in the list.
@@ -81,11 +81,11 @@
 			$user	= JFactory::getUser();
 			$isNew	= ($this->item->id == 0);
 			$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-			$canDo	= LANHelper::getActions();
+			$canDo	= EventsHelper::getActions();
 
 			JToolBarHelper::title(
 				JText::_(
-					'COM_LAN_COMPETITION_'.
+					'COM_EVENTS_COMPETITION_'.
 					($checkedOut
 						? 'VIEW_COMPETITION'
 						: ($isNew ? 'ADD_COMPETITION' : 'EDIT_COMPETITION')).'_TITLE',

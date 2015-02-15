@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -14,7 +14,7 @@
 	
 	
 ?>
-<h3><?php echo JText::_('COM_LAN_COMPETITION_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+<h3><?php echo JText::_('COM_EVENTS_COMPETITION_SUBHEADING_PLAYERS_LIST', true) ?></h3>
 <div class="control-group ">
 	<div class="control-label "><?php echo $this->form->getLabel('add_user'); ?></div>
 	<div class="controls" ><?php echo $this->form->getInput('add_user'); ?></div>
@@ -26,10 +26,10 @@
 				<input type="checkbox" name="toggle" value="" onclick="checkAll(this)" />
 			</th>
 			<th>
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_COMPETITION_TABLE_PLAYERS_PLAYER', 'p.username', $listDirn, $listOrder); ?>
 			</th>
 			<th width="10%" class="center">
-				<?php echo JHTML::_('grid.sort', 'COM_LAN_COMPETITION_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
+				<?php echo JHTML::_('grid.sort', 'COM_EVENTS_COMPETITION_TABLE_PLAYERS_STATUS', 'status', $listDirn, $listOrder); ?>
 			</th>
 			<th width="1%">
 				<?php echo JHTML::_('grid.sort', 'JGRID_HEADING_ID', 'id', $listDirn, $listOrder); ?>

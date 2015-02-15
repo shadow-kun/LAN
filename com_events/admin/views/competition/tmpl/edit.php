@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	 * @package		Hello
-	 * @subpackage	com_hello
+	 * @package		Events Party!
+	 * @subpackage	com_events
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
@@ -39,12 +39,12 @@
 				}
 			}
 
-			alert(Joomla.JText._('COM_LAN_ERROR_N_INVALID_FIELDS').replace('%d', invalid));
+			alert(Joomla.JText._('COM_EVENTS_ERROR_N_INVALID_FIELDS').replace('%d', invalid));
 		}
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&view=competition&layout=edit&id='.(int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=competition&layout=edit&id='.(int) $this->item->id); ?>"
 	method="post" name="adminForm" id="competition-form" class="form-validate">
 	<?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
 	

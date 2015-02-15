@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	 * @package		LAN
-	 * @subpackage	com_lan
+	 * @package		Events Party!
+	 * @subpackage	com_events
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
@@ -11,11 +11,11 @@
 	/**
 	 * Event table.
 	 *
-	 * @package		LAN
-	 * @subpackage	com_lan
+	 * @package		Events Party!
+	 * @subpackage	com_events
 	 * @since		0.0
 	 */
-class LANTableEvent extends JTable
+class EventsTableEvent extends JTable
 {
 	/**
 	 * Constructor.
@@ -61,7 +61,7 @@ class LANTableEvent extends JTable
 	{
 		// Check for valid name.
 		if (trim($this->title) === '') {
-			$this->setError(JText::_('COM_LAN_ERROR_EVENT_TITLE'));
+			$this->setError(JText::_('COM_EVENTS_ERROR_EVENT_TITLE'));
 			return false;
 		}
 

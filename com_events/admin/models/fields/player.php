@@ -7,7 +7,7 @@
 	JFormHelper::loadFieldClass('list');
 	 
 	/**
-	 * Player Form Field class for the LAN component
+	 * Player Form Field class for the Events component
 	 */
 	class JFormFieldPlayer extends JFormFieldList
 	{
@@ -16,7 +16,7 @@
 		 *
 		 * @var         string
 		 */
-		protected $type = 'LAN';
+		protected $type = 'Events';
 
 		/**
 		 * Method to get a list of options for a list input.

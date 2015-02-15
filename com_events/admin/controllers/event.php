@@ -1,8 +1,8 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
    /**
 	* @version 		$Id$
-	* @package		LAN
-	* @subpackage	com_lan
+	* @package		Events Party!
+	* @subpackage	com_events
 	* @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	* @license		GNU General Public License version 2 or later.
 	*/
@@ -12,12 +12,12 @@
 	/**
 	 * Event Sub-Controller
 	 *
-	 * @package			LAN
-	 * @subpackage		com_lan
+	 * @package			Events Party!
+	 * @subpackage		com_events
 	 * @since			0.0
 	 */
 	 
-	class LANControllerEvent extends JControllerForm
+	class EventsControllerEvent extends JControllerForm
 	{
 		public function save ($key = null, $urlVar = null)
 		{
@@ -94,12 +94,12 @@
 					
 					
 					// Returns a notice message stating user has been added to the team.
-					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_LAN_EVENT_MSG_PLAYER_ADDED'), 'notice');
+					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_EVENTS_EVENT_MSG_PLAYER_ADDED'), 'notice');
 				}
 				else
 				{
 					// Returns an error message stating user already in the team.
-					$app->enqueueMessage(JText::_('COM_LAN_EVENT_ERROR_USER_ALREADY_IN_EVENT'), 'error');
+					$app->enqueueMessage(JText::_('COM_EVENTS_EVENT_ERROR_USER_ALREADY_IN_EVENT'), 'error');
 				}
 			}
 			$query	= $db->getQuery(true);
@@ -196,13 +196,13 @@
 			if(empty($params['usergroup']))
 			{
 				
-				// Finds root user group for LAN! Party
+				// Finds root user group for Events Party!
 				$query	= $db->getQuery(true);
 				
 				$query->select('ug.id AS id');
 				$query->from('#__usergroups AS ug');
 				
-				$query->where($db->quoteName('ug.title') . ' = ' . $db->quote("LAN Party! Event Groups"));
+				$query->where($db->quoteName('ug.title') . ' = ' . $db->quote("Events Party! Event Groups"));
 				$result = $db->setQuery($query)->loadResult();
 				
 				$db->query();
