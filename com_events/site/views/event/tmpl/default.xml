@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-        <layout title="COM_LAN_EVENT_VIEW_DEFAULT_TITLE">
+        <layout title="COM_EVENTS_EVENT_VIEW_DEFAULT_TITLE">
                 <message>
-                        <![CDATA[COM_LAN_EVENT_VIEW_DEFAULT_DESC]]>
+                        <![CDATA[COM_EVENTS_EVENT_VIEW_DEFAULT_DESC]]>
                 </message>
         </layout>
 		<fields
             name="request"
-            addfieldpath="/administrator/components/com_lan/models/fields"
+            addfieldpath="/administrator/components/com_events/models/fields"
 			>
                 <fieldset name="request">
                         <field
                                 name="id"
                                 type="event"
-                                label="COM_LAN_COMPETITION_FIELD_EVENT_LABEL"
-                                description="COM_LAN_COMPETITION_FIELD_EVENT_DESC"
+                                label="COM_EVENTS_EVENT_FIELD_EVENT_LABEL"
+                                description="COM_EVENTS_EVENT_FIELD_EVENT_DESC"
                         />
                 </fieldset>
         </fields>

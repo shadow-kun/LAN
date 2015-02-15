@@ -71,12 +71,27 @@
 				
 				// Gets current view.
 				$competition 	= JRequest::getInt('id');
+				$team 	= JRequest::getInt('team');
 				$type 			= JRequest::getVar('type');
 				$user			= JFactory::getUser()->id;
 				
 				if($type == 'team')
 				{
-					
+					// If adding to the event is successful
+					if($model->storeCompetitionTeam($competition, $team))
+					{
+						$return['success'] = true;
+						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+					}
+					else
+					{
+						$return['success'] = false;
+						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						
+						$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+					}
 				}
 				else
 				{

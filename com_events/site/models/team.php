@@ -210,6 +210,85 @@
 			return true;
 		}
 		
+		public function storeTeam($title, $body)
+		{
+			if(empty($title))
+			{
+				// If title is empty do not create team
+				$return['redirect'] = JRoute::_('index.php?option=com_events&view=teams', false);
+				$return['success'] = true;
+			}
+			else
+			{
+				// Gets database connection
+				$db		= $this->getDb();
+				$query	= $db->getQuery(true);
+				
+				// Gets current user info
+				$user	= JFactory::getUser();
+				$date = new JDate(time());
+				
+				// Sets columns
+				$colums = array('id', 'title', 'body', 'published', 'access', 'language', 'created_user_id', 'created_time', 'params');
+				
+				// Sets values
+				$values = array('null', $db->quote($title), $db->quote($body), 1, 1, $db->quote('*'), $user->id, $db->quote($date->tosql(true)), 'null');
+				
+				// Prepare Insert Query $db->quoteName('unconfirmed')
+				$query  ->insert($db->quoteName('#__lan_teams'))
+						->columns($db->quoteName($colums))
+						->values(implode(',', $values));
+				
+				// Set the query and execute item
+				$db->setQuery($query);
+				$db->query();
+				
+				$query	= $db->getQuery(true);
+				
+				// Select the required fields from the table.
+				$query->select('a.id AS id');
+				$query->from('#__lan_teams AS a');
+							
+				// Selects current user.
+				$query->where('a.created_user_id = ' . JFactory::getUser()->id);
+				
+				// Selects team created timestamp.
+				$query->where('a.created_time = ' . $db->quote($date->tosql(true)));
+				
+				// Selects only non cancelled entries. (Inactive as of current)
+				
+				// Runs query
+				$result = $db->setQuery($query)->loadObject();
+				$db->query();
+				
+				
+				$query	= $db->getQuery(true);
+				$id = $result->id;
+				
+				// Sets columns
+				$colums = NULL;
+				$colums = array('id', 'team', 'status', 'user', 'params');
+				
+				// Sets values
+				$values = NULL;
+				$values = array('NULL', $id, 4, $user->id, 'NULL');
+				
+				// Prepare Insert Query $db->quoteName('unconfirmed')
+				$query  ->insert($db->quoteName('#__lan_team_players'))
+						->columns($db->quoteName($colums))
+						->values(implode(',', $values));
+				
+				// Set the query and execute item
+				$db->setQuery($query);
+				$db->query();
+				
+				$return['redirect'] = JRoute::_('index.php?option=com_events&view=team&id=' . $id, false);
+				$return['success'] = true;
+			}
+			
+			return $return;
+		}
+		
 		public function storeTeamMember($team, $user, $status = 0)
 		{
 			

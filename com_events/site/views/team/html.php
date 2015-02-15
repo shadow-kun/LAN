@@ -25,6 +25,7 @@
 		public function render()
 		{
 			$id = (int) JRequest::getInt('id');
+			
 			$app = JFactory::getApplication();
 			
 			
@@ -32,14 +33,19 @@
 						
 			$this->params = JComponentHelper::getParams('com_events');
 			
-			// Gets Competition Details
-			$this->team = $this->model->getTeam($id);
+			// if team details are set, ie. team exists
+			if(isset($id) && $id > 0)
+			{
+				// Gets Competition Details
+				$this->team = $this->model->getTeam($id);
+				
+				// Gets user base information
+				$this->users = $this->model->getUsers($id);
+				
+				// Gets the current user that is logged in
+				$this->currentUser = $this->model->getCurrentUser();
+			}
 			
-			// Gets user base information
-			$this->users = $this->model->getUsers($id);
-			
-			// Gets the current user that is logged in
-			$this->currentUser = $this->model->getCurrentUser();
 						
 			//display
 			return parent::render();

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+        <layout title="COM_EVENT_COMPETITION_VIEW_DEFAULT_TITLE">
+                <message>
+                        <![CDATA[COM_EVENTS_COMPETITION_VIEW_DEFAULT_DESC]]>
+                </message>
+        </layout>
+		<fields
+            name="request"
+            addfieldpath="/administrator/components/com_events/models/fields"
+			>
+                <fieldset name="request">
+                        <field
+                                name="id"
+                                type="competition"
+                                label="COM_EVENTS_COMPETITION_FIELD_EVENT_LABEL"
+                                description="COM_EVENTS_COMPETITION_FIELD_EVENT_DESC"
+                        />
+                </fieldset>
+        </fields>
+</metadata>

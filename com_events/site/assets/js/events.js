@@ -1,4 +1,30 @@
 
+	
+// register an attendee to an event
+function addTeam()
+{
+	var details = {};
+	jQuery("#details :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+	details["title"] = document.getElementById('title').value;
+	details["body"] = document.getElementById('body').value;
+    console.log(details);
+	
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=addteam',
+		type:'POST', 
+		data:details,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.redirect);
+			window.location.href = data.redirect;
+			//jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
 // register an attendee to an event
 function confirmEventUser()
 {
@@ -76,6 +102,29 @@ function registerCompetitionUser()
     
 	jQuery.ajax({
 		url:'index.php?option=com_events&controller=register&format=raw&tmpl=component&view=competition&type=user&id=' + competitionid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.view);
+			jQuery("#buttons").replaceWith(data.buttons);
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
+function registerCompetitionTeam()
+{
+	var competitionid = document.getElementById('competitionid').value;
+	var teamid = document.getElementById('registerTeamID').value;
+	var attendeeInfo = {};
+	jQuery("#bookForm :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=register&format=raw&tmpl=component&view=competition&type=team&id=' + competitionid + '&team=' + teamid,
 		type:'POST',
 		data:attendeeInfo,
 		dataType:'JSON',
@@ -231,6 +280,29 @@ function unregisterCompetitionUser()
     
 	jQuery.ajax({
 		url:'index.php?option=com_events&controller=unregister&format=raw&tmpl=component&view=competition&type=user&id=' + competitionid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data.view);
+			jQuery("#buttons").replaceWith(data.buttons);
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
+function unregisterCompetitionTeam()
+{
+	var competitionid = document.getElementById('competitionid').value;
+	var teamid = document.getElementById('unregisterTeamID').value;
+	var attendeeInfo = {};
+	jQuery("#bookForm :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=unregister&format=raw&tmpl=component&view=competition&type=team&id=' + competitionid + '&team=' + teamid,
 		type:'POST',
 		data:attendeeInfo,
 		dataType:'JSON',

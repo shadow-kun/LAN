@@ -41,6 +41,9 @@
 			// Gets the current user that is logged in
 			$this->currentUser = $this->model->getCurrentUser();
 			
+			// Gets the current user that is logged in
+			$this->currentTeams = $this->model->getCurrentTeams();
+			
 			// Sets PHtml Items
 			//$this->_terms = EventsHelpersView::load('event','_terms','phtml');
 			//$this->_terms->event = $id;

@@ -136,6 +136,7 @@
 			// Get current data on team status on the current user.
 			//
 			
+			
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
@@ -145,7 +146,7 @@
 				->from('#__lan_teams AS t');
 			
 			// Select the required fields from the table.
-			$query->select('ct.id AS entryid')
+			$query->select('ct.id AS entryid, ct.status AS status')
 				->join('LEFT', '#__lan_competition_teams AS ct ON ct.team = t.id');
 			
 			// Join the user current status in each team
@@ -165,19 +166,32 @@
 			$db->query();
 			
 			$teams = $this->getTeams();
-			
+						
 			foreach ($result as $t => $team)
 			{				
-				if(in_array($team->id, $teams))
+				if(isset($team->entryid))
 				{	
-					$result['registered'] = $result->registered + 1;
+					$registered++;
+					if($team->status == -2)
+					{
+						$forfeit++;
+					}
+					elseif($team->status == -1)
+					{
+						$eliminated++;
+					}
 				}
 				else
 				{
-					$result['unregistered'] = $result->unregistered + 1;
+					$unregistered++;
 					
 				}
 			}
+			
+			$result['eliminated'] = $eliminated;
+			$result['forfeit'] = $forfeit;
+			$result['registered'] = $registered;
+			$result['unregistered'] = $unregistered;
 			
 			return $result;
 		}
@@ -579,6 +593,56 @@
 			
 		}
 		
+		public function storeCompetitionTeam($competition, $team)
+		{
+			$app = JFactory::getApplication();
+			
+			// Gets database connection
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.competition, p.params');
+			$query->from('#__lan_competition_teams AS p');
+						
+			// Selects the competition that is required.
+			$query->where('p.competition = ' . $competition);
+			
+			// Selects current team.
+			$query->where('p.team = ' . $team);
+			
+			// Selects only non cancelled entries. (Inactive as of current)
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadObject();
+			$db->query();
+				
+			// Checks to see if already registered for this competition
+			if(!(isset($result)))
+			{					
+				//Sets JSON Params data
+				$params = $db->quote(json_encode(array('status' => 1)));
+				
+				// Sets columns
+				$colums = array('id', 'competition', 'team', 'params');
+				
+				// Sets values
+				$values = array('NULL', $competition, $team, $params);
+				
+				// Prepare Insert Query $db->quoteName('unconfirmed')
+				$query  ->insert($db->quoteName('#__lan_competition_teams'))
+						->columns($db->quoteName($colums))
+						->values(implode(',', $values));
+				
+				// Set the query and execute item
+				$db->setQuery($query);
+				$db->query();
+			}
+			
+			return true;
+			
+		}
+		
 		public function deleteCompetitionUser($competition, $user)
 		{
 			$app = JFactory::getApplication();
@@ -591,6 +655,27 @@
 			$conditions = array($db->quoteName('competition') . ' = ' . $competition, $db->quoteName('user') . ' = ' .  $user);
 			
 			$query->delete($db->quoteName('#__lan_competition_players'));
+			$query->where($conditions);
+						
+			// Set the query and execute item
+			$db->setQuery($query);
+			$db->query();
+			
+			return true;
+		}
+		
+		public function deleteCompetitionTeam($competition, $team)
+		{
+			$app = JFactory::getApplication();
+			
+			// Gets database connection
+			$db		= JFactory::getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Sets the conditions of the delete of the user with the competition
+			$conditions = array($db->quoteName('competition') . ' = ' . $competition, $db->quoteName('team') . ' = ' .  $team);
+			
+			$query->delete($db->quoteName('#__lan_competition_teams'));
 			$query->where($conditions);
 						
 			// Set the query and execute item
@@ -618,6 +703,33 @@
 			$query->where($conditions);
 			
 			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
+		}
+		
+		public function setCompetitionTeamStatus($competition, $team, $status = 0)
+		{			
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Gets data to update
+			$fields = $db->quoteName('status') . ' = ' . ((int) $status);
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('competition') . ' = ' . ((int) $competition), $db->quoteName('team') . ' = ' . ((int) $team));
+			
+			// Executes Query
+			$query->update($db->quoteName('#__lan_competition_teams'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			var_dump($fields);
+			var_dump($conditions);
 			
 			$db->query();
 			
