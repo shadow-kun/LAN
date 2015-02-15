@@ -75,7 +75,7 @@
 		{
 			// Initialise variables.
 			$state	= $this->get('State');
-			$canDo	= LANHelper::getActions();
+			$canDo	= EventsHelper::getActions();
 			
 			JToolBarHelper::title(JText::_('COM_EVENTS_COMPETITIONS_TITLE'));
 			

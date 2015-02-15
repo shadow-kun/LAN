@@ -45,6 +45,7 @@
 			<folder>controllers</folder>
 			<folder>language</folder>
 			<folder>models</folder>
+			<folder>helpers</folder>
 			<folder>views</folder>
 			<folder>sql</folder>
 			<filename>events.php</filename>
@@ -52,7 +53,25 @@
 			<filename>config.xml</filename>
 			<filename>install.mysql.sql</filename>
 		</files>  
-	
+		
+		<submenu>
+			<!--
+				Note that all & must be escaped to &amp; for the file to be valid
+				XML and be parsed by the installer
+			-->
+			<menu link="option=com_events" view="events" img="class:events"
+				alt="Events/Home">com_events_home</menu>
+			<menu link="option=com_categories&amp;extension=com_events"
+				view="categories" img="class:events-categories" alt="Events/Categories">com_events_categories</menu>
+			<menu link="option=com_events&amp;view=competitions" 
+				view="competitions" img="class:competitions" alt="Events/Competitions">com_events_competitions</menu>
+			<menu link="option=com_events&amp;view=events" 
+				view="events" img="class:events" alt="Events/Events">com_events_events</menu>
+			<menu link="option=com_events&amp;view=players" 
+				view="players" img="class:events-players" alt="Events/Players">com_events_players</menu>
+			<menu link="option=com_events&amp;view=teams" 
+				view="teams" img="class:events-teams" alt="Events/Players">com_events_teams</menu>
+		</submenu>
 		
 		<languages folder="admin">
 			<language tag="en-GB">language/en-GB/en-GB.com_events.ini</language>
