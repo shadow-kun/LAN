@@ -48,9 +48,11 @@
 			<folder>helpers</folder>
 			<folder>views</folder>
 			<folder>sql</folder>
+			<folder>tables</folder>
 			<filename>events.php</filename>
 			<filename>index.html</filename>
 			<filename>config.xml</filename>
+			<filename>access.xml</filename>
 			<filename>install.mysql.sql</filename>
 		</files>  
 		

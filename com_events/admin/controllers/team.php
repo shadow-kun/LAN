@@ -27,8 +27,8 @@
 			$team			= JRequest::getVar('id');
 			$data           = JRequest::getVar('jform', array(), 'post', 'array');
 						
-			
-			if(isset($data['add_user']))
+			var_dump($data);
+			if(!empty($data['add_user']))
 			{
 				// Gets database connection
 				$db		= JFactory::getDbo();

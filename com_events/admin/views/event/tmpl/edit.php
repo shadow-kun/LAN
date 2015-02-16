@@ -44,14 +44,14 @@
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_lan&layout=edit&id='.(int) $this->item->id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_events&layout=edit&id='.(int) $this->item->id); ?>"
 	method="post" name="adminForm" id="event-form" class="form-validate">
 	<?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
 	
 	<div class="form-horizontal"> <!--class="width-60 fltlft"-->
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
 
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_LAN_EVENT_TAB_GENERAL', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_EVENTS_EVENT_TAB_GENERAL', true)); ?>
 		
 		<div class="row-fluid">
 			<div class="span8">
@@ -173,7 +173,7 @@
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'additions', JText::_('COM_LAN_EVENT_TAB_TERMS', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'additions', JText::_('COM_EVENTS_EVENT_TAB_TERMS', true)); ?>
 		
 		<div class="row-fluid">
 			<div class="span6">
@@ -192,12 +192,12 @@
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'players', JText::_('COM_LAN_EVENT_TAB_PLAYERS', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'players', JText::_('COM_EVENTS_EVENT_TAB_PLAYERS', true)); ?>
 		
 		<div class="row-fluid">
 			<div class="span8">
 				<!-- Player Listing To Be Inserted Here -->
-				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+				<h3><?php echo JText::_('COM_EVENTS_EVENT_SUBHEADING_PLAYERS_LIST', true) ?></h3>
 				<div class="control-group ">
 					<div class="control-label"><?php echo $this->form->getLabel('add_user'); ?></div>
 					<div class="controls" ><?php echo $this->form->getInput('add_user'); ?> <?php echo $this->form->getInput('add_user_status'); ?></div>
@@ -207,7 +207,7 @@
 			
 			<div class="span3">
 				<fieldset class="adminform">
-					<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_SUMMARY', true) ?></h3>
+					<h3><?php echo JText::_('COM_EVENTS_EVENT_SUBHEADING_PLAYERS_SUMMARY', true) ?></h3>
 					
 					<p><?php echo $this->form->getLabel('players_current'); ?>
 					<?php echo $this->form->getInput('players_current'); ?>
@@ -230,10 +230,10 @@
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_LAN_EVENT_TAB_SETTINGS', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_EVENTS_EVENT_TAB_SETTINGS', true)); ?>
 		<div class="row-fluid">
 			<div class="span4">
-				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_SETTINGS_PUBLISHING_TITLE', true) ?></h3>
+				<h3><?php echo JText::_('COM_EVENTS_EVENT_SUBHEADING_SETTINGS_PUBLISHING_TITLE', true) ?></h3>
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 			</div>
 			<div class="span4">
