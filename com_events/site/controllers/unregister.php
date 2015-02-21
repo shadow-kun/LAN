@@ -167,9 +167,12 @@
 			 
 			$return['html'] = $html;
 			
-			echo $renderButtons->render();
-			$html = ob_get_contents();
-			ob_clean();
+			if(!empty($renderButtons))
+			{
+				echo $renderButtons->render();
+				$html = ob_get_contents();
+				ob_clean();
+			}
 			 
 			$return['buttons'] = $html;
 			

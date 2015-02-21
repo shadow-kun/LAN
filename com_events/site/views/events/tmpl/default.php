@@ -23,7 +23,7 @@
 				$ordering	= ($listOrder == 'a.ordering'); 
 				$canCreate	= $this->user->authorise('core.create',		'com_events.category.' . $event->category_id);
 				$canEdit	= $this->user->authorise('core.edit',		'com_events.event.' . $event->id);
-				$canCheckin = $this->user->authorise('core.manage',		'com_checkin') || $event->checked_out == $user->get('id') || $event-> checked_out == 0;
+				$canCheckin = $this->user->authorise('core.manage',		'com_checkin') || /*$event->checked_out == $user->get('id') ||*/ $event-> checked_out == 0;
 				$canChange	= $this->user->authorise('core.edit.state',	'com_events.event.' . $event->id) && $canCheckin;
 			?>
 			<div class="media well well-small">

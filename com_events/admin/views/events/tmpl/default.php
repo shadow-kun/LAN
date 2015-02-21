@@ -140,7 +140,7 @@
 						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'events.', $canEdit); ?>
 					<?php endif; ?>
 					<?php if ($canCreate || $canEdit) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_lan&task=event.edit&id=' . $item->id); ?>">
+					<a href="<?php echo JRoute::_('index.php?option=com_events&task=event.edit&id=' . $item->id); ?>">
 						<?php echo $this->escape($item->title); ?></a>
 					<?php else : ?>
 						<?php echo $this->escape($item->title); ?>

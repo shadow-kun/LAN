@@ -121,11 +121,14 @@
 			
 			$return['html'] = $html;
 			
-			echo $renderButtons->render();
-			$html = ob_get_contents();
-			ob_clean();
-			 
-			$return['buttons'] = $html;
+			if(!empty($renderButtons))
+			{
+				echo $renderButtons->render();
+				$html = ob_get_contents();
+				ob_clean();
+				 
+				$return['buttons'] = $html;
+			}
 			echo json_encode($return);
 		}
 	}
