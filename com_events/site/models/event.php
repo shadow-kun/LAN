@@ -47,7 +47,7 @@
 						)
 					);
 					
-					$query->from('#__lan_events AS a');
+					$query->from('#__events_events AS a');
 					
 					// Join on category table.
 					$query->select('c.title AS category_title')
@@ -109,7 +109,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
 			$query->where('p.event = ' . JRequest::getVar('id',NULL));
@@ -133,7 +133,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->from('#__events_players AS p');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -174,7 +174,7 @@
 			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_players'));
+			$query->update($db->quoteName('#__events_players'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -192,7 +192,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -219,7 +219,7 @@
 			$values = array('NULL',JRequest::getVar('id'), $user->id, '1', 'NULL');
 			
 			// Prepare Insert Query $db->quoteName('unconfirmed')
-			$query  ->insert($db->quoteName('#__lan_players'))
+			$query  ->insert($db->quoteName('#__events_players'))
 					->columns($db->quoteName($colums))
 					->values(implode(',', $values));
 			
@@ -235,7 +235,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -256,7 +256,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.players_confirmed', 'a.players_current');
-			$query->from('#__lan_events AS a');
+			$query->from('#__events_events AS a');
 				
 			$query->where('a.id = ' . (int) JRequest::getInt('id',NULL,'GET'));
 			$db->setQuery($query);
@@ -276,7 +276,7 @@
 
 				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 				
-				$query->update($db->quoteName('#__lan_events'));
+				$query->update($db->quoteName('#__events_events'));
 				$query->set($fields);
 				$query->where($conditions);
 				
@@ -289,7 +289,7 @@
 			// Sets the conditions of the delete of the user with the event
 			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
 			
-			$query->delete($db->quoteName('#__lan_players'));
+			$query->delete($db->quoteName('#__events_players'));
 			$query->where($conditions);
 						
 			// Set the query and execute item
@@ -303,7 +303,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -329,7 +329,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
 			$query->where('p.event = ' . JRequest::getVar('id',NULL));

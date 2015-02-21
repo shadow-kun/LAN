@@ -35,7 +35,7 @@
 					'a.published, a.access, a.created_time, a.ordering, a.language, a.params, a.competition_start, a.competition_end'
 				)
 			);
-			$query->from('#__lan_competitions AS a');
+			$query->from('#__events_competitions AS a');
 			
 			//Join over the language
 			$query->select('l.title AS langugage_title');
@@ -131,7 +131,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.id');
-			$query->from('#__lan_competition_players AS a');
+			$query->from('#__events_competition_players AS a');
 			
 			$query->where('a.competition = ' . (int) $competition);
 			
@@ -146,7 +146,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.id');
-			$query->from('#__lan_competition_teams AS a');
+			$query->from('#__events_competition_teams AS a');
 			
 			$query->where('a.competition = ' . (int) $competition);
 			

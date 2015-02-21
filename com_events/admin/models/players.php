@@ -94,11 +94,11 @@
 					'list.select', 'a.id, a.status, a.checked_in'
 				)
 			);
-			$query->from('#__lan_players AS a');
+			$query->from('#__events_players AS a');
 			
 			//Join over the events
 			$query->select('e.title AS event');
-			$query->join('LEFT', '`#__lan_events` AS e ON e.id = a.event');
+			$query->join('LEFT', '`#__events_events` AS e ON e.id = a.event');
 			
 			
 			//Join over the users.

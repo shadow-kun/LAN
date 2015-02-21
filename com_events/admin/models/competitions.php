@@ -104,7 +104,7 @@
 					'a.published, a.access, a.created_time, a.ordering, a.language'
 				)
 			);
-			$query->from('#__lan_competitions AS a');
+			$query->from('#__events_competitions AS a');
 			
 			//Join over the language
 			$query->select('l.title AS langugage_title');

@@ -35,7 +35,7 @@
 					'a.published, a.access, a.created_time, a.ordering, a.language, a.params'
 				)
 			);
-			$query->from('#__lan_teams AS a');
+			$query->from('#__events_teams AS a');
 			
 			//Join over the language
 			$query->select('l.title AS langugage_title');
@@ -114,7 +114,7 @@
 			if ($layout == 'myteams')
 			{
 				
-				$query->join('LEFT', '#__lan_team_players AS t ON t.team = a.id');
+				$query->join('LEFT', '#__events_team_players AS t ON t.team = a.id');
 				$query->where('t.user = ' . (int) JFactory::getUser()->id);
 			}
 			

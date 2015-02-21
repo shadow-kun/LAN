@@ -47,7 +47,7 @@
 						)
 					);
 					
-					$query->from('#__lan_competitions AS a');
+					$query->from('#__events_competitions AS a');
 					
 					// Join on category table.
 					$query->select('c.title AS category_title')
@@ -109,7 +109,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params, p.status AS status');
-			$query->from('#__lan_competition_players AS p');
+			$query->from('#__events_competition_players AS p');
 						
 			// Selects the competition that is required.
 			$query->where('p.competition = ' . JRequest::getVar('id',NULL));
@@ -143,14 +143,14 @@
 
 			// Join over the team names
 			$query->select('t.title AS name, t.id AS id')
-				->from('#__lan_teams AS t');
+				->from('#__events_teams AS t');
 			
 			// Select the required fields from the table.
 			$query->select('ct.id AS entryid, ct.status AS status')
-				->join('LEFT', '#__lan_competition_teams AS ct ON ct.team = t.id');
+				->join('LEFT', '#__events_competition_teams AS ct ON ct.team = t.id');
 			
 			// Join the user current status in each team
-			$query->join('LEFT', '#__lan_team_players AS tp on tp.team = t.id');
+			$query->join('LEFT', '#__events_team_players AS tp on tp.team = t.id');
 
 			// Selects the competition that is required.
 			//$query->where('ct.competition = ' . JRequest::getVar('id',NULL));
@@ -203,11 +203,11 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params as params, p.status AS status');
-			$query->from('#__lan_competition_teams AS p');
+			$query->from('#__events_competition_teams AS p');
 			
 			//Join over the users.
 			$query->select('t.title AS name');
-			$query->join('LEFT', '#__lan_teams AS t ON t.id = p.team');
+			$query->join('LEFT', '#__events_teams AS t ON t.id = p.team');
 			
 			// Selects the event that is required.
 			$query->where('p.competition = ' . JRequest::getInt('id'));
@@ -235,7 +235,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params as params, p.status AS status');
-			$query->from('#__lan_competition_players AS p');
+			$query->from('#__events_competition_players AS p');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -276,7 +276,7 @@
 			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_players'));
+			$query->update($db->quoteName('#__events_players'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -294,7 +294,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -321,7 +321,7 @@
 			$values = array('NULL',JRequest::getVar('id'), $user->id, '1', 'NULL');
 			
 			// Prepare Insert Query $db->quoteName('unconfirmed')
-			$query  ->insert($db->quoteName('#__lan_players'))
+			$query  ->insert($db->quoteName('#__events_players'))
 					->columns($db->quoteName($colums))
 					->values(implode(',', $values));
 			
@@ -337,7 +337,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -358,7 +358,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.players_confirmed', 'a.players_current');
-			$query->from('#__lan_events AS a');
+			$query->from('#__events_events AS a');
 				
 			$query->where('a.id = ' . (int) JRequest::getInt('id',NULL,'GET'));
 			$db->setQuery($query);
@@ -378,7 +378,7 @@
 
 				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 				
-				$query->update($db->quoteName('#__lan_events'));
+				$query->update($db->quoteName('#__events_events'));
 				$query->set($fields);
 				$query->where($conditions);
 				
@@ -391,7 +391,7 @@
 			// Sets the conditions of the delete of the user with the event
 			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
 			
-			$query->delete($db->quoteName('#__lan_players'));
+			$query->delete($db->quoteName('#__events_players'));
 			$query->where($conditions);
 						
 			// Set the query and execute item
@@ -405,7 +405,7 @@
 
 			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
 			
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -431,7 +431,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
 			$query->where('p.event = ' . JRequest::getVar('id',NULL));
@@ -519,7 +519,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.id');
-			$query->from('#__lan_competition_players AS a');
+			$query->from('#__events_competition_players AS a');
 			
 			$query->where('a.competition = ' . (int) $competition);
 			
@@ -534,7 +534,7 @@
 			$query	= $db->getQuery(true);
 			
 			$query->select('a.id');
-			$query->from('#__lan_competition_teams AS a');
+			$query->from('#__events_competition_teams AS a');
 			
 			$query->where('a.competition = ' . (int) $competition);
 			
@@ -553,7 +553,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params');
-			$query->from('#__lan_competition_players AS p');
+			$query->from('#__events_competition_players AS p');
 						
 			// Selects the competition that is required.
 			$query->where('p.competition = ' . $competition);
@@ -580,7 +580,7 @@
 				$values = array('NULL', $competition, $user, $params);
 				
 				// Prepare Insert Query $db->quoteName('unconfirmed')
-				$query  ->insert($db->quoteName('#__lan_competition_players'))
+				$query  ->insert($db->quoteName('#__events_competition_players'))
 						->columns($db->quoteName($colums))
 						->values(implode(',', $values));
 				
@@ -603,7 +603,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params');
-			$query->from('#__lan_competition_teams AS p');
+			$query->from('#__events_competition_teams AS p');
 						
 			// Selects the competition that is required.
 			$query->where('p.competition = ' . $competition);
@@ -630,7 +630,7 @@
 				$values = array('NULL', $competition, $team, $params);
 				
 				// Prepare Insert Query $db->quoteName('unconfirmed')
-				$query  ->insert($db->quoteName('#__lan_competition_teams'))
+				$query  ->insert($db->quoteName('#__events_competition_teams'))
 						->columns($db->quoteName($colums))
 						->values(implode(',', $values));
 				
@@ -654,7 +654,7 @@
 			// Sets the conditions of the delete of the user with the competition
 			$conditions = array($db->quoteName('competition') . ' = ' . $competition, $db->quoteName('user') . ' = ' .  $user);
 			
-			$query->delete($db->quoteName('#__lan_competition_players'));
+			$query->delete($db->quoteName('#__events_competition_players'));
 			$query->where($conditions);
 						
 			// Set the query and execute item
@@ -675,7 +675,7 @@
 			// Sets the conditions of the delete of the user with the competition
 			$conditions = array($db->quoteName('competition') . ' = ' . $competition, $db->quoteName('team') . ' = ' .  $team);
 			
-			$query->delete($db->quoteName('#__lan_competition_teams'));
+			$query->delete($db->quoteName('#__events_competition_teams'));
 			$query->where($conditions);
 						
 			// Set the query and execute item
@@ -698,7 +698,7 @@
 			$conditions = array($db->quoteName('competition') . ' = ' . ((int) $competition), $db->quoteName('user') . ' = ' . ((int) $user));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_competition_players'));
+			$query->update($db->quoteName('#__events_competition_players'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -722,7 +722,7 @@
 			$conditions = array($db->quoteName('competition') . ' = ' . ((int) $competition), $db->quoteName('team') . ' = ' . ((int) $team));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_competition_teams'));
+			$query->update($db->quoteName('#__events_competition_teams'));
 			$query->set($fields);
 			$query->where($conditions);
 			

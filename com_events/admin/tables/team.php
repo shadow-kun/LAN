@@ -27,7 +27,7 @@ class EventsTableTeam extends JTable
 	 */
 	public function __construct($db)
 	{
-		parent::__construct('#__lan_teams', 'id', $db);
+		parent::__construct('#__events_teams', 'id', $db);
 	}
 
 	/**

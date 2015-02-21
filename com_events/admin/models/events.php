@@ -104,7 +104,7 @@
 					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max'
 				)
 			);
-			$query->from('#__lan_events AS a');
+			$query->from('#__events_events AS a');
 			
 			//Join over the language
 			$query->select('l.title AS langugage_title');

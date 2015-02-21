@@ -85,7 +85,7 @@
 				$query	= $db->getQuery(true);
 				
 				$query->select('a.id AS id, a.params AS params');
-				$query->from('#__lan_payments AS a');
+				$query->from('#__events_payments AS a');
 							
 				// Selects current user.
 				$query->where('a.transaction_id = ' . $db->quote(JRequest::getVar('txn_id')));
@@ -137,7 +137,7 @@
 					$values = array('NULL', 'NULL', $item_number, $db->quote(JRequest::getVar('txn_id')), $paypalAmount, $db->quote(JRequest::getVar('mc_currency')), $params);
 
 					// Prepare Insert Query $db->quoteName('unconfirmed')
-					$query  ->insert($db->quoteName('#__lan_payments'))
+					$query  ->insert($db->quoteName('#__events_payments'))
 							->columns($db->quoteName($colums))
 							->values(implode(',', $values));
 					
@@ -152,10 +152,10 @@
 					
 						// Check that payment_amount/payment_currency are correct
 						$query->select('a.id AS id, a.params AS params');
-						$query->from('#__lan_events AS a');
+						$query->from('#__events_events AS a');
 						
 						$query->select('p.user AS user, p.status AS status');
-						$query->join('LEFT', '#__lan_players AS p ON a.id = p.event');
+						$query->join('LEFT', '#__events_players AS p ON a.id = p.event');
 						
 						// Selects current transaction.
 						$query->where('p.id = ' . $item_number);
@@ -176,7 +176,7 @@
 							$conditions = array($db->quoteName('id') . ' = ' . $item_number);
 							
 							// Executes Query
-							$query->update($db->quoteName('#__lan_players'));
+							$query->update($db->quoteName('#__events_players'));
 							$query->set($fields);
 							$query->where($conditions);
 							

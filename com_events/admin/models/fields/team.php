@@ -28,7 +28,7 @@
 			$db = JFactory::getDBO();
 			$query = $db->getQuery(true);
 			$query->select('id,title');
-			$query->from('#__lan_teams');
+			$query->from('#__events_teams');
 			$db->setQuery((string)$query);
 			$messages = $db->loadObjectList();
 			$options = array();

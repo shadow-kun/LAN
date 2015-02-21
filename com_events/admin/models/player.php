@@ -149,7 +149,7 @@
 					$query	= $db->getQuery(true);
 					
 					$query->select('MAX(ordering)');
-					$query->from('#__lan_players AS a');
+					$query->from('#__events_players AS a');
 					
 					//$query->where('a.category_id = '.(int) $table->category_id);
 					

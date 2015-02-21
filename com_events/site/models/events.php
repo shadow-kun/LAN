@@ -35,7 +35,7 @@
 					'a.published, a.access, a.created_time, a.ordering, a.language, a.players_current, a.players_max, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time, a.params'
 				)
 			);
-			$query->from('#__lan_events AS a');
+			$query->from('#__events_events AS a');
 			
 			//Join over the language
 			$query->select('l.title AS langugage_title');

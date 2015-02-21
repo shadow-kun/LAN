@@ -10,11 +10,11 @@
 	<version>0.0.1</version>
 	<description>COM_EVENTS_DESCRIPTION</description>
 	
-	<!--<install>
+	<install>
   		<sql>
     		<file charset="utf8" driver="mysql">install.mysql.sql</file>
   		</sql>
-	</install>-->
+	</install>
 	
 	<update> <!-- Runs on update; New since J2.5 -->
 		<schemas>

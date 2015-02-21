@@ -92,11 +92,11 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.competition, p.params');
-			$query->from('#__lan_competition_players AS p');
+			$query->from('#__events_competition_players AS p');
 			
 			//Join over the competitions.
 			$query->select('c.id AS competition');
-			$query->join('LEFT', '`#__lan_competitions` AS c ON c.id = p.competition');
+			$query->join('LEFT', '`#__events_competitions` AS c ON c.id = p.competition');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -129,14 +129,14 @@
 			
 			// Select the required fields from the table.
 			$query->select('ct.id AS id, ct.competition, ct.params');
-			$query->from('#__lan_competition_teams AS ct');
+			$query->from('#__events_competition_teams AS ct');
 			
 			//Join over the competitions.
-			$query->join('LEFT', '`#__lan_competitions` AS c ON c.id = ct.competition');
+			$query->join('LEFT', '`#__events_competitions` AS c ON c.id = ct.competition');
 			
 			//Join over the users.
 			$query->select('t.title AS name');
-			$query->join('LEFT', '#__lan_teams AS t ON t.id = ct.team');
+			$query->join('LEFT', '#__events_teams AS t ON t.id = ct.team');
 			
 			// Selects the competition that is required.
 			$id = (int) JRequest::getVar('id');
@@ -241,7 +241,7 @@
 					$query	= $db->getQuery(true);
 					
 					$query->select('MAX(ordering)');
-					$query->from('#__lan_competitions AS a');
+					$query->from('#__events_competitions AS a');
 					
 					$query->where('a.category_id = '.(int) $table->category_id);
 					

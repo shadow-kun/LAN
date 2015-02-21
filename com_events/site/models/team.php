@@ -47,7 +47,7 @@
 						)
 					);
 					
-					$query->from('#__lan_teams AS a');
+					$query->from('#__events_teams AS a');
 					
 					// Join on category table.
 					$query->select('c.title AS category_title')
@@ -110,7 +110,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.team, p.status, p.params');
-			$query->from('#__lan_team_players AS p');
+			$query->from('#__events_team_players AS p');
 						
 			// Selects the team that is required.
 			$query->where('p.team = ' . JRequest::getVar('id',NULL));
@@ -134,7 +134,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.team, p.status, p.params as params, p.user as userid');
-			$query->from('#__lan_team_players AS p');
+			$query->from('#__events_team_players AS p');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -175,7 +175,7 @@
 			$conditions = array($db->quoteName('id') . ' = ' . ((int) $team));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_teams'));
+			$query->update($db->quoteName('#__events_teams'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -199,7 +199,7 @@
 			$conditions = array($db->quoteName('team') . ' = ' . ((int) $team), $db->quoteName('user') . ' = ' . ((int) $user));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_team_players'));
+			$query->update($db->quoteName('#__events_team_players'));
 			$query->set($fields);
 			$query->where($conditions);
 			
@@ -235,7 +235,7 @@
 				$values = array('null', $db->quote($title), $db->quote($body), 1, 1, $db->quote('*'), $user->id, $db->quote($date->tosql(true)), 'null');
 				
 				// Prepare Insert Query $db->quoteName('unconfirmed')
-				$query  ->insert($db->quoteName('#__lan_teams'))
+				$query  ->insert($db->quoteName('#__events_teams'))
 						->columns($db->quoteName($colums))
 						->values(implode(',', $values));
 				
@@ -247,7 +247,7 @@
 				
 				// Select the required fields from the table.
 				$query->select('a.id AS id');
-				$query->from('#__lan_teams AS a');
+				$query->from('#__events_teams AS a');
 							
 				// Selects current user.
 				$query->where('a.created_user_id = ' . JFactory::getUser()->id);
@@ -274,7 +274,7 @@
 				$values = array('NULL', $id, 4, $user->id, 'NULL');
 				
 				// Prepare Insert Query $db->quoteName('unconfirmed')
-				$query  ->insert($db->quoteName('#__lan_team_players'))
+				$query  ->insert($db->quoteName('#__events_team_players'))
 						->columns($db->quoteName($colums))
 						->values(implode(',', $values));
 				
@@ -303,7 +303,7 @@
 			$values = array('NULL',(int) $team, (int) $status, (int) $user, 'NULL');
 			
 			// Prepare Insert Query $db->quoteName('unconfirmed')
-			$query  ->insert($db->quoteName('#__lan_team_players'))
+			$query  ->insert($db->quoteName('#__events_team_players'))
 					->columns($db->quoteName($colums))
 					->values(implode(',', $values));
 			
@@ -322,7 +322,7 @@
 			
 			$conditions = array($db->quoteName('team') . ' = ' . (int) $team, $db->quoteName('user') . ' = ' .  (int) $user);
 			
-			$query->delete($db->quoteName('#__lan_team_players'));
+			$query->delete($db->quoteName('#__events_team_players'));
 			$query->where($conditions);
 									
 			// Set the query and execute item
@@ -344,7 +344,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('a.id AS id, a.status AS status');
-			$query->from('#__lan_team_players AS a');
+			$query->from('#__events_team_players AS a');
 						
 			// Selects current user.
 			$query->where('a.user = ' . JFactory::getUser()->id);
@@ -368,7 +368,7 @@
 				$conditions = array($db->quoteName('id') . ' = ' . (int) $team);
 				
 				// Executes Query
-				$query->update($db->quoteName('#__lan_teams'));
+				$query->update($db->quoteName('#__events_teams'));
 				$query->set($fields);
 				$query->where($conditions);
 				
@@ -401,7 +401,7 @@
 						
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.event, p.status AS status, p.params');
-			$query->from('#__lan_players AS p');
+			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
 			$query->where('p.event = ' . JRequest::getVar('id',NULL));

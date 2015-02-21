@@ -40,7 +40,7 @@
 			{
 				// Select the required fields from the table.
 				$query->select('a.id AS id, a.competition, a.params');
-				$query->from('#__lan_competition_players AS a');
+				$query->from('#__events_competition_players AS a');
 							
 				// Selects the team that is required.
 				$query->where('a.competition = ' . $competition);
@@ -64,7 +64,7 @@
 					$values = array('NULL',$competition, $data['add_user'], $db->quote(json_encode(array('status' => 1))));
 					
 					// Prepare Insert Query $db->quoteName('unconfirmed')
-					$query  ->insert($db->quoteName('#__lan_competition_players'))
+					$query  ->insert($db->quoteName('#__events_competition_players'))
 							->columns($db->quoteName($colums))
 							->values(implode(',', $values));
 					

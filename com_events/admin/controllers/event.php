@@ -43,7 +43,7 @@
 			{
 				// Select the required fields from the table.
 				$query->select('e.id AS id, e.event, e.status, e.params');
-				$query->from('#__lan_players AS e');
+				$query->from('#__events_players AS e');
 							
 				// Selects the team that is required.
 				$query->where('e.event = ' . $event);
@@ -67,7 +67,7 @@
 					$values = array('NULL',$event, $data['add_user'], $data['add_user_status'], 'NULL');
 					
 					// Prepare Insert Query $db->quoteName('unconfirmed')
-					$query  ->insert($db->quoteName('#__lan_players'))
+					$query  ->insert($db->quoteName('#__events_players'))
 							->columns($db->quoteName($colums))
 							->values(implode(',', $values));
 					
@@ -84,7 +84,7 @@
 
 					$conditions = array($db->quoteName('id') . ' = ' . $event);
 					
-					$query->update($db->quoteName('#__lan_events'));
+					$query->update($db->quoteName('#__events_events'));
 					$query->set($fields);
 					$query->where($conditions);
 					
@@ -106,7 +106,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('e.id AS id, e.event, e.status, e.params');
-			$query->from('#__lan_players AS e');
+			$query->from('#__events_players AS e');
 						
 			// Selects the team that is required.
 			$query->where('e.event = ' . $event);
@@ -129,7 +129,7 @@
 						$query	= $db->getQuery(true);
 						
 						// Sets delete statement and clauses
-						$query->delete($db->quoteName('#__lan_players'));
+						$query->delete($db->quoteName('#__events_players'));
 						
 						// Sets conditions for a single player for that team.
 						$query->where($db->quoteName('event') . ' = ' . $event);
@@ -151,7 +151,7 @@
 						$query->where($db->quoteName('id') . ' = ' . $player->id);
 						
 						// Executes Query
-						$query->update($db->quoteName('#__lan_players'));
+						$query->update($db->quoteName('#__events_players'));
 						
 						// Set the query and execute item
 						$db->setQuery($query);							
@@ -172,7 +172,7 @@
 			
 			// Gets current event
 			$query->select('e.params AS params');
-			$query->from('#__lan_events AS e');
+			$query->from('#__events_events AS e');
 			
 			$query->where('id = ' . $event);
 			$result = $db->setQuery($query)->loadResult();
@@ -186,7 +186,7 @@
 			
 			// Gets current event name
 			$query->select('e.title AS title');
-			$query->from('#__lan_events AS e');
+			$query->from('#__events_events AS e');
 			
 			$query->where('id = ' . $event);
 			$eventName = $db->setQuery($query)->loadResult();
@@ -282,7 +282,7 @@
 			$query->where($db->quoteName('id') . ' = ' . $db->quote($event));
 			
 			// Executes Query
-			$query->update($db->quoteName('#__lan_events'));
+			$query->update($db->quoteName('#__events_events'));
 			
 			// Set the query and execute item
 			$db->setQuery($query);							

@@ -92,11 +92,11 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.team, p.status, p.params');
-			$query->from('#__lan_team_players AS p');
+			$query->from('#__events_team_players AS p');
 			
 			//Join over the competitions.
 			$query->select('t.id AS team');
-			$query->join('LEFT', '`#__lan_teams` AS t ON t.id = p.team');
+			$query->join('LEFT', '`#__events_teams` AS t ON t.id = p.team');
 			
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -205,7 +205,7 @@
 					$query	= $db->getQuery(true);
 					
 					$query->select('MAX(ordering)');
-					$query->from('#__lan_teams AS a');
+					$query->from('#__events_teams AS a');
 					
 					$query->where('a.category_id = '.(int) $table->category_id);
 					

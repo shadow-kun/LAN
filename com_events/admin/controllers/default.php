@@ -57,7 +57,7 @@
 			
 			// Select the required fields from the table.
 			$query->select('p.id AS id, p.status AS status, p.params');
-			$query->from('#__lan_team_players AS p');
+			$query->from('#__events_team_players AS p');
 					
 			//Join over the users.
 			$query->select('u.username AS username');
@@ -90,7 +90,7 @@
 							}
 							
 							// Sets delete statement and clauses
-							$query->delete($db->quoteName('#__lan_team_players'));
+							$query->delete($db->quoteName('#__events_team_players'));
 							
 							// Sets conditions for a single player for that team.
 							$query->where($db->quoteName('team') . ' = ' . $id);
@@ -122,7 +122,7 @@
 							$query->where($db->quoteName('id') . ' = ' . $player->id);
 							
 							// Executes Query
-							$query->update($db->quoteName('#__lan_team_players'));
+							$query->update($db->quoteName('#__events_team_players'));
 							
 							// Set the query and execute item
 							$db->setQuery($query);							
@@ -148,7 +148,7 @@
 							$query->where($db->quoteName('id') . ' = ' . $player->id);
 							
 							// Executes Query
-							$query->update($db->quoteName('#__lan_team_players'));
+							$query->update($db->quoteName('#__events_team_players'));
 							
 							// Set the query and execute item
 							$db->setQuery($query);							
@@ -168,7 +168,7 @@
 							$query->where($db->quoteName('status') . ' = ' . '4');
 							
 							// Executes Query
-							$query->update($db->quoteName('#__lan_team_players'));
+							$query->update($db->quoteName('#__events_team_players'));
 							
 							// Set the query and execute item
 							$db->setQuery($query);							
@@ -185,7 +185,7 @@
 							$query->where($db->quoteName('id') . ' = ' . $player->id);
 							
 							// Executes Query
-							$query->update($db->quoteName('#__lan_team_players'));
+							$query->update($db->quoteName('#__events_team_players'));
 							
 							// Set the query and execute item
 							$db->setQuery($query);							
