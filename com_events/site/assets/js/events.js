@@ -257,7 +257,7 @@ function unregisterEventUser()
 	});
     
 	jQuery.ajax({
-		url:'index.php?option=com_events&controller=unregister&format=raw&tmpl=component&id=' + eventid,
+		url:'index.php?option=com_events&controller=unregister&view=event&format=raw&tmpl=component&id=' + eventid,
 		type:'POST',
 		data:attendeeInfo,
 		dataType:'JSON',

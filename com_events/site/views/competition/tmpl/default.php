@@ -86,7 +86,6 @@
 			
 		
 		<?php echo EventsHelpersView::load('competition','_details','phtml'); ?>
-		<?php echo EventsHelpersView::load('competition','_entrants','phtml'); ?>
 			
 		
 		<?php /* Seperate teams / players competitions from this point onwards */ ?>

@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `#__events_competition_players` (
   `competition` int(10) unsigned NOT NULL,
   `user` int(10) unsigned NOT NULL,
   `note` text CHARACTER SET 'utf8',
+  `status` int(11) NOT NULL,
   `params` mediumtext CHARACTER SET 'utf8',
   PRIMARY KEY (`id`)
 );
@@ -36,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `#__events_competition_teams` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `competition` int(11) NOT NULL,
   `team` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
   `note` text,
   `params` mediumtext,
   PRIMARY KEY (`id`)

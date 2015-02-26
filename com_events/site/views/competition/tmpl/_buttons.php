@@ -69,6 +69,11 @@
 						echo '<a class="btn btn-primary" onclick="registerCompetitionTeam()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REGISTER_LABEL', true) . '</a> ';
 					}
 				}
+				
+			}
+			else
+			{
+				echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REQUIRED_LABEL', true) . ' ';
 			}
 		}
 	}
