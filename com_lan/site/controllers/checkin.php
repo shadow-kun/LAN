@@ -41,7 +41,7 @@
 			$app->enqueueMessage('Test Valid', 'warning');
 			
 			$query->select('*');
-			$query->from('#__lan_competition_playerss');
+			$query->from('#__lan_competition_players');
 			
 			
 			// Runs query

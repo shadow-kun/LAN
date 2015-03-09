@@ -207,47 +207,52 @@
 				
 				$db->query();
 				
-				$groupData = array(
-				'title' => $eventName,
-				'parent_id' => $result,
-				'id' => 0 );
+				if(!empty($result))
+				{
+					$groupData = array(
+					'title' => $data['title'],
+					'parent_id' => $result,
+					'id' => 0 );
 
-				$groupModel->save( $groupData );
-				
-				$query	= $db->getQuery(true);
-				
-				$query->select('ug.id AS id');
-				$query->from('#__usergroups AS ug');
-				
-				$query->where('ug.title = "' . $eventName . '"');
-				$result = $db->setQuery($query)->loadResult();
-								
-				$db->query();
-				
-				// Creates Checked-In Group
-				/*$groupData = array(
-				'title' => 'Checked-In Users',
-				'parent_id' => $result,
-				'id' => 0 );
+					$groupModel->save( $groupData );
+					
+					$query	= $db->getQuery(true);
+					
+					$query->select('ug.id AS id');
+					$query->from('#__usergroups AS ug');
+					
+					$query->where($db->quoteName('ug.title') . ' = ' . $db->quote($data['title']));
+					$result = $db->setQuery($query)->loadResult();
+									
+					$db->query();
+					
+					if(!empty($result))
+					{
+						// Creates Checked-In Group
+						$groupData = array(
+						'title' => 'Checked-In Users',
+						'parent_id' => $result,
+						'id' => 0 );
 
-				$groupModel->save( $groupData );
-				
-				// Creates Paid Group
-				$groupData = array(
-				'title' => 'Paid Users',
-				'parent_id' => $result,
-				'id' => 0 );
+						$groupModel->save( $groupData );
+					}
+					/*
+					// Creates Paid Group
+					$groupData = array(
+					'title' => 'Paid Users',
+					'parent_id' => $result,
+					'id' => 0 );
 
-				$groupModel->save( $groupData );
-				
-				// Creates Registered Group 
-				$groupData = array(
-				'title' => 'Registered Users',
-				'parent_id' => $result,
-				'id' => 0 );
+					$groupModel->save( $groupData );
+					
+					// Creates Registered Group 
+					$groupData = array(
+					'title' => 'Registered Users',
+					'parent_id' => $result,
+					'id' => 0 );
 
-				$groupModel->save( $groupData );*/
-				
+					$groupModel->save( $groupData );*/
+				}
 				$usergroup = array('usergroup' => $result);
 				$params = array_merge($params, $usergroup);
 				

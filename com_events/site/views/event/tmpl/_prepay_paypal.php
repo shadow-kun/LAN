@@ -17,16 +17,24 @@
 	$paypalEmail		= $this->event->params->paypal_email;// Event Setting
 	$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
 	$paypalCurrency 	= $this->event->params->paypal_currency; // Event Setting
-	$paypalCancel		= JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); // Send to event page
-	$paypalReturn		= JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); // Send to event page
-	$paypalItem			= 'Respawn LAN event ticket'; // Website Setting or Event Setting?
+	$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+	$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+	$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
 	$paypalItemNumber	= (int) $this->currentUser->id;
-	$paypalNotifyURL	= 'http://beta.shadowreaper.net/respawn/components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
+	$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
 
 	$paypalSiteSandbox = "www.sandbox.paypal.com"; 
 	$paypalSiteProduction = "www.paypal.com";
 	
-	$paypalSite = $paypalSiteSandbox;
+	// Sets if sandbox mode is on or off.
+	if($params->paypal_sandbox == 1)
+	{
+		$paypalSite = $paypalSiteSandbox;
+	}
+	else
+	{
+		$paypalSite = $paypalSiteProduction;
+	}
 	$p = 0;
 	
 ?>

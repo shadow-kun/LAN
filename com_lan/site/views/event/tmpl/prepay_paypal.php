@@ -26,7 +26,16 @@
 	$paypalSiteSandbox = "www.sandbox.paypal.com"; 
 	$paypalSiteProduction = "www.paypal.com";
 	
-	$paypalSite = $paypalSiteSandbox;
+	// Sets if sandbox mode is on or off.
+	if($params->paypal_sandbox == 1)
+	{
+		$paypalSite = $paypalSiteSandbox;
+	}
+	else
+	{
+		$paypalSite = $paypalSiteProduction;
+	}
+	
 	$p = 0;
 	
 ?>

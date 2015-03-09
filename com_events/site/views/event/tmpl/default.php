@@ -43,9 +43,9 @@
 		<p><strong><?php echo JText::_('COM_EVENTS_EVENT_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($this->event->players_current); ?> / <?php echo $this->escape($this->event->players_confirmed); ?> / <?php echo $this->escape($this->event->players_max); ?><br />
 			<strong><?php echo JText::_('COM_EVENTS_EVENT_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($this->event->players_prepaid); ?> / <?php echo $this->escape($this->event->players_prepay); ?></p>
 		
-		<p><?php /*
+		<p><?php 
 				include('qrcode.php');
-				QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/images/qrcodes/010_merged.png');
+				QRcode::png('http://beta.shadowreaper.net/respawn', JPATH_COMPONENT . '/assets/images/qrcodes/010_merged.png');
 				
 				include('barcode.php');  
 				$im     = imagecreatetruecolor(200, 100);  
@@ -57,13 +57,13 @@
 				// Output the image to browser
 				header('Content-Type: image/gif');
 
-				imagegif($im, JPATH_COMPONENT . '/images/qrcodes/010_merged.gif');
+				imagegif($im, JPATH_COMPONENT . '/assets/images/qrcodes/010_merged.gif');
 				imagedestroy($im);
 				
-				echo '<img src="' . JURI::root() . '/components/COM_EVENTS/images/qrcodes/010_merged.gif' . '">';
+				echo '<img src="' . JURI::root() . 'components/com_events/assets/images/qrcodes/010_merged.gif' . '">';
 				
 			// displaying
-			echo '<img src="./components/COM_EVENTS/images/qrcodes/010_merged.png' . '" />'; */?><p>
+			echo '<img src="' . JURI::root() . 'components/com_events/assets/images/qrcodes/010_merged.png' . '" />'; ?><p>
 		<!-- Need to have a restrict access cause here -->
 		
 		<?php if(JFactory::getUser()->guest) { 

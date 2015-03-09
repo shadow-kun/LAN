@@ -31,6 +31,7 @@
 				// If adding to the event is successful
 				if($model->storeAttendee())
 				{
+					$model->sendTicket();
 					$return['success'] = true;
 					$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
 				}

@@ -73,7 +73,7 @@
 
 					if (empty($data))
 					{
-						return JError::raiseError(404, JText::_('COM_LAN_ERROR_EVENT_NOT_FOUND'));
+						return JError::raiseError(404, JText::_('COM_EVENTS_ERROR_EVENT_NOT_FOUND'));
 					}
 					
 					$data->params = json_decode($data->params);
@@ -92,7 +92,7 @@
 					}
 					else
 					{
-						$this->setError($e);
+						JError::raiseError(500, $e->getMessage());
 						$this->_item[$pk] = false;
 					}
 				}

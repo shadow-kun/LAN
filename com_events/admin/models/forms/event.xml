@@ -330,6 +330,14 @@
 				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
 				default="your@email.here"
 				size="10" />
+			<field name="paypal_sandbox"
+				type="radio"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_OFF</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
+			</field>
 			
 			<field name="usergroup"
 				type="hidden"

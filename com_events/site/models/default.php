@@ -104,7 +104,7 @@
 		
 		public function getItem()
 		{
-			$db = JFactory::getDBO();
+			$db = JFactory::getDB();
 
 			$query = $this->_buildQuery();
 			$this->_buildWhere($query);
