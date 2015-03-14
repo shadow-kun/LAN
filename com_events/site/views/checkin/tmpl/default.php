@@ -22,6 +22,9 @@
 	<div class="span5 well">
 		<?php echo EventsHelpersView::load('checkin','_details','phtml'); ?>
 	</div>
+	<div class="span5 well">
+		<?php echo EventsHelpersView::load('checkin','_payments','phtml'); ?>
+	</div>
 	<?php echo JHtml::_( 'form.token' ); ?>
 	
 	<input type="hidden" name="option" value="com_events" />

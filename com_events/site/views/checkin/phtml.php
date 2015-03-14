@@ -22,12 +22,9 @@
 						$user = JRequest::getVar('username',NULL);
 						if(!empty($user))
 						{
-							
 							$user = JUserHelper::getUserId(JRequest::getVar('username',NULL));	
 							$event = JRequest::getInt('eventid',NULL);
 							$id = $this->model->getPlayerID($user, $event);
-										
-							
 						}
 					}
 				}
@@ -40,7 +37,7 @@
 				}
 			}
 			// Gets Event Details
-			//$this->event = $this->model->getEvent($id);
+			//$this->event = $this->model->getEvent($this->player->event);
 			
 			// Gets user base information
 			//$this->users = $this->model->getUsers($id);
