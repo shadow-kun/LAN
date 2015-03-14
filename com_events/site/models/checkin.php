@@ -74,7 +74,7 @@
 
 					if (empty($data) and $pk != null)
 					{
-						return JError::raiseError(404, JText::_('COM_LAN_ERROR_TICKET_NOT_FOUND'));
+						return JError::raiseError(404, JText::_('COM_EVENTS_ERROR_TICKET_NOT_FOUND'));
 					}
 					
 					if($pk != null)
@@ -124,6 +124,28 @@
 			$db->query();
 			
 			return $result;
+		}
+		
+		public function getPlayerID($id = null, $event = null)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('a.id AS id');
+			$query->from('#__events_players AS a');
+											
+			// Selects the team that is required.
+			$query->where('a.user = ' . $id);
+			
+			// Selects current user.
+			$query->where('a.event = ' . $event);
+						
+			// Runs query
+			$result = $db->setQuery($query)->loadResult();
+			$db->query();
+			
+			return intval($result);
 		}
 		
 		public function getCheckinGroup($pk = null)
@@ -183,5 +205,42 @@
 					}
 				}
 			}
+		}
+		
+		public function listEvents()
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select(
+				$this->getState(
+					'list.select', 'a.id AS id, a.title AS title, a.event_start_time, a.event_end_time'
+				)
+			);
+			$query->from('#__events_events AS a');
+			 
+			// Filter by published state
+			$published = $this->getState('filter.published');
+			if (is_numeric($published)) 
+			{
+				$query->where('a.published = ' . (int) $published);
+			} 
+			else if ($published === '') 
+			{
+				// Shows published and Archived Events
+				$query->where('(a.published = 1)');
+			}
+			
+			$query->where('a.event_end_time > NOW()');
+			
+			//echo nl2br(str_replace('#__','joom_',$query));
+			
+			// Runs query
+			
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			return $result;
 		}
 	}

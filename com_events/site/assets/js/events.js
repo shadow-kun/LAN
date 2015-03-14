@@ -29,7 +29,7 @@ function addTeam()
 function checkinUser(id)
 {
 	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
+	jQuery("#sources :input").each(function(idx,ele){
 		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
 	});
     
@@ -41,6 +41,32 @@ function checkinUser(id)
 		success:function(data)
 		{
 			console.log(data.view);
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
+// register an attendee to an event
+function checkinSearchEntry()
+{
+	var barcode = document.getElementById('checkin_barcode').value;
+	var id = document.getElementById('checkin_registration_id').value;
+	var username = document.getElementById('checkin_username').value;
+	var eventid = document.getElementById('eventid').value;
+	
+	var attendeeInfo = {};
+	jQuery("#sources :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=checkin&format=raw&tmpl=component&search=search&barcode=' + barcode + '&id=' + id + '&username=' + username + '&eventid=' + eventid,
+		type:'POST', 
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			console.log(data);
 			jQuery("#details").replaceWith(data.html);
 		}
     });

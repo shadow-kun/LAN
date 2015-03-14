@@ -126,15 +126,25 @@
 					}
 					
 					// ************ Logs the new payment *************
-							
+					// Check that payment_amount/payment_currency are correct
+					$query->select('p.user AS user');
+					$query->from('#__events_players AS p');
+					
+					// Selects current transaction.
+					$query->where('p.id = ' . $item_number);
+					
+					// Runs query
+					$user = $db->setQuery($query)->loadResult();
+					$db->query();
+					
 					// Sets JSON Params data
 					$params = $db->quote(json_encode(array('payment_method' => 'paypal', 'payment_status' => $db->quote(JRequest::getVar('payment_status')))));
 
 					// Sets columns
-					$colums = array('id', 'created_time', 'userEventID', 'transaction_id', 'amount', 'currency', 'params');
+					$colums = array('id', 'created_time', 'userEventID', 'transaction_id', 'amount', 'currency', 'params', 'user');
 
 					// Sets values
-					$values = array('NULL', 'NULL', $item_number, $db->quote(JRequest::getVar('txn_id')), $paypalAmount, $db->quote(JRequest::getVar('mc_currency')), $params);
+					$values = array('NULL', 'NULL', $item_number, $db->quote(JRequest::getVar('txn_id')), $paypalAmount, $db->quote(JRequest::getVar('mc_currency')), $params, $user);
 
 					// Prepare Insert Query $db->quoteName('unconfirmed')
 					$query  ->insert($db->quoteName('#__events_payments'))

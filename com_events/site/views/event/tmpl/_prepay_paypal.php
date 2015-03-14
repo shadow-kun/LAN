@@ -13,7 +13,6 @@
 	$paypalReturn		= $params->get('paypalReturn');*/
 	
 	// Test Data
-	//$params 			= json_decode($this->item->params);
 	$paypalEmail		= $this->event->params->paypal_email;// Event Setting
 	$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
 	$paypalCurrency 	= $this->event->params->paypal_currency; // Event Setting
@@ -27,7 +26,7 @@
 	$paypalSiteProduction = "www.paypal.com";
 	
 	// Sets if sandbox mode is on or off.
-	if($params->paypal_sandbox == 1)
+	if(intval($this->event->params->paypal_sandbox) == 1)
 	{
 		$paypalSite = $paypalSiteSandbox;
 	}
@@ -36,7 +35,6 @@
 		$paypalSite = $paypalSiteProduction;
 	}
 	$p = 0;
-	
 ?>
 <tr class="row<?php echo $p % 2; ?>">
 	<td class="center">	

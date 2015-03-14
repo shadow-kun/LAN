@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<!-- $Id$ -->
+<form>
+	<fieldset>
+		<field name="add_user"
+			type="user"
+			label="COM_EVENTS_EVENT_FIELD_PLAYERS_ADD_USER_LABEL"
+			description="COM_EVENTS_EVENT_FIELD_PLAYERS_ADD_USER_DESC"
+			class="readonly"
+			readonly="true"
+			filter="unset"			/>
+	</fieldset>
+</form>

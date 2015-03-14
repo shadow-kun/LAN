@@ -28,6 +28,7 @@
 			
 			$app = JFactory::getApplication();
 			
+			JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
 			
 			$this->editor = JFactory::getEditor();
 						
@@ -41,6 +42,7 @@
 								
 				// Gets the current user that is logged in
 				//$this->currentUser = $this->model->getCurrentUser();
+				
 				
 				$this->groupCheckin = $this->model->getCheckinGroup($id);
 			}

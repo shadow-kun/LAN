@@ -6,13 +6,39 @@
 	class EventsViewsCheckinPhtml extends JViewHTML
 	{
 		function render()
-		{
-			
-			$id = (int) JRequest::getInt('id');
-			
+		{		
 			$this->params = JComponentHelper::getParams('com_events');
 			
-			
+			$search = JRequest::getVar('search',NULL);
+					
+			if(isset($search) == true)
+			{
+				$id = JRequest::getInt('id',NULL);
+				if(empty($id) )
+				{
+					$id = JRequest::getInt('barcode',NULL);
+					if(empty($id))
+					{
+						$user = JRequest::getVar('username',NULL);
+						if(!empty($user))
+						{
+							
+							$user = JUserHelper::getUserId(JRequest::getVar('username',NULL));	
+							$event = JRequest::getInt('eventid',NULL);
+							$id = $this->model->getPlayerID($user, $event);
+										
+							
+						}
+					}
+				}
+				
+				if(!empty($id))
+				{
+					$this->player = $this->model->getPlayer($id);
+					
+					$this->groupCheckin = $this->model->getCheckinGroup($id);
+				}
+			}
 			// Gets Event Details
 			//$this->event = $this->model->getEvent($id);
 			
