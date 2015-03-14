@@ -314,7 +314,7 @@
 			return true;
 		}
 		
-		public function sendTicket()
+		public function sendTicket($pk = null)
 		{
 			
 			$mailer = JFactory::getMailer();
@@ -328,11 +328,11 @@
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.event, p.status AS status, p.params');
+			$query->select('p.id AS id, p.event AS event, p.status AS status, p.params');
 			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
-			$query->where('p.event = ' . JRequest::getVar('id',NULL));
+			$query->where('p.event = ' . $pk);
 			
 			// Selects current user.
 			$query->where('p.user = ' . JFactory::getUser()->id);
@@ -348,7 +348,7 @@
 			include('barcode.php');  
 				
 			// Get event details
-			$item = $this->getItem();
+			$event = $this->getEvent($result->event);
 			
 			// Gathers sender information from joomla
 			$sender = array( 
@@ -363,9 +363,9 @@
 			$mailer->addRecipient($recipient);
 			
 			// Subject of the email
-			$mailer->setSubject($db->escape($item->title) . ' - Registration Ticket');
+			$mailer->setSubject($db->escape($event->title) . ' - Registration Ticket');
 			// Body of the email
-			QRcode::png(JURI::root() . '/?option=com_events&view=checkin&layout=qrcode&id=' . $result->id , JPATH_COMPONENT . '/assets/qrcodes/ticket' . $result->id .'.png');
+			QRcode::png(JURI::root() . '/?option=com_events&view=checkin&layout=qrcode&id=' . $result->id , JPATH_COMPONENT . '/assets/images/qrcodes/ticket' . $result->id .'.png');
 			
 			$im     = imagecreatetruecolor(200, 100);  
 			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
@@ -376,25 +376,26 @@
 			// Output the image to browser
 			header('Content-Type: image/gif');
 
-			imagegif($im, JPATH_COMPONENT . '/assets/barcodes/ticket' . $result->id . '.gif');
+			imagegif($im, JPATH_COMPONENT . '/assets/images/barcodes/ticket' . $result->id . '.gif');
 			imagedestroy($im);
 			
 			$body = $app->getParams('com_events')->get('emailregistration');
 				
-			$body = $body . '<br />' . '<h2>' . $db->escape($item->title) . ' - Event Registration Ticket</h2>'
+			$body = $body . '<br />' . '<h2>' . $db->escape($event->title) . ' - Event Registration Ticket</h2>'
 					. '<div><p><strong>Username: </strong>' . JFactory::getUser()->username . '<br />' 
 					. '<strong>Name: </strong>' . JFactory::getUser()->name . '<br />'
-					. '<strong>Event Name: </strong>' . $db->escape($item->title) . '<br />'
+					. '<strong>Event Name: </strong>' . $db->escape($event->title) . '<br />'
 					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
-					. '<p><img src="components/com_events/assets/qrcodes/ticket' . $result->id . '.png" />'
-					. '<img src="components/com_events/assets/barcodes/ticket' . $result->id . '.gif" /></p></div>';
+					. '<p><img src="components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="components/com_events/assets/images/barcodes/ticket' . $result->id . '.gif" /></p></div>'
+					. '<p>' . JURI::root() . 'components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png"</p>';
 					
 			/* Needs to re-code images to ensure a full unc path */
 			$body = str_ireplace('src="', 'src="' . JURI::root() . '/', $body);
 			
 			/* Replaces braketed wildcards with appropriate text */
 			$body = str_ireplace('{name}', $user->name, $body);
-			$body = str_ireplace('{event}', $db->escape($item->title), $body);
+			$body = str_ireplace('{event}', $db->escape($event->title), $body);
 			
 			
 			$mailer->isHTML(true);
@@ -406,9 +407,12 @@
 			$send = $mailer->Send();
 			if ( $send !== true ) {
 				echo 'Error sending email: ' . $send->__toString();
+				return false;
 			} else {
-				echo 'Mail sent';
+				//echo 'Mail sent';
+				return true;
 			}
+			
 		}
 	}
 	

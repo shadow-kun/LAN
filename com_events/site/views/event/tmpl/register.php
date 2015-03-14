@@ -5,14 +5,11 @@
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
-	 
-	JHtml::_('behavior.tooltip');
-	JHtml::_('behavior.formvalidation');
 	
 	
-	$app = JFactory::getApplication();
-	$pathway = $app->getPathway();
-	$pathway->addItem(JText::_('COM_EVENTS_EVENT_REGISTER_TITLE', true), JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id));
+	//$app = JFactory::getApplication();
+	//$pathway = $app->getPathway();
+	//$pathway->addItem(JText::_('COM_EVENTS_EVENT_REGISTER_TITLE', true), JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id));
 ?>
 
 				
@@ -23,13 +20,14 @@
 		<a href="<?php echo JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id); ?>"><?php echo JText::_('COM_EVENTS_EVENT_REGISTER_TITLE', true) ?></a></h2>
 	
 	
-	<div class="row-fluid" id="details" >
-		<?php echo $this->_terms->render(); ?>
+	<div id="details">
+		<?php //echo EventsHelpersView::load('event','_terms','phtml'); ?>
 	
-		<div class="center">
-			<p><button class="btn " ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button> 
-				<a href="javascript:void(0);" onclick="registerEventUser()" class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_REGISTER', true); ?></a></p>
-		</div>
+			<div class="center">
+				<p><!--<button class="btn " ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button> -->
+					<a class="btn btn-primary" onclick="registerEventUser()" href="javascript:void(0);" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_REGISTER', true); ?></a></p>
+				<p><a class="btn" onclick="registerEventUser()"  href="javascript:void(0);" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_UNREGISTER', true); ?></a></p>
+			</div>
 	</div>
 	<input type="hidden" name="option" value="com_events" />
     <input type="hidden" name="task" value="" />

@@ -24,14 +24,25 @@
 			$renderButtons = null;
 			
 			// if calling from the event view.
-			if($view == 'event')
+			if($view == 'mail')
 			{
 				$model = new EventsModelsEvent();
 				
+				$id = JRequest::getInt('id');
+				
 				// If adding to the event is successful
-				if($model->storeAttendee())
+				$model->sendTicket($id);
+				$renderView = 'hi';
+			}
+			else if($view == 'event')
+			{
+				$model = new EventsModelsEvent();
+				
+				$id = JRequest::getInt('id');
+				
+				// If adding to the event is successful
+				if($model->storeAttendee() && $model->sendTicket($id))
 				{
-					$model->sendTicket();
 					$return['success'] = true;
 					$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
 				}
@@ -118,12 +129,13 @@
 			echo $renderView->render();
 			$html = ob_get_contents();
 			ob_clean();
-			ob_start();
 			
 			$return['html'] = $html;
 			
 			if(!empty($renderButtons))
-			{
+			{	
+				
+				ob_start();
 				echo $renderButtons->render();
 				$html = ob_get_contents();
 				ob_clean();
