@@ -80,6 +80,7 @@
 					if($pk != null)
 					{
 						$data->params = json_decode($data->params);
+						$data->event_params = json_decode($data->event_params);
 					}
 					$this->_item[$pk] = $data;
 				}
@@ -161,7 +162,7 @@
 					
 			$query->from('#__usergroups AS a');
 				
-			$query->where('parent_id = ' . json_decode($this->getPlayer($pk)->event_params)->usergroup);
+			$query->where('parent_id = ' . $this->getPlayer($pk)->event_params->usergroup);
 			$query->where('title = "Checked-In Users"');
 			
 			$db->setQuery($query);
@@ -243,4 +244,6 @@
 			
 			return $result;
 		}
+		
+		
 	}

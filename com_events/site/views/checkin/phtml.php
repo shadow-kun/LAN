@@ -10,10 +10,10 @@
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			$search = JRequest::getVar('search',NULL);
+			$id = JRequest::getInt('id',NULL);
 					
 			if(isset($search) == true)
 			{
-				$id = JRequest::getInt('id',NULL);
 				if(empty($id) )
 				{
 					$id = JRequest::getInt('barcode',NULL);
@@ -29,12 +29,12 @@
 					}
 				}
 				
-				if(!empty($id))
-				{
-					$this->player = $this->model->getPlayer($id);
-					
-					$this->groupCheckin = $this->model->getCheckinGroup($id);
-				}
+			}
+			if(!empty($id))
+			{
+				$this->player = $this->model->getPlayer($id);
+				
+				$this->groupCheckin = $this->model->getCheckinGroup($id);
 			}
 			// Gets Event Details
 			//$this->event = $this->model->getEvent($this->player->event);

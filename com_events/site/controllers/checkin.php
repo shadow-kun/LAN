@@ -41,6 +41,15 @@
 						
 						
 						$eventView = EventsHelpersView::load('checkin', '_details', 'phtml');
+						$eventPayments = EventsHelpersView::load('checkin', '_payments', 'phtml');
+						
+						ob_start();
+						echo $eventPayments->render();
+						$html = ob_get_contents();
+						ob_clean();
+						 
+						$return['payments'] = $html;
+						
 						$return['success'] = true;
 						
 					}

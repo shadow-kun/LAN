@@ -39,6 +39,7 @@
 			{
 				// Gets Competition Details
 				$this->player = $this->model->getPlayer($id);
+				
 								
 				// Gets the current user that is logged in
 				//$this->currentUser = $this->model->getCurrentUser();

@@ -18,9 +18,7 @@ function addTeam()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.redirect);
 			window.location.href = data.redirect;
-			//jQuery("#details").replaceWith(data.html);
 		}
     });
 }
@@ -40,10 +38,51 @@ function checkinUser(id)
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#details").replaceWith(data.html);
 		}
     });
+}
+
+// register an attendee to an event
+function checkinUserPayment(id)
+{
+	var attendeeInfo = {};
+	jQuery("#sources :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=payment&format=raw&tmpl=component&id=' + id + '&type=cash',
+		type:'POST', 
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			jQuery("#details").replaceWith(data.html);
+			jQuery("#payments").replaceWith(data.payments);
+		}
+    });
+}
+
+function checkinUserPaymentCheckin(id)
+{
+	var attendeeInfo = {};
+	jQuery("#sources :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+    
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=payment&format=raw&tmpl=component&id=' + id + '&type=cash',
+		type:'POST', 
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			jQuery("#payments").replaceWith(data.payments);
+		}
+    });
+	
+	checkinUser(id);
 }
 
 // register an attendee to an event
@@ -66,8 +105,8 @@ function checkinSearchEntry()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data);
 			jQuery("#details").replaceWith(data.html);
+			jQuery("#payments").replaceWith(data.payments);
 		}
     });
 }
@@ -88,7 +127,6 @@ function confirmEventUser()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#details").replaceWith(data.html);
 		}
     });
@@ -110,7 +148,6 @@ function registerEventUser()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#details").replaceWith(data.html);
 		}
     });
@@ -132,7 +169,6 @@ function registerTeamMember()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -155,7 +191,6 @@ function registerCompetitionUser()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#buttons").replaceWith(data.buttons);
 			jQuery("#details").replaceWith(data.html);
 		}
@@ -178,7 +213,6 @@ function registerCompetitionTeam()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#buttons").replaceWith(data.buttons);
 			jQuery("#details").replaceWith(data.html);
 		}
@@ -200,7 +234,6 @@ function showCompetitionEntrants()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -222,7 +255,6 @@ function showOptionTeamLeader()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -244,7 +276,6 @@ function showOptionTeamDetails()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -266,7 +297,6 @@ function showOptionTeamDelete()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -288,7 +318,6 @@ function unregisterTeamMember()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -311,7 +340,6 @@ function unregisterEventUser()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#details").replaceWith(data.html);
 		}
     });
@@ -333,7 +361,6 @@ function unregisterCompetitionUser()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#buttons").replaceWith(data.buttons);
 			jQuery("#details").replaceWith(data.html);
 		}
@@ -356,7 +383,6 @@ function unregisterCompetitionTeam()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.view);
 			jQuery("#buttons").replaceWith(data.buttons);
 			jQuery("#details").replaceWith(data.html);
 		}
@@ -379,7 +405,6 @@ function updateOptionTeamLeader()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
 		}
@@ -401,7 +426,6 @@ function deleteTeam()
 		dataType:'JSON',
 		success:function(data)
 		{
-			console.log(data.success);
 			window.location.replace(data.html);
 			//jQuery("#details").replaceWith(data.html);
 			//jQuery("#buttons").replaceWith(data.buttons);
