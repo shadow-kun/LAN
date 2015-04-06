@@ -61,19 +61,7 @@
 			filter="safehtml"
 			buttons="true" />
 		
-		<field name="terms_global"
-			type="radio"
-			label="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_LABEL"
-			description="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_DESC"
-			default="0"
-			class="inputbox"
-			filter="intval"
-			size="1">
-			<option value="0">
-				COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
-			<option value="1">
-				COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
-		</field>
+		
 
 		<field name="note"
 			type="text"
@@ -179,8 +167,8 @@
 			label="COM_EVENTS_EVENT_FIELD_PLAYERS_CURRENT_LABEL"
 			description="COM_EVENTS_EVENT_FIELD_PLAYERS_CURRENT_DESC"
 			default="0"
-			class="readonly"
 			size="10"
+			class="readonly"
 			readonly="true"
 			filter="unset" />
 			
@@ -189,8 +177,8 @@
 			label="COM_EVENTS_EVENT_FIELD_PLAYERS_CONFIRMED_LABEL"
 			description="COM_EVENTS_EVENT_FIELD_PLAYERS_CONFIRMED_DESC"
 			default="0"
-			class="readonly"
 			size="10"
+			class="readonly"
 			readonly="true"
 			filter="unset" />
 			
@@ -219,8 +207,8 @@
 			label="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAID_LABEL"
 			description="COM_EVENTS_EVENT_FIELD_PLAYERS_PREPAID_DESC"
 			default="0"
-			class="readonly"
 			size="10"
+			class="readonly"
 			readonly="true"
 			filter="unset" />
 		
@@ -298,6 +286,7 @@
 				<option value="0">COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_OFF</option>
 				<option value="1">COM_EVENTS_EVENT_PARAMS_WAITLIST_OVERRIDE_OPTION_ON</option>
 			</field>
+			
 			<field name="show_title"
 				type="list"
 				label="JGLOBAL_SHOW_TITLE_LABEL"
@@ -339,9 +328,15 @@
 				<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
 			</field>
 			
-			<field name="usergroup"
-				type="hidden"
-				filter="unset" /> 
+			<field name="bump"
+				type="radio"
+				label="COM_EVENTS_EVENT_PARAMS_BUMP_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_BUMP_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_EVENTS_EVENT_PARAMS_BUMP_OPTION_OFF</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_BUMP_OPTION_ON</option>
+			</field>
+			
 		</fieldset>
 		<fieldset name="location" label="COM_EVENTS_EVENT_LOCATION_FIELDSET_LABEL">
 			<field name="location"
@@ -359,6 +354,21 @@
 				class="inputbox"
 				size="10"
 				/>
+		</fieldset>
+		<fieldset name="terms" label="COM_EVENTS_EVENT_TERMS_FIELDSET_LABEL">
+			<field name="terms_global"
+				type="radio"
+				label="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_DESC"
+				default="0"
+				class="inputbox"
+				filter="intval"
+				size="1">
+				<option value="0">
+					COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
+				<option value="1">
+					COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
+			</field>
 		</fieldset>
 	</fields>
 

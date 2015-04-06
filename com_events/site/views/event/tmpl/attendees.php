@@ -30,13 +30,13 @@
 			<table class="list table table-striped">
 				<thead>
 					<tr>
-						<th width="15%">
+						<th width="25%">
 							<?php echo JHTML::_('grid.sort', 'COM_EVENTS_EVENT_TABLE_ATTENDEES_ORDER', 'id', $listDirn, $listOrder); ?>
 						</th>
 						<th>
 							<?php echo JHTML::_('grid.sort', 'COM_EVENTS_EVENT_TABLE_ATTENDEES_ATTENDEE', 'p.username', $listDirn, $listOrder); ?>
 						</th>
-						<th width="10%">
+						<th width="15%">
 							<?php echo JHTML::_('grid.sort', 'COM_EVENTS_EVENT_TABLE_ATTENDEES_STATUS', 'status', $listDirn, $listOrder); ?>
 						</th>
 					</tr>
@@ -49,26 +49,54 @@
 					</tr>
 				</tfoot>
 				<tbody>
-					<?php foreach ($this->users as $u => $user) :
+					<?php 
+						foreach ($this->users as $u => $user) :
 						$user->max_ordering = 0;
 						$ordering	= ($listOrder == 'id');
 					?>
-					<tr class="row<?php echo $p % 2; ?>">
+					<tr class="row<?php echo $u % 2; ?>">
 						<td class="left">
 							<?php 
 								if($user->status == 4)
 								{ /******* Needs Language ********/
-									echo 'Pre-Paid User ' . ($p + 1) . ':'; 
+									echo 'Pre-Paid User ' . ($u + 1) . ':'; 
 								} 
-								else if(($p + $this->event->players_prepay) <= $this->event->players_max)
+								else if($this->event->params->bump == 0)
 								{
-									echo 'User ' . ((int) ($p + 1) + $this->event->players_prepay) . ':';
+									if($this->event->players_prepaid > $this->event->players_prepay)
+									{
+										$prepay = (int) $this->event->players_prepaid;
+										$gap = 0;
+									}
+									else
+									{
+										$prepay = $this->event->players_prepay;
+										$gap = $this->event->players_prepay - $this->event->players_prepaid;
+										
+									}
+									
+									if($u + $gap + 1 <= ($this->event->players_max))
+									{
+										
+										echo 'User ' . ((int) ($u + 1) + $gap) . ':';
+									}									
+									else
+									{
+										echo 'Waiting ' . ($u + $gap + 1 - ($this->event->players_max)) . ':';
+									}
 								}
 								else
 								{
-									echo 'Waiting ' . ($p - ($this->event->players_max - $this->event->players_prepay)) . ':';
-								}
-									
+									if($u <= $this->event->players_max)
+									{
+										
+										echo 'User ' . ((int) ($u + 1)) . ':';
+									}									
+									else
+									{
+										echo 'Waiting ' . ($u - $this->event->players_max) . ':';
+									}
+								}	
 							?>
 						</td>
 						<td class="left">

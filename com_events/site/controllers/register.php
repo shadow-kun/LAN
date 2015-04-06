@@ -32,7 +32,7 @@
 				
 				// If adding to the event is successful
 				$model->sendTicket($id);
-				$renderView = 'hi';
+				$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
 			}
 			else if($view == 'event')
 			{
@@ -40,9 +40,18 @@
 				
 				$id = JRequest::getInt('id');
 				
-				// If adding to the event is successful
-				if($model->storeAttendee() && $model->sendTicket($id))
+				// Detects if there is an entry already
+				if($model->getCurrentUser())
 				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('event','_result-register-failure','phtml');
+					
+					$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_DUPLICATE');
+				}
+				else if($model->storeAttendee() && $model->sendTicket($id))
+				{
+					// If adding to the event is successful
 					$return['success'] = true;
 					$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
 				}

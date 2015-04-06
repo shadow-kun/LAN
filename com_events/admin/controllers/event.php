@@ -124,6 +124,86 @@
 				
 				if($player->status != $status)
 				{
+					if($player->status == 2)
+					{
+						$db->query();
+			
+						$query	= $db->getQuery(true);
+						
+						$confirmedPlayers = $this->event->a.players_confirmed;
+						$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
+
+						$conditions = array($db->quoteName('id') . ' = ' . $event);
+						
+						$query->update($db->quoteName('#__events_events'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+					}
+					elseif($status == 4)
+					{
+						$db->query();
+			
+						$query	= $db->getQuery(true);
+						
+						$prepaidPlayers = $this->event->a.players_prepaid;
+						$fields = 'players_prepaid' . ' = ' . $prepaidPlayers . ' + 1';
+
+						$conditions = array($db->quoteName('id') . ' = ' . $event);
+						
+						$query->update($db->quoteName('#__events_events'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+					}
+					
+					if($status == 2)
+					{
+						$db->query();
+			
+						$query	= $db->getQuery(true);
+						
+						$confirmedPlayers = $this->event->a.players_confirmed;
+						$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
+
+						$conditions = array($db->quoteName('id') . ' = ' . $event);
+						
+						$query->update($db->quoteName('#__events_events'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+					}
+					elseif($player->status == 4)
+					{
+						$db->query();
+			
+						$query	= $db->getQuery(true);
+						
+						$prepaidPlayers = $this->event->a.players_prepaid;
+						$fields = 'players_prepaid' . ' = ' . $prepaidPlayers . ' - 1';
+
+						$conditions = array($db->quoteName('id') . ' = ' . $event);
+						
+						$query->update($db->quoteName('#__events_events'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
+						$db->query();
+					}
+						
+					
+					// If status is to remove the user 
 					if($status == -2)
 					{
 						$query	= $db->getQuery(true);
@@ -137,6 +217,26 @@
 						
 						// Set the query and execute item
 						$db->setQuery($query);
+						$db->query();
+						
+						
+						$query	= $db->getQuery(true);
+						
+						$db->query();
+			
+						$query	= $db->getQuery(true);
+						
+						$currentPlayers = $this->event->a.players_current;
+						$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
+
+						$conditions = array($db->quoteName('id') . ' = ' . $event);
+						
+						$query->update($db->quoteName('#__events_events'));
+						$query->set($fields);
+						$query->where($conditions);
+						
+						$db->setQuery($query);
+						
 						$db->query();
 					}
 					else

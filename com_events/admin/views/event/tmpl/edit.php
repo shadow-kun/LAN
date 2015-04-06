@@ -183,10 +183,17 @@
 				</fieldset>
 			</div>
 			<div class="span3">
-				<fieldset class="adminform">
-					<?php echo $this->form->getLabel('terms_global'); ?>
-					<?php echo $this->form->getInput('terms_global'); ?>
-				</fieldset>
+				<?php $fieldSets = $this->form->getFieldsets('params');
+					foreach ($fieldSets as $name => $fieldSet) :
+					if($name == "terms") : 
+						foreach ($this->form->getFieldset($name) as $field) : ?>
+							<div class="control-group ">
+								<div class="control-label"><?php echo $field->label; ?></div>
+								<div class="controls"><?php echo $field->input; ?></div>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
 			</div>
 		</div>
 		

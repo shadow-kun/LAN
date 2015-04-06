@@ -52,29 +52,44 @@
 			
 			$app = JFactory::getApplication('site');
 			$waitlist = $this->event->params->waitlist_override;
+			// If player has a status entry
 			if(isset($this->currentUser->status))
 			{
 				echo '<p>';
-				if($this->event->params->confirmations_override > 0 && $this->currentUser->status == 1) 
+				// If registrations haven't closed
+				if(!((strtotime($this->event->event_end_time) < time()) || ($this->event->params->event_closed == 1)))
 				{
-					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirmation&id=' . $this->event->id) . '" class="btn btn-primary">';
-					echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a> ';
-				}	 
-				if((int) $this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
-				{
-					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '" class="btn">';
-					echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a> ';
-				}	
-				if((int) $this->currentUser->status <= 2)
-				{
-					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '" class="btn">' .
-						JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> '; 
+					// Confirmations opened
+					if($this->event->params->confirmations_override > 0 && $this->currentUser->status == 1) 
+					{
+						echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirmation&id=' . $this->event->id) . '" class="btn btn-primary">';
+						echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a> ';
+					}	 
+					// Allows pre-payment
+					if((int) $this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
+					{
+						echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '" class="btn">';
+						echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a> ';
+					}	
+					// If not pre-paid, allow un-registering from the event
+					if((int) $this->currentUser->status <= 2)
+					{
+						echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $this->event->id) . '" class="btn">' .
+							JText::_('COM_EVENTS_EVENT_SUMMARY_UNREGISTER', true) . '</a> '; 
+					}
 				}
 			}
+			// Registrations are closed and not registered
+			else if((strtotime($this->event->event_end_time) < time()) || ($this->event->params->event_closed == 1))
+			{
+				echo '<p>' . JText::_('COM_EVENTS_EVENT_SUMMARY_CLOSED', true);
+			}
+			// Registrations opened though event is full with no wait list
 			else if((isset($waitlist) && $waitlist == 0 || (!(isset($waitlist)) && $app->getParams('com_events')->get('waitlist') == 0)) && ($this->event->players_current >= $this->event->players_max))
 			{
 				echo '<p>' . JText::_('COM_EVENTS_EVENT_SUMMARY_FULL', true);
 			}
+			// User able register
 			else
 			{
 				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id) . '" class="btn btn-primary">';

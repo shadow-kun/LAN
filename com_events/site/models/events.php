@@ -118,6 +118,7 @@
 			}
 			$query->order($db->escape($orderCol . ' ' . $orderDirn));*/
 			
+			$query->order($db->escape('event_end_time' . ' ' . 'desc'));
 			//echo nl2br(str_replace('#__','joom_',$query));
 			
 			// Runs query
