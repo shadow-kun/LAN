@@ -61,7 +61,7 @@
 								{ /******* Needs Language ********/
 									echo 'Pre-Paid User ' . ($u + 1) . ':'; 
 								} 
-								else if($this->event->params->bump == 0)
+								else if($this->event->params->bump == 0 && $this->event->params->bump != null)
 								{
 									if($this->event->players_prepaid > $this->event->players_prepay)
 									{

@@ -1,30 +1,37 @@
 Bug List:
 
- # Can register multiple times (Site safety net completed / Admin confirmed)
- - Can't set opening and closing times on registrations
- - Can't set opening and closing times on competitions 
- - Can't link competitions to events.
- # Remove from admin doesn't change stat counts (register users)
- - Pic for events 
- - Pic for competitions
- - Series link competitions
- - Link ruleset to competition button
- - Search events doesn't work
- - Adding user puts them in unconfirmed always and not what is selected
- - Event Check-In via ACP
- # Adding or modifying user in ACP doesn't change the stats of a user\
- - Stats for an event player base not read only
- # Event Bump language files missing
- # Doesn't save user define t&c setting (admin / events)
- - Mandartory pre-pay doesn't work (site / events)
+
+ - Search events doesn't work (admin / events)
+ - Mandatory pre-pay doesn't work (site / events)
  - Sorting of competitions in list doesn't work (admin / comps)
  - Sorting of events in list doesn't work (admin / events)
- # Extra dot point after params in events (admin / events)
  - Paypal has no global settings
+ 
+
+ # Adding or modifying user in ACP doesn't change the stats of a user\
+ # Stats for an event player base not read only
+ # Event Bump language files missing
+ # Doesn't save user define t&c setting (admin / events)
+ # Extra dot point after params in events (admin / events)
+ # Can register multiple times (Site safety net completed / Admin confirmed)
+ # Remove from admin doesn't change stat counts (register users)
+ # Bug where adding a user causes the system to have a hissy fit in comfirmed players
+ # Adding user puts them in unconfirmed always and not what is selected
+ # Listing of players bug again.
+ # Mod-Front page only says register and no confirm or anything else.
+ # Registration page doesn't check to see if player has already registered.
  
 Feature Additions
  - Hidden Events (ie. invite events)
- - 
+ - Event Check-In via ACP
+ - Pic for events 
+ - Pic for competitions
+ 
+ - Link ruleset to competition button
+ - Series link competitions
  
  
+ - Can't link competitions to events.
+ - Can't set opening and closing times on registrations
+ - Can't set opening and closing times on competitions 
  

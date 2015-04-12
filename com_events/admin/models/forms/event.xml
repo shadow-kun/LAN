@@ -240,10 +240,9 @@
 			type="list"
 			label="COM_EVENTS_TEAM_FIELD_ADD_USER_STATUS_LABEL"
 			description="COM_EVENTS_TEAM_FIELD_ADD_USER_STATUS_DESC"
-			default="1"
 			class="inputbox"
 			filter="intval"
-			size="1">
+			>
 			<option value="1">
 				COM_EVENTS_EVENT_PLAYERS_UNCONFIRMED</option>
 			<option value="2">

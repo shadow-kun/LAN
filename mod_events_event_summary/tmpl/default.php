@@ -22,7 +22,7 @@
 	<p><strong><?php echo JText::_('MOD_EVENTS_EVENT_REGISTRATION_LABEL', true); ?>:</strong> <?php echo $event->playersCurrent . ' / ' . $event->playersMax ?></p>
 
 	<?php if(JFactory::getUser()->guest) { 
-			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
+			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '"> | ';
 			echo JText::_('MOD_EVENTS_EVENT_LOGIN_LABEL', true);
 		} else { 
 			
@@ -31,22 +31,27 @@
 				if(json_decode($event->params)->confirmations_override > 0 && $player->status == 1) 
 				{
 					echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=confirm&id=' . $event->id) . '">';
-					echo JText::_('MOD_EVENTS_EVENT_CONFIRM_LABEL', true) . '</a>';
+					echo JText::_('MOD_EVENTS_EVENT_CONFIRM_LABEL', true) . '</a> | ';
 				}	 
-				else
+				elseif((json_decode($event->params)->prepay != 0 || !(json_decode($event->params)->prepay == 0 && json_decode($event->params)->prepay != null)) && ($player->status < 3))
+				{
+					echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $event->id) . '">';
+					echo JText::_('MOD_EVENTS_EVENT_PREPAY_LABEL', true) . '</a> | ';
+				}
+				elseif($player->status < 3)
 				{
 					echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=unregister&id=' . $event->id) . '">';
-					echo JText::_('MOD_EVENTS_EVENT_UNREGISTER_LABEL', true) . '</a> ';
+					echo JText::_('MOD_EVENTS_EVENT_UNREGISTER_LABEL', true) . '</a> | ';
 				}
 			}
 			else
 			{
 				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $event->id) . '">';
-				echo JText::_('MOD_EVENTS_EVENT_REGISTER_LABEL', true) . '</a>';
+				echo JText::_('MOD_EVENTS_EVENT_REGISTER_LABEL', true) . '</a> | ';
 			}
 		} 
 		
-		echo ' | <a href="' .  JRoute::_('index.php?option=com_events&view=event&id=' . $event->id) . '">';
+		echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&id=' . $event->id) . '">';
 		echo JText::_('MOD_EVENTS_EVENT_INFORMATION_LABEL', true) . '</a>';
 	?></p>
 	

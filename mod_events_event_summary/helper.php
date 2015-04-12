@@ -41,7 +41,7 @@
 			return $result;
 		}
 		
-		public static function getCurrentPlayer ($params)
+		public static function getCurrentPlayer ($params, $event)
 		{
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
@@ -51,7 +51,7 @@
 			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
-			$query->where('p.event = 1');
+			$query->where('p.event = ' . $event);
 			
 			// Selects current user.
 			$query->where('p.user = ' . JFactory::getUser()->id);

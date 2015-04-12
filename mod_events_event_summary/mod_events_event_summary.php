@@ -10,6 +10,6 @@
 	require_once( dirname(__FILE__).'/helper.php' );
 	
 	$event = modEventsEventSummaryHelper::getEvent( $params );
-	$player = modEventsEventSummaryHelper::getCurrentPlayer( $params );
+	$player = modEventsEventSummaryHelper::getCurrentPlayer( $params, $event->id );
 	require(JModuleHelper::getLayoutPath('mod_events_event_summary'));
 ?>

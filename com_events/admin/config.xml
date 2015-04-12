@@ -24,6 +24,36 @@
 			<option value="1">COM_EVENTS_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_OPTION_WAIT</option>
 			<option value="0">COM_EVENTS_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_OPTION_NOWAIT</option>
 		</field>
+		<field name="prepay"
+			type="radio"
+			label="COM_EVENTS_EVENT_PARAMS_PREPAY_LABEL"
+			description="COM_EVENTS_EVENT_PARAMS_PREPAY_DESC"
+			default="0">
+			<option value="0">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_DISABLE</option>
+			<option value="1">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_OPTIONAL</option>
+			<option value="2">COM_EVENTS_EVENT_PARAMS_PREPAY_OPTION_MANDATORY</option>
+		</field>
+		
+		<field name="paypal_currency"
+			type="text"
+			label="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_LABEL"
+			description="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_DESC"
+			default="USD"
+			size="10" />
+		<field name="paypal_email"
+			type="email"
+			label="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_LABEL"
+			description="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
+			default="your@email.here"
+			size="10" />
+		<field name="paypal_sandbox"
+			type="radio"
+			label="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_LABEL"
+			description="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_DESC"
+			default="1">
+			<option value="0">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_OFF</option>
+			<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
+		</field>
 	</fieldset>
 	
 	<fieldset

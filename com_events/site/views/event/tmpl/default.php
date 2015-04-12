@@ -14,6 +14,16 @@
 	
 	//$listOrder	= $this->escape($this->state->get('list.ordering'));
 	//$listDirn	= $this->escape($this->state->get('list.direction'));
+	if($this->event->params->prepay !== '') 
+	// Gets global setting if not explicitly set.
+	{
+		$prepay = intval($this->event->params->prepay);
+	} 
+	else
+	{
+		$prepay = intval($this->params->get('prepay'));
+	}
+	
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=event&id='.(int) $this->event->id); ?>"
@@ -66,8 +76,9 @@
 						echo JText::_('COM_EVENTS_EVENT_SUMMARY_CONFIRM', true) . '</a> ';
 					}	 
 					// Allows pre-payment
-					if((int) $this->event->params->prepay > 0 && $this->currentUser->status <= 2) 
+					if($prepay > 0 && $this->currentUser->status <= 2) 
 					{
+						
 						echo '<a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id) . '" class="btn">';
 						echo JText::_('COM_EVENTS_EVENT_SUMMARY_PREPAY', true) . '</a> ';
 					}	

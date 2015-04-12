@@ -32,15 +32,15 @@
 	<?php if(($this->currentUser->status <= 2)) : ?>	
 		<div class="row-fluid">
 			
-			<?php if(isset($this->event->params->prepay)) 
+			<?php if($this->event->params->prepay !== '') 
 			// Gets global setting if not explicitly set.
 			{
-				$prepay = $this->event->params->prepay;
+				$prepay = intval($this->event->params->prepay);
 			} 
 			else
 			{
 				// Set as disabled for now.
-				$prepay = 0;
+				$prepay = intval($this->params->get('prepay'));
 			}
 			
 			if($prepay == 2)

@@ -51,8 +51,6 @@
 				// Selects current user.
 				$query->where('e.user = ' . $data['add_user']);
 				
-				// Selects only non cancelled entries. (Inactive as of current)
-				
 				// Runs query
 				$result = $db->setQuery($query)->loadObject();
 				$db->query();
@@ -64,9 +62,7 @@
 					$colums = array('id', 'event', 'user', 'status', 'params');
 					
 					// Sets values
-					$values = array('NULL',$event, $data['add_user'], $data['add_user_status'], 'NULL');
-					
-					// Prepare Insert Query $db->quoteName('unconfirmed')
+					$values = array('NULL',$event, $data['add_user'], intval($data['add_user_status']), 'NULL');
 					$query  ->insert($db->quoteName('#__events_players'))
 							->columns($db->quoteName($colums))
 							->values(implode(',', $values));
@@ -74,24 +70,7 @@
 					// Set the query and execute item
 					$db->setQuery($query);
 					$db->query();
-					
-					
-					$query	= $db->getQuery(true);
-					
-					$currentPlayers = $this->items->a.players_current;
-					
-					$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
-
-					$conditions = array($db->quoteName('id') . ' = ' . $event);
-					
-					$query->update($db->quoteName('#__events_events'));
-					$query->set($fields);
-					$query->where($conditions);
-					
-					$db->setQuery($query);
-					
-					$db->query();
-					
+									
 					
 					// Returns a notice message stating user has been added to the team.
 					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_EVENTS_EVENT_MSG_PLAYER_ADDED'), 'notice');
@@ -105,7 +84,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('e.id AS id, e.event, e.status, e.params');
+			$query->select('e.id AS id, e.event, e.status, e.params, e.user');
 			$query->from('#__events_players AS e');
 						
 			// Selects the team that is required.
@@ -115,93 +94,13 @@
 			$result = $db->setQuery($query)->loadObjectList();
 			$db->query();
 			
-			
-			
-			
 			foreach ($result as $p => $player) :
 			{
 				$status = JRequest::getVar('player_status_change#' . $player->id);
 				
-				if($player->status != $status)
+				if($player->status != $status && $player->user != intval($data['add_user']))
 				{
-					if($player->status == 2)
-					{
-						$db->query();
-			
-						$query	= $db->getQuery(true);
-						
-						$confirmedPlayers = $this->event->a.players_confirmed;
-						$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
-
-						$conditions = array($db->quoteName('id') . ' = ' . $event);
-						
-						$query->update($db->quoteName('#__events_events'));
-						$query->set($fields);
-						$query->where($conditions);
-						
-						$db->setQuery($query);
-						
-						$db->query();
-					}
-					elseif($status == 4)
-					{
-						$db->query();
-			
-						$query	= $db->getQuery(true);
-						
-						$prepaidPlayers = $this->event->a.players_prepaid;
-						$fields = 'players_prepaid' . ' = ' . $prepaidPlayers . ' + 1';
-
-						$conditions = array($db->quoteName('id') . ' = ' . $event);
-						
-						$query->update($db->quoteName('#__events_events'));
-						$query->set($fields);
-						$query->where($conditions);
-						
-						$db->setQuery($query);
-						
-						$db->query();
-					}
 					
-					if($status == 2)
-					{
-						$db->query();
-			
-						$query	= $db->getQuery(true);
-						
-						$confirmedPlayers = $this->event->a.players_confirmed;
-						$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
-
-						$conditions = array($db->quoteName('id') . ' = ' . $event);
-						
-						$query->update($db->quoteName('#__events_events'));
-						$query->set($fields);
-						$query->where($conditions);
-						
-						$db->setQuery($query);
-						
-						$db->query();
-					}
-					elseif($player->status == 4)
-					{
-						$db->query();
-			
-						$query	= $db->getQuery(true);
-						
-						$prepaidPlayers = $this->event->a.players_prepaid;
-						$fields = 'players_prepaid' . ' = ' . $prepaidPlayers . ' - 1';
-
-						$conditions = array($db->quoteName('id') . ' = ' . $event);
-						
-						$query->update($db->quoteName('#__events_events'));
-						$query->set($fields);
-						$query->where($conditions);
-						
-						$db->setQuery($query);
-						
-						$db->query();
-					}
-						
 					
 					// If status is to remove the user 
 					if($status == -2)
@@ -224,20 +123,7 @@
 						
 						$db->query();
 			
-						$query	= $db->getQuery(true);
 						
-						$currentPlayers = $this->event->a.players_current;
-						$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
-
-						$conditions = array($db->quoteName('id') . ' = ' . $event);
-						
-						$query->update($db->quoteName('#__events_events'));
-						$query->set($fields);
-						$query->where($conditions);
-						
-						$db->setQuery($query);
-						
-						$db->query();
 					}
 					else
 					{
@@ -258,8 +144,89 @@
 						$db->query();
 					}
 				}
+								
 			}			
 			endforeach;
+			
+			/* Resets statistics for event */
+			
+			$query	= $db->getQuery(true);
+						
+			$currentPlayers = $this->event->a.players_current;
+			$fields = 'players_current = 0, players_confirmed = 0, players_prepaid = 0';
+
+			$conditions = array($db->quoteName('id') . ' = ' . $event);
+			
+			$query->update($db->quoteName('#__events_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+
+			/* Get player data for the event */
+
+			$query = $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('status, COUNT(status) AS players');
+			$query->from('#__events_players AS e');
+						
+			// Selects the team that is required.
+			$query->where('e.event = ' . $event);
+			$query->group('status');
+						
+			// Runs query
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			
+			$query = $db->getQuery(true);
+			$players = 0;
+			
+			foreach ($result as $e => $eventStatus) 
+			{
+				if($eventStatus->status == 2 || $eventStatus->status == 4)
+				{
+					
+					$query = $db->getQuery(true);
+					if($eventStatus->status == 2)
+					{
+						// sets confirmed user count
+						$fields = 'players_confirmed' . ' = ' . $eventStatus->players;
+					}
+					else
+					{
+						// sets current prepaid user count
+						$fields = 'players_prepaid' . ' = ' . $eventStatus->players;
+					}
+
+					$conditions = array($db->quoteName('id') . ' = ' . $event);
+					
+					$query->update($db->quoteName('#__events_events'));
+					$query->set($fields);
+					$query->where($conditions);
+					
+					
+					$db->setQuery($query);
+					
+					$db->query();
+				}
+				$players += $eventStatus->players;
+				
+			}
+			// Sets current user count
+			$fields = 'players_current' . ' = ' . $players;
+			$conditions = array($db->quoteName('id') . ' = ' . $event);
+					
+			$query->update($db->quoteName('#__events_events'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
 			
 			// Creates the groups if it doesn't exist
 			JModelLegacy::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_users/models/', 'UsersModel' );
