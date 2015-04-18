@@ -239,16 +239,18 @@
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_EVENTS_EVENT_TAB_SETTINGS', true)); ?>
 		<div class="row-fluid">
-			<div class="span4">
+			<div class="span2">
 				<h3><?php echo JText::_('COM_EVENTS_EVENT_SUBHEADING_SETTINGS_PUBLISHING_TITLE', true) ?></h3>
 				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
 			</div>
-			<div class="span4">
-				<?php echo JHtml::_('sliders.start','event-sliders-'.$this->item->id, array('useCookie' => 1)); ?>
+			<div class="span2">
+				<?php /*echo JHtml::_('sliders.start','event-sliders-'.$this->item->id, array('useCookie' => 1));  */?>
 
 				<?php echo $this->loadTemplate('params'); ?>
-
 			</div>
+			<div class="span2">
+				<?php echo $this->loadTemplate('paypal'); ?>
+			</div> 
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 	</div>

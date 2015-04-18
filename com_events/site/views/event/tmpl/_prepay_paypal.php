@@ -6,27 +6,36 @@
 	 * @license		GNU General Public License version 2 or later.
 	 */
 
-	/*$paypalEmail		= $params->get('paypalEmail');
-	$paypalAmount	 	= $params->get('paypalAmount');
-	$paypalCurrency 	= $params->get('paypalCurrency');
-	$paypalCancel		= $params->get('paypalCancel');
-	$paypalReturn		= $params->get('paypalReturn');*/
-	
-	// Test Data
-	$paypalEmail		= $this->event->params->paypal_email;// Event Setting
-	$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
-	$paypalCurrency 	= $this->event->params->paypal_currency; // Event Setting
-	$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
-	$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
-	$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
-	$paypalItemNumber	= (int) $this->currentUser->id;
-	$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
+	if($this->event->params->paypal_global == 0)
+	{
+		$paypalEmail		= $this->params->get('paypal_email');// Event Setting
+		$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
+		$paypalCurrency 	= $this->params->get('paypal_currency'); // Event Setting
+		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
+		$paypalItemNumber	= (int) $this->currentUser->id;
+		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
+		$paypalSandbox 		= intval($this->params->get('paypal_sandbox'));
+	}
+	else
+	{
+		$paypalEmail		= $this->event->params->paypal_email;// Event Setting
+		$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
+		$paypalCurrency 	= $this->event->params->paypal_currency; // Event Setting
+		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
+		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
+		$paypalItemNumber	= (int) $this->currentUser->id;
+		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
+		$paypalSandbox 		= intval($this->event->params->paypal_sandbox);
+	}
 
 	$paypalSiteSandbox = "www.sandbox.paypal.com"; 
 	$paypalSiteProduction = "www.paypal.com";
 	
 	// Sets if sandbox mode is on or off.
-	if(intval($this->event->params->paypal_sandbox) == 1)
+	if($paypalSandbox == 1)
 	{
 		$paypalSite = $paypalSiteSandbox;
 	}

@@ -306,26 +306,7 @@
 				description="COM_EVENTS_EVENT_PARAMS_COST_EVENT_DESC"
 				default="0.0"
 				size="10" />
-			<field name="paypal_currency"
-				type="text"
-				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_LABEL"
-				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_DESC"
-				default="USD"
-				size="10" />
-			<field name="paypal_email"
-				type="email"
-				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_LABEL"
-				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
-				default="your@email.here"
-				size="10" />
-			<field name="paypal_sandbox"
-				type="radio"
-				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_LABEL"
-				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_DESC">
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_OFF</option>
-				<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
-			</field>
+			
 			
 			<field name="bump"
 				type="radio"
@@ -367,6 +348,43 @@
 					COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_GLOBAL</option>
 				<option value="1">
 					COM_EVENTS_EVENT_FIELD_TERMS_GLOBAL_OPTIONS_USERDEFINED</option>
+			</field>
+		</fieldset>
+		<fieldset name="paypal" label="COM_EVENTS_EVENT_PAYPAL_FIELDSET_LABEL">
+			<field name="paypal_global"
+				type="radio"
+				label="COM_EVENTS_EVENT_FIELD_PAYPAL_GLOBAL_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_PAYPAL_GLOBAL_DESC"
+				default="0"
+				class="inputbox"
+				filter="intval"
+				size="1">
+				<option value="0">
+					COM_EVENTS_EVENT_FIELD_PAYPAL_GLOBAL_OPTIONS_GLOBAL</option>
+				<option value="1">
+					COM_EVENTS_EVENT_FIELD_PAYPAL_GLOBAL_OPTIONS_USERDEFINED</option>
+			</field>
+			<field name="paypal_currency"
+				type="text"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_CURRENCY_DESC"
+				default="USD"
+				size="10" 
+				showon="paypal_global:1"/>
+			<field name="paypal_email"
+				type="email"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_EMAIL_DESC"
+				default="your@email.here"
+				size="10" 
+				showon="paypal_global:1"/>
+			<field name="paypal_sandbox"
+				type="radio"
+				label="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_DESC"
+				showon="paypal_global:1">
+				<option value="0">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_OFF</option>
+				<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
 			</field>
 		</fieldset>
 	</fields>

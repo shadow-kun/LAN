@@ -2,12 +2,12 @@
 <extension type="component" version="3.3.0" method="upgrade">
 	<name>COM_EVENTS</name>
 	<creationDate>2014-12-16</creationDate>
-	<author>Daniel Johnson</author>
-	<authorEmail>shadowreaper@shadowreaper.net</authorEmail>
-	<authorUrl>http://www.shadowreaper.net</authorUrl>
-	<copyright>Daniel Johnson, 2014</copyright>
+	<author>ZoR Systems</author>
+	<authorEmail>info@zor.systems</authorEmail>
+	<authorUrl>http://zor.systems</authorUrl>
+	<copyright>ZoR Systems, 2014</copyright>
 	<license>GPL v2.0</license>
-	<version>0.0.1</version>
+	<version>0.1.0</version>
 	<description>COM_EVENTS_DESCRIPTION</description>
 	
 	<install>

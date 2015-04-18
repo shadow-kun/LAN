@@ -5,9 +5,9 @@ Bug List:
  - Mandatory pre-pay doesn't work (site / events)
  - Sorting of competitions in list doesn't work (admin / comps)
  - Sorting of events in list doesn't work (admin / events)
- - Paypal has no global settings
  
-
+ ====================================================================================
+ 
  # Adding or modifying user in ACP doesn't change the stats of a user\
  # Stats for an event player base not read only
  # Event Bump language files missing
@@ -20,6 +20,7 @@ Bug List:
  # Listing of players bug again.
  # Mod-Front page only says register and no confirm or anything else.
  # Registration page doesn't check to see if player has already registered.
+ # Paypal has no global settings
  
 Feature Additions
  - Hidden Events (ie. invite events)

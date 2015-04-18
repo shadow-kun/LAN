@@ -6,10 +6,10 @@
 	 * @license		GNU General Public License version 2 or later.
 	 */
 	
-	echo "<h3>" . JText::_("COM_EVENTS_BASIC_PARAMS_FIELDSET_LABEL") . "</h3>";
+	echo "<h3>" . JText::_("COM_EVENTS_EVENT_PAYPAL_FIELDSET_LABEL") . "</h3>";
 	$fieldSets = $this->form->getFieldsets('params');
 	foreach ($fieldSets as $name => $fieldSet) :
-		if($name == "basic") :
+		if($name == "paypal") :
 			/*echo JHtml::_('sliders.panel',JText::_($fieldSet->label), $name.'-params');*/
 			if (isset($fieldSet->description) && trim($fieldSet->description)) :
 				echo '<p class="tip">'.$this->escape(JText::_($fieldSet->description)).'</p>';

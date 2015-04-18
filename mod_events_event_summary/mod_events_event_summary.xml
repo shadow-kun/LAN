@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1.0" client="site" method="upgrade">
     <name>MOD_EVENTS_EVENT_SUMMARY_TITLE</name>
-    <author>Daniel Johnson</author>
-    <version>1.0.0</version>
+    <author>ZoR Systems</author>
+    <version>1.1.0</version>
     <description>A module to show the next event with the Events Party! component.</description>
     <files>
         <filename>mod_events_event_summary.xml</filename>
