@@ -2,6 +2,11 @@
 <extension type="module" version="3.1.0" client="site" method="upgrade">
     <name>MOD_EVENTS_EVENT_SUMMARY_TITLE</name>
     <author>ZoR Systems</author>
+	<creationDate>2014-12-16</creationDate>
+	<copyright>ZoR Systems, 2014</copyright>
+	<authorEmail>info@zor.systems</authorEmail>
+	<authorUrl>http://zor.systems</authorUrl>
+	<license>GPL v2.0</license>
     <version>1.1.0</version>
     <description>A module to show the next event with the Events Party! component.</description>
     <files>

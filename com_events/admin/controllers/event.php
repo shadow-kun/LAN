@@ -317,8 +317,8 @@
 					'title' => 'Registered Users',
 					'parent_id' => $result,
 					'id' => 0 );
-
-					$groupModel->save( $groupData );*/
+*/
+					$groupModel->save( $groupData );
 				}
 				$usergroup = array('usergroup' => $result);
 				$params = array_merge($params, $usergroup);
@@ -340,12 +340,20 @@
 			$event_start_date = $data['event_start_time'] . ' ' . $data['event_start_hour'] . ':' . $data['event_start_minute'] . ':00';
 			$event_end_date = $data['event_end_time'] . ' ' . $data['event_end_hour'] . ':' . $data['event_end_minute'] . ':00';
 			
+			
+			$registrationData = array(
+				'registration_open_time' => $data['params']['registration_open_time'] . ' ' . $data['registration_open_hour'] . ':' . $data['registration_open_minute'] . ':00',
+				'registration_confirmation_time' => $data['params']['registration_confirmation_time'] . ' ' . $data['registration_confirmation_hour'] . ':' . $data['registration_confirmation_minute'] . ':00',
+				'registration_close_time' => $data['params']['registration_close_time'] . ' ' . $data['registration_close_hour'] . ':' . $data['registration_close_minute'] . ':00');
+				
+			$params = array_merge($params, $registrationData);
+			
 			// Sets data to be updated
 			$query->set($db->quoteName('event_start_time') . ' = ' . $db->quote($event_start_date));
 			$query->set($db->quoteName('event_end_time') . ' = ' . $db->quote($event_end_date));
 			
 			// If usergroup has been added
-			if(isset($usergroup))
+			//if(isset($usergroup))
 			{
 				$query->set($db->quoteName('params') . ' = ' . $db->quote(json_encode($params)));
 			}

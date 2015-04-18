@@ -55,6 +55,10 @@
 		{
 			if ($result = parent::getItem($pk)) 
 			{
+				
+				// Creates Params Array
+				$result->params = (object) $result->params;
+				
 				// Convert the created and modified dates to local user time for display in the form.
 				jimport('joomla.utilities.date');
 				$tz	= new DateTimeZone(JFactory::getApplication()->getCfg('offset'));
@@ -87,6 +91,19 @@
 				// gets hours and minutes for drop down boxes
 				$result->event_end_hour = substr($result->event_end_time, 11, 2);
 				$result->event_end_minute = substr($result->event_end_time, 14, 2);
+				
+				
+				// gets hours and minutes for drop down boxes
+				$result->registration_open_hour = substr($result->params->registration_open_time, 11, 2);
+				$result->registration_open_minute = substr($result->params->registration_open_time, 14, 2);
+				
+				// gets hours and minutes for drop down boxes
+				$result->registration_confirmation_hour = substr($result->params->registration_confirmation_time, 11, 2);
+				$result->registration_confirmation_minute = substr($result->params->registration_confirmation_time, 14, 2);
+				
+				// gets hours and minutes for drop down boxes
+				$result->registration_close_hour = substr($result->params->registration_close_time, 11, 2);
+				$result->registration_close_minute = substr($result->params->registration_close_time, 14, 2);
 			}
 			
 			return $result;

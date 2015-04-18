@@ -1,8 +1,8 @@
 Bug List:
-
-
- - Search events doesn't work (admin / events)
+ - If know event id, can see event unless stopped by code... ie go do it
  - Mandatory pre-pay doesn't work (site / events)
+ 
+ - Search events doesn't work (admin / events)
  - Sorting of competitions in list doesn't work (admin / comps)
  - Sorting of events in list doesn't work (admin / events)
  
@@ -21,18 +21,25 @@ Bug List:
  # Mod-Front page only says register and no confirm or anything else.
  # Registration page doesn't check to see if player has already registered.
  # Paypal has no global settings
+ # Time doesn't save on cration
+ # Registration, Confirmation, Close times
+ # Hidden Events
+ # Cost Missing
  
 Feature Additions
- - Hidden Events (ie. invite events)
+ # Hidden Events (ie. invite events)
  - Event Check-In via ACP
- - Pic for events 
+ # Pic for events 
  - Pic for competitions
+ - Seat Bookings
  
  - Link ruleset to competition button
  - Series link competitions
- 
+ - Not displaying attendee list
+ - Multiple tickets
  
  - Can't link competitions to events.
- - Can't set opening and closing times on registrations
+ # Can't set opening and closing times on registrations
  - Can't set opening and closing times on competitions 
+ - Barcode doesn't allow entry (site/ checkin)
  

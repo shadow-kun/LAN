@@ -80,16 +80,16 @@
 			}
 			 
 			// Filter by published state
-			$published = $this->getState('filter.published');
+			/*$published = $this->getState('filter.published');
 			if (is_numeric($published)) 
 			{
 				$query->where('a.published = ' . (int) $published);
 			} 
 			else if ($published === '') 
-			{
+			{*/
 				// Shows published and Archived Events
-				$query->where('(a.published = 1 or a.published = 2)');
-			}
+				$query->where('(a.published = 1 or a.published = 2 or a.published = -1)');
+			//}
 			 
 			// Filter by a single or group of categories.
 			$categoryId = $this->getState('filter.category_id');
@@ -123,6 +123,27 @@
 			
 			// Runs query
 			
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			return $result;
+		}
+		
+		public function getCurrentUser($pk = null)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.event, p.status AS status, p.params');
+			$query->from('#__events_players AS p');
+						
+			// Selects current user.
+			$query->where('p.user = ' . JFactory::getUser()->id);
+			
+			// Selects only non cancelled entries. (Innactive as of current)
+			
+			// Runs query
 			$result = $db->setQuery($query)->loadObjectList();
 			$db->query();
 			

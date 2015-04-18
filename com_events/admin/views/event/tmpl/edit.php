@@ -248,6 +248,9 @@
 
 				<?php echo $this->loadTemplate('params'); ?>
 			</div>
+			<div class="span3">
+				<?php echo $this->loadTemplate('registration'); ?>
+			</div> 
 			<div class="span2">
 				<?php echo $this->loadTemplate('paypal'); ?>
 			</div> 

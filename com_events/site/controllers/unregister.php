@@ -33,7 +33,7 @@
 				$currentUser = $model->getCurrentUser();
 				
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				if(isset($currentUser->status) && ((int) $currentUser->status == 2 || (int) $currentUser->status == 1)) 
+				if(isset($currentUser->status) && (int) $currentUser->status <= 2)
 				{
 					if($model->deleteAttendee())
 					{

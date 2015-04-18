@@ -11,6 +11,9 @@
 <?php if(isset($event->title)) 
 	{ ?>
 	<p><strong><?php echo $event->title; ?></strong></p>
+	<?php if(!empty(json_decode($event->params)->display_image)) : ?>
+	<p><img src="<?php echo json_decode($event->params)->display_image; ?>" style="max-width: 100%;"/></p>
+	<?php endif; ?>
 	<p><strong><?php echo JText::_('MOD_EVENTS_EVENT_START_TIME_LABEL', true); ?>:</strong> 
 		<?php echo date('g:i a, d M', strtotime($event->startTime));?></br >
 		<strong><?php echo JText::_('MOD_EVENTS_EVENT_END_TIME_LABEL', true); ?>:</strong> 

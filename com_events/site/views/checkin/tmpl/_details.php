@@ -1,5 +1,6 @@
+
 <div id="details">
-	<h2>Checkin</h2>
+	<h2>Checkin - <?php time(); ?></h2>
 	<h3>Event: <?php echo $this->player->event_name; ?></h3>
 	<h3>Player: <?php echo $this->player->username; ?></h3>
 	<h3>Status: 

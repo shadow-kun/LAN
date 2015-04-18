@@ -27,7 +27,7 @@
 					
 				// Gets the current user that is logged in
 				//$player = $model->getPlayer();
-				//$groupCheckin = $this->model->getCheckinGroup($id);
+				//$groupCheckin = $this->model->getCheckinGroup($player);
 				//$groupCheckin = $this->model->getCheckinGroup($id);
 				//$currentUser = $model->getCurrentUser();
 					
@@ -74,12 +74,12 @@
 				}
 			}
 				
-						ob_start();
-						echo $eventView->render();
-						$html = ob_get_contents();
-						ob_clean();
-						 
-						$return['html'] = $html;
+			ob_start();
+			echo $eventView->render();
+			$html = ob_get_contents();
+			ob_clean();
+			 
+			$return['html'] = $html;
 			echo json_encode($return);
 		}
 	}

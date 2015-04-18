@@ -84,6 +84,8 @@
 				JUNPUBLISHED</option>
 			<option value="2">
 				JARCHIVED</option>
+			<option value="-1">
+				COM_EVENTS_PUBLISHED_HIDDEN_LABEL</option>
 			<option value="-2">
 				JTRASHED</option>
 		</field>
@@ -307,7 +309,18 @@
 				default="0.0"
 				size="10" />
 			
-			
+			<field name="event_image"
+				type="media"
+				label="COM_EVENTS_EVENT_PARAMS_EVENT_IMAGE_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_EVENT_IMAGE_DESC"
+				directory="" 
+				preview="tooltip" />
+			<field name="display_image"
+				type="media"
+				label="COM_EVENTS_EVENT_PARAMS_DISPLAY_IMAGE_LABEL"
+				description="COM_EVENTS_EVENT_PARAMS_DISPLAY_IMAGE_DESC"
+				directory="" 
+				preview="tooltip" />
 			<field name="bump"
 				type="radio"
 				label="COM_EVENTS_EVENT_PARAMS_BUMP_LABEL"
@@ -316,7 +329,6 @@
 				<option value="0">COM_EVENTS_EVENT_PARAMS_BUMP_OPTION_OFF</option>
 				<option value="1">COM_EVENTS_EVENT_PARAMS_BUMP_OPTION_ON</option>
 			</field>
-			
 		</fieldset>
 		<fieldset name="location" label="COM_EVENTS_EVENT_LOCATION_FIELDSET_LABEL">
 			<field name="location"
@@ -386,6 +398,32 @@
 				<option value="0">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_OFF</option>
 				<option value="1">COM_EVENTS_EVENT_PARAMS_PAYPAL_SANDBOX_OPTION_ON</option>
 			</field>
+		</fieldset>
+		<fieldset name="registration" label="COM_EVENTS_EVENT_REGISTRATION_FIELDSET_LABEL">
+			<field name="registration_open_time"
+				type="calendar"
+				label="COM_EVENTS_EVENT_FIELD_REGISTRATION_START_TIME_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_REGISTRATION_START_TIME_DESC"
+				default="2014-01-01"
+				format="%Y-%m-%d"
+				required="true"
+				/>
+			<field name="registration_confirmation_time"
+				type="calendar"
+				label="COM_EVENTS_EVENT_FIELD_REGISTRATION_CONFIRMATION_TIME_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_REGISTRATION_CONFIRMATION_TIME_DESC"
+				default="2099-01-01"
+				format="%Y-%m-%d"
+				required="true"
+				/>
+			<field name="registration_close_time"
+				type="calendar"
+				label="COM_EVENTS_EVENT_FIELD_REGISTRATION_CLOSE_TIME_LABEL"
+				description="COM_EVENTS_EVENT_FIELD_REGISTRATION_CLOSE_TIME_DESC"
+				default="2099-01-01"
+				format="%Y-%m-%d"
+				required="true"
+				/>
 		</fieldset>
 	</fields>
 

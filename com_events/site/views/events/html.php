@@ -32,6 +32,8 @@
 			
 			// Gets Current User
 			$this->user	= JFactory::getUser();
+			
+			$this->userEvents = $this->model->getCurrentUser();
 									
 			//display
 			return parent::render();

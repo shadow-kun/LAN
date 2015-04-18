@@ -23,7 +23,7 @@
 			'parent_id' => 2,
 			'id' => 0 );
 
-		$groupModel->save( $groupData );
+		
 		
 		/******************************************************/
 		/* Creates User Views */
