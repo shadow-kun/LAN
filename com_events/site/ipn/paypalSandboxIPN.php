@@ -2,6 +2,10 @@
 
 	// Send an empty HTTP 200 OK response to acknowledge receipt of the notification 
 	header('HTTP/1.1 200 OK'); 
+   
+	// Assign payment notification values to local variables
+			
+
 	
 	// Build the required acknowledgement message out of the notification just received
 	$req = 'cmd=_notify-validate';               // Add 'cmd=_notify-validate' to beginning of the acknowledgement
@@ -16,11 +20,11 @@
 	// Set up the acknowledgement request headers
 	$header  = "POST /cgi-bin/webscr HTTP/1.1\r\n";                    // HTTP POST request
 	$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-	$header .= "Host: www.paypal.com\r\n";  // www.paypal.com for a live site 
+	$header .= "Host: www.sandbox.paypal.com\r\n";  // www.paypal.com for a live site 
 	$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
 	
 	// Open a socket for the acknowledgement request
-	$fp = fsockopen('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+	$fp = fsockopen('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
 
 	$stuff = null;
 	if (!$fp) 
@@ -145,7 +149,6 @@
 					// Check that the payment_status is Completed
 					if(strcmp(JRequest::getVar('payment_status'), 'Completed') == 0)
 					{
-					
 						// Check that payment_amount/payment_currency are correct
 						$query->select('a.id AS id, a.params AS params');
 						$query->from('#__events_events AS a');
@@ -209,7 +212,6 @@
 				}
 
 			} 
-			
 			else if (stripos($res, "INVALID") !== false)
 			{
 				//Response contains INVALID - reject notification

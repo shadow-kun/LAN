@@ -23,6 +23,7 @@
 			'parent_id' => 2,
 			'id' => 0 );
 
+		$groupModel->save($groupData);
 		
 		
 		/******************************************************/
@@ -47,8 +48,6 @@
     */
     function update($parent)
     {
-		
-		
 		echo JText::_('COM_EVENTS_UPDATE_SUCCESSFULL');
     }
 	

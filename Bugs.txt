@@ -41,5 +41,5 @@ Feature Additions
  - Can't link competitions to events.
  # Can't set opening and closing times on registrations
  - Can't set opening and closing times on competitions 
- - Barcode doesn't allow entry (site/ checkin)
+ # Barcode doesn't allow entry (site/ checkin)
  

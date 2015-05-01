@@ -25,8 +25,8 @@
 	<p><strong><?php echo JText::_('MOD_EVENTS_EVENT_REGISTRATION_LABEL', true); ?>:</strong> <?php echo $event->playersCurrent . ' / ' . $event->playersMax ?></p>
 
 	<?php if(JFactory::getUser()->guest) { 
-			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '"> | ';
-			echo JText::_('MOD_EVENTS_EVENT_LOGIN_LABEL', true);
+			echo '<p><a href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
+			echo JText::_('MOD_EVENTS_EVENT_LOGIN_LABEL', true) . ' | ' ;
 		} else { 
 			
 			if(isset($player->status))

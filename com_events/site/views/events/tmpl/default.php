@@ -22,6 +22,7 @@
 			foreach($this->userEvents as $ue => $event) :
 				array_push($player_events, intval($event->event));
 			endforeach;
+			
 			// If invite only event and invited allowed to be seen, else skip event.
 			foreach ($this->events as $e => $event) : if($event->published > 0 || ($event->published == -1 && in_array(intval($event->id), $player_events))) : 
 				$event->max_ordering = 0;

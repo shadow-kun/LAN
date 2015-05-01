@@ -1,7 +1,7 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
 	/**
-	 * @package		LAN
-	 * @subpackage	com_lan
+	 * @package		Events Party!
+	 * @subpackage	com_events
 	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
 	 * @license		GNU General Public License version 2 or later.
 	 */
@@ -15,7 +15,6 @@
 		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
 		$paypalItemNumber	= (int) $this->currentUser->id;
-		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
 		$paypalSandbox 		= intval($this->params->get('paypal_sandbox'));
 	}
 	else
@@ -27,7 +26,6 @@
 		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
 		$paypalItemNumber	= (int) $this->currentUser->id;
-		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
 		$paypalSandbox 		= intval($this->event->params->paypal_sandbox);
 	}
 
@@ -38,10 +36,12 @@
 	if($paypalSandbox == 1)
 	{
 		$paypalSite = $paypalSiteSandbox;
+		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalSandboxIPN.php'; // COM_LAN or event setting
 	}
 	else
 	{
 		$paypalSite = $paypalSiteProduction;
+		$paypalNotifyURL	= JURI::root() . 'components/com_events/ipn/paypalIPN.php'; // COM_LAN or event setting
 	}
 	$p = 0;
 ?>
@@ -66,3 +66,5 @@
 		<?php echo JText::_('COM_EVENTS_EVENT_PREPAY_PAYPAL_DESC'); ?>
 	</td>
 </tr>
+<?php $params = JFactory::getApplication()->getParams('com_events');
+							echo $pCurrency = $params->get('paypal_email'); ?>
