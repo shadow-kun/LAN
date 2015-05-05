@@ -55,7 +55,7 @@
 		<p>
 		<?php if(!empty($this->event->params->venue)) : ?>
 			<strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_VENUE', true); ?></strong> - 
-			<?php echo $this->escape($this->event->params->location); ?>
+			<?php echo $this->escape($this->event->params->venue); ?>
 			<?php if(!empty($this->event->params->venue)) : 
 				echo '<br />';
 			endif; ?>
