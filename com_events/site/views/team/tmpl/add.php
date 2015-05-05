@@ -16,8 +16,10 @@
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=teams') ; ?>"
 	method="post" name="adminForm" id="team-form">
 		<div class="form-horizontal"> <!--class="width-60 fltlft"-->
-		
 			<div class="row-fluid">
+				<?php if(JFactory::getUser()->guest) { 
+					echo '<p>' . JText::_('COM_EVENTS_EVENT_SUMMARY_LOGIN', true) . '</p>';
+				} else { ?>
 				<div class="details span8" id="#details">
 					<fieldset class="adminform">
 						<div><?php echo JText::_('COM_EVENTS_TEAM_EDIT_TITLE_LABEL');?><input type="text" id="title" name="title" value="" /><br /></div>
@@ -27,6 +29,7 @@
 					<a class="btn btn-primary" onclick="addTeam()" href="javascript:void(0)" ><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CREATE_TEAM_LABEL');?></a></div>
 					
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 	<input type="hidden" name="task" value="team" />

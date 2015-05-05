@@ -15,7 +15,13 @@
 
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=teams');?>" method="post" name="adminForm" id="adminForm">
 	<div class="row-fluid">
-		<div><a name="newTeam" class="btn btn-primary" href="<?php echo JRoute::_('index.php?option=com_events&view=team&layout=add', false); ?>" "><?php echo JText::_('COM_EVENTS_TEAMS_SUMMARY_NEW_LABEL');?></a></div>
+		<?php if(JFactory::getUser()->guest) { 
+			echo '<div><a href="' . JRoute::_('index.php?option=com_users&view=login') . '" class="btn btn-primary">' . 
+				JText::_('COM_EVENTS_EVENT_SUMMARY_LOGIN', true) . '</a></div>';
+		} else { 
+			echo '<div><a name="newTeam" class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=team&layout=add', false) . '" ">' .
+				JText::_('COM_EVENTS_TEAMS_SUMMARY_NEW_LABEL') . '</a></div>';
+		} ?>
 		<div class="clr"></div>
 		<?php foreach ($this->teams as $t => $team) :
 				$team->max_ordering = 0;
