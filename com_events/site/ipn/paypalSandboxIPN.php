@@ -161,6 +161,7 @@
 						// Runs query
 						$result = $db->setQuery($query)->loadObject();
 						$db->query();
+						$event = $result->id;
 						
 						if(json_decode($result->params)->paypal_global == 0)
 						{
@@ -200,6 +201,29 @@
 							
 							// Executes Query
 							$query->update($db->quoteName('#__events_players'));
+							$query->set($fields);
+							$query->where($conditions);
+							
+							$db->setQuery($query);
+							
+							$db->query();
+							
+							// Check that payment_amount/payment_currency are correct
+							$query	= $db->getQuery(true);
+							$query->select('count(id) AS id');
+							$query->from('#__events_players');
+							$query->where($db->quoteName('event') . ' = ' . $event . ' AND ' . $db->quoteName('status') . ' = 4');
+							$prepaids = $db->setQuery($query)->loadObject();
+							
+							// Gets data to update
+							$query	= $db->getQuery(true);
+							$fields = $db->quoteName('players_prepaid') . ' = ' . $prepaids->id;
+							
+							// Sets the conditions of which event and which player to update
+							$conditions = array($db->quoteName('id') . ' = ' . $event);
+							
+							// Executes Query
+							$query->update($db->quoteName('#__events_events'));
 							$query->set($fields);
 							$query->where($conditions);
 							

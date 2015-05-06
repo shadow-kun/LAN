@@ -38,5 +38,18 @@
 			
 			return $result;
 		}
+		
+		function check()
+		{
+			jimport('joomla.filter.output');
+			if (empty($this->alias))
+			{
+				$this->alias = $this->title;
+			}
+			$this->alias = JFilterOutput::stringURLSafe($this->alias);
+		 
+			/* All your other checks */
+			return true;
+		}
 	}
 ?>

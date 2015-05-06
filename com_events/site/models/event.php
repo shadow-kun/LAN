@@ -71,10 +71,11 @@
 
 					$data = $db->loadObject();
 
-					if (empty($data))
+					if (empty($data) || ((int) $data->published == -2 || (int) $data->published == 0))
 					{
 						return JError::raiseError(404, JText::_('COM_EVENTS_ERROR_EVENT_NOT_FOUND'));
 					}
+					
 					
 					$data->params = json_decode($data->params);
 					$registry = new JRegistry;
@@ -85,10 +86,17 @@
 				}
 				catch (Exception $e)
 				{
-					if ($e->getCode() == 404)
+					if ($e->getCode() == 403)
+					{
+						// Need to go thru the error handler to allow Redirect to work.
+						JError::raiseError(403, $e->getMessage());
+						$this->_item[$pk] = false;
+					}
+					else if ($e->getCode() == 404)
 					{
 						// Need to go thru the error handler to allow Redirect to work.
 						JError::raiseError(404, $e->getMessage());
+						$this->_item[$pk] = false;
 					}
 					else
 					{
@@ -121,7 +129,7 @@
 			
 			// Runs query
 			$result = $db->setQuery($query)->loadObject();
-			$db->query();
+			$db->query();			
 			
 			return $result;
 		}

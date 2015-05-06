@@ -168,8 +168,13 @@
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
+			// Creates team alias
+			jimport('joomla.filter.output');
+			$alias = $title;
+			$alias = JFilterOutput::stringURLSafe($alias);
+		 			
 			// Gets data to update
-			$fields = array($db->quoteName('body') . ' = ' . $db->quote($body), $db->quoteName('title') . ' = ' . $db->quote($title));
+			$fields = array($db->quoteName('body') . ' = ' . $db->quote($body), $db->quoteName('title') . ' = ' . $db->quote($title), $db->quoteName('alias') . ' = ' . $db->quote($alias));
 			
 			// Sets the conditions of which event and which player to update
 			$conditions = array($db->quoteName('id') . ' = ' . ((int) $team));
@@ -228,11 +233,16 @@
 				$user	= JFactory::getUser();
 				$date = new JDate(time());
 				
+				// Creates team alias
+				jimport('joomla.filter.output');
+				$alias = $title;
+				$alias = JFilterOutput::stringURLSafe($alias);
+			
 				// Sets columns
-				$colums = array('id', 'title', 'body', 'published', 'access', 'language', 'created_user_id', 'created_time', 'params');
+				$colums = array('id', 'title', 'body', 'published', 'access', 'language', 'created_user_id', 'created_time', 'params', 'alias');
 				
 				// Sets values
-				$values = array('null', $db->quote($title), $db->quote($body), 1, 1, $db->quote('*'), $user->id, $db->quote($date->tosql(true)), 'null');
+				$values = array('null', $db->quote($title), $db->quote($body), 1, 1, $db->quote('*'), $user->id, $db->quote($date->tosql(true)), 'null', $db->quote($alias));
 				
 				// Prepare Insert Query $db->quoteName('unconfirmed')
 				$query  ->insert($db->quoteName('#__events_teams'))

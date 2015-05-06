@@ -38,6 +38,11 @@
 			// Gets the current user that is logged in
 			$this->currentUser = $this->model->getCurrentUser();
 			
+			if (empty($this->currentUser->status) && (int) $this->event->published == -1)
+			{
+				JError::raiseError(404, JText::_('COM_EVENTS_ERROR_EVENT_NOT_FOUND'));
+			}
+			
 			// Sets PHtml Items
 			$this->_terms = EventsHelpersView::load('event','_terms','phtml');
 			$this->_terms->event = $id;
