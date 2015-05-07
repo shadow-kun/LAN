@@ -397,10 +397,12 @@
 				// Normal Use
 				$user1 = JFactory::getUser();
 				$body = $app->getParams('com_events')->get('emailregistration');
+				$path1 = JPATH_COMPONENT;
 				$host1 = JURI::root();
 			}
 			else
 			{
+				$path1 = getcwd() . '/..';
 				$user1 = intval($user1);
 				$user1 = JFactory::getUser($user1);
 				$host1 = substr(JURI::root(), 0, stripos(JURI::root(), '/components/com_events'));
@@ -460,6 +462,7 @@
 			// Subject of the email
 			$mailer->setSubject($db->escape($event->title) . ' - Registration Ticket');
 			// Body of the email
+			QRcode::png($host1 . '/?option=com_events&view=checkin&layout=qrcode&id=' . $result->id , $path1 . '/assets/images/qrcodes/ticket' . $result->id .'.png');
 			
 			$im     = imagecreatetruecolor(200, 100);  
 			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
@@ -469,6 +472,7 @@
 
 			// Output the image to browser
 			//header('Content-Type: image/gif');
+			imagegif($im, $path1 . '/assets/images/barcodes/ticket' . $result->id . '.gif');
 			imagedestroy($im);
 			
 			//$body = $app->getParams('com_events')->get('emailregistration');
@@ -482,6 +486,7 @@
 					. '<strong>Event Name: </strong>' . $db->escape($event->title) . '<br />'
 					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
 					. '<p><img src="components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="components/com_events/assets/images/barcodes/ticket' . $result->id . '.gif" /></p></div>';
 					
 			/* Needs to re-code images to ensure a full unc path */
 			$body = str_ireplace('src="', 'src="' . $host1, $body);
