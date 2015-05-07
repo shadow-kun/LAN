@@ -49,11 +49,27 @@
 					
 					$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_DUPLICATE');
 				}
-				else if($model->storeAttendee() && $model->sendTicket($id))
+				else if($model->storeAttendee($id))
 				{
 					// If adding to the event is successful
-					$return['success'] = true;
-					$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
+					if(intval($model->getEvent($id)->params->prepay) == 2)
+					{
+						$return['success'] = true;
+						$renderView = EventsHelpersView::load('event','_prepay','phtml');
+					}
+					else
+					{
+						if($model->sendTicket($id))
+						{
+							$return['success'] = true;
+							$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
+						}
+						else
+						{
+							$return['success'] = false;
+							$renderView = EventsHelpersView::load('event','_result-register-failure','phtml');
+						}
+					}
 				}
 				else
 				{

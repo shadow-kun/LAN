@@ -24,6 +24,12 @@
 		protected $players;
 		
 		/**
+		 * @var		array		The array of the player records to display in the list.
+		 * @sicne 	0.0
+		 */
+		protected $events;
+		
+		/**
 		* @var JObject The data for the record being displayed.
 		* @since 0.0
 		*/
@@ -53,6 +59,7 @@
 			// Intialiase variables.
 			$this->item		= $this->get('Item');
 			$this->players	= $this->get('Players');
+			$this->events	= $this->get('Events');
 			$this->teams	= $this->get('Teams');
 			$this->form		= $this->get('Form');
 			$this->state	= $this->get('State');

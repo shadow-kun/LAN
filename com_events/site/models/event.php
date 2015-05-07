@@ -270,7 +270,7 @@
 			return true;
 		}
 		
-		public function storeAttendee()
+		public function storeAttendee($pk = null)
 		{
 			// Gets current user info
 			$user	= JFactory::getUser();
@@ -300,7 +300,7 @@
 			
 			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
 
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			$conditions = array($db->quoteName('id') . ' = ' . intval($pk));
 			
 			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
@@ -381,8 +381,9 @@
 			return true;
 		}
 		
-		public function sendTicket($pk = null)
+		public function sendTicket($pk = null, $user1 = null)
 		{
+			
 			
 			$mailer = JFactory::getMailer();
 			$config = JFactory::getConfig();
@@ -390,8 +391,37 @@
 						
 			$app = JFactory::getApplication();
 			
-			// Gets User Data
 			$db		= $this->getDb();
+			if($user1 == null)
+			{
+				// Normal Use
+				$user1 = JFactory::getUser();
+				$body = $app->getParams('com_events')->get('emailregistration');
+				$host1 = JURI::root();
+			}
+			else
+			{
+				$user1 = intval($user1);
+				$user1 = JFactory::getUser($user1);
+				$host1 = substr(JURI::root(), 0, stripos(JURI::root(), '/components/com_events'));
+				// For IPN User Only - Get params for emailing purposes.
+				
+				$query	= $db->getQuery(true);
+						
+				// Select the required fields from the table.
+				$query->select('params');
+				$query->from('#__extensions AS p');
+							
+				// Selects the event that is required.
+				$query->where('element = ' . $db->quote("com_events"));
+				
+				// Selects only non cancelled entries. (Innactive as of current)
+				// Runs query
+				$body = json_decode($db->setQuery($query)->loadResult())->emailregistration;
+				$db->query();
+			}
+			
+			// Gets User Data
 			$query	= $db->getQuery(true);
 						
 			// Select the required fields from the table.
@@ -399,13 +429,12 @@
 			$query->from('#__events_players AS p');
 						
 			// Selects the event that is required.
-			$query->where('p.event = ' . $pk);
+			$query->where('p.event = ' . $db->quote($pk));
 			
 			// Selects current user.
-			$query->where('p.user = ' . JFactory::getUser()->id);
+			$query->where('p.user = ' . $db->quote($user1->id));
 			
 			// Selects only non cancelled entries. (Innactive as of current)
-			
 			// Runs query
 			$result = $db->setQuery($query)->loadObject();
 			$db->query();
@@ -423,16 +452,14 @@
 				$config->get('config.fromname'));
 			 
 			$mailer->setSender($sender);
-			
 			// Sends email to the users address
-			$recipient = $user->email;
+			$recipient = $user1->email;
  
 			$mailer->addRecipient($recipient);
 			
 			// Subject of the email
 			$mailer->setSubject($db->escape($event->title) . ' - Registration Ticket');
 			// Body of the email
-			QRcode::png(JURI::root() . '/?option=com_events&view=checkin&layout=qrcode&id=' . $result->id , JPATH_COMPONENT . '/assets/images/qrcodes/ticket' . $result->id .'.png');
 			
 			$im     = imagecreatetruecolor(200, 100);  
 			$black  = ImageColorAllocate($im,0x00,0x00,0x00);  
@@ -441,27 +468,26 @@
 			$data 	= Barcode::gd($im, $black, 100, 50, 0, "code128", $result->id, 2, 50);
 
 			// Output the image to browser
-			header('Content-Type: image/gif');
-
-			imagegif($im, JPATH_COMPONENT . '/assets/images/barcodes/ticket' . $result->id . '.gif');
+			//header('Content-Type: image/gif');
 			imagedestroy($im);
 			
-			$body = $app->getParams('com_events')->get('emailregistration');
-				
+			//$body = $app->getParams('com_events')->get('emailregistration');
+			
+			// Experimental
+			//$body = $app->getParams('com_events');
+			
 			$body = $body . '<br />' . '<h2>' . $db->escape($event->title) . ' - Event Registration Ticket</h2>'
-					. '<div><p><strong>Username: </strong>' . JFactory::getUser()->username . '<br />' 
-					. '<strong>Name: </strong>' . JFactory::getUser()->name . '<br />'
+					. '<div><p><strong>Username: </strong>' . $user1->username . '<br />' 
+					. '<strong>Name: </strong>' . $user1->name . '<br />'
 					. '<strong>Event Name: </strong>' . $db->escape($event->title) . '<br />'
 					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
 					. '<p><img src="components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png" />'
-					. '<img src="components/com_events/assets/images/barcodes/ticket' . $result->id . '.gif" /></p></div>'
-					. '<p>' . JURI::root() . 'components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png"</p>';
 					
 			/* Needs to re-code images to ensure a full unc path */
-			$body = str_ireplace('src="', 'src="' . JURI::root() . '/', $body);
+			$body = str_ireplace('src="', 'src="' . $host1, $body);
 			
 			/* Replaces braketed wildcards with appropriate text */
-			$body = str_ireplace('{name}', $user->name, $body);
+			$body = str_ireplace('{name}', $user1->name, $body);
 			$body = str_ireplace('{event}', $db->escape($event->title), $body);
 			
 			

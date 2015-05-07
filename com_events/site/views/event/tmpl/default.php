@@ -24,7 +24,11 @@
 		$prepay = intval($this->params->get('prepay'));
 	}
 	
-	if($this->event->params->confirmations_override !== '') 
+	if($prepay == 2)
+	{
+		$confirmations = -1;
+	}
+	elseif($this->event->params->confirmations_override !== '') 
 	// Gets global setting if not explicitly set.
 	{
 		$confirmations = intval($this->event->params->confirmations_override);
@@ -76,12 +80,13 @@
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->event->params->registration_open_time))); ?><br />
 			<strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_REGISTRATION_CLOSE_TIME_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->event->params->registration_close_time))); ?></p>
-			
+		
+		<?php if($confirmations >= 0) : ?>
 		<p><strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_REGISTRATION_CONFIRMATION_TIME_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->event->params->registration_confirmation_time))); ?></p>
-			
-		<p><strong><?php echo JText::_('COM_EVENTS_EVENT_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($this->event->players_current); ?> / <?php echo $this->escape($this->event->players_confirmed); ?> / <?php echo $this->escape($this->event->players_max); ?><br />
-			<strong><?php echo JText::_('COM_EVENTS_EVENT_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($this->event->players_prepaid); ?> / <?php echo $this->escape($this->event->players_prepay); ?></p>
+			<?php endif; ?>
+		<p><strong><?php if($confirmations >= 0) : echo JText::_('COM_EVENTS_EVENT_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($this->event->players_current); ?> / <?php echo $this->escape($this->event->players_confirmed); ?> / <?php echo $this->escape($this->event->players_max) . '<br /><strong>'; endif; ?>
+			<?php echo JText::_('COM_EVENTS_EVENT_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($this->event->players_prepaid); ?> / <?php echo $this->escape($this->event->players_prepay); ?></p>
 		
 		<!-- Need to have a restrict access cause here -->
 		

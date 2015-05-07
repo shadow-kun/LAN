@@ -79,8 +79,36 @@
 				{
 					$result->modified_time = null;
 				}
+				
 			}
 			
+			
+			return $result;
+		}
+		
+		public function getEvents($pk = null)
+		{			
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('e.id AS id, e.title');
+			$query->from('#__events_events AS e');
+									
+			// Selects the event that is required.
+			$id = (int) JRequest::getVar('id');
+			$query->where('e.published = 1 or e.published = 2 or e.published = -1');
+			
+			// Add the list ordering clause.
+			/*if ($orderCol == 'p.ordering' || $orderCol == 'id') 
+			{
+				$orderCol = 'id ' . $orderDirn . ', p.ordering';
+			}*/
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			
+			$query->order('e.title');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
 			
 			return $result;
 		}

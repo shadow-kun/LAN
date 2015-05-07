@@ -47,8 +47,28 @@
 					{ 
 						echo '<p><strong>' . JText::_('COM_EVENTS_EVENTS_LIST_LOCATION') . ': </strong>' . $this->escape($event->params->location) . '</p>';
 					}?>
-					<p><strong><?php echo JText::_('COM_EVENTS_EVENTS_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($event->players_current); ?> / <?php echo $this->escape($event->players_confirmed); ?> / <?php echo $this->escape($event->players_max); ?><br />
-					<strong><?php echo JText::_('COM_EVENTS_EVENTS_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($event->players_prepaid); ?> / <?php echo $this->escape($event->players_prepay); ?></p>
+					<p><?php 
+						$prepay = 0;
+						if($event->params->prepay !== '') 
+
+						// Gets global setting if not explicitly set.
+						{
+							$prepay = intval($event->params->prepay);
+						} 
+						else
+						{
+							$prepay = intval($this->params->get('prepay'));
+						}
+						if($prepay < 2)
+						{
+							echo '<strong>' . JText::_('COM_EVENTS_EVENTS_LIST_PLAYERS') . '</strong> - ' . $this->escape($event->players_current) . ' / ' . $this->escape($event->players_confirmed)  . ' / ' . $this->escape($event->players_max) . '<br />';
+						}
+						
+						if($prepay > 0)
+						{
+							echo '<strong>' . JText::_('COM_EVENTS_EVENTS_LIST_PREPAID') . '</strong> - ' . $this->escape($event->players_prepaid) . ' / ' . $this->escape($event->players_prepay); 
+						}
+					 ?> </p>
 					<?php 
 						$tokens = explode('<hr id="system-readmore" />',$event->body);
 						echo $tokens[0];

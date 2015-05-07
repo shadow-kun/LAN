@@ -66,5 +66,3 @@
 		<?php echo JText::_('COM_EVENTS_EVENT_PREPAY_PAYPAL_DESC'); ?>
 	</td>
 </tr>
-<?php $params = JFactory::getApplication()->getParams('com_events');
-							echo $pCurrency = $params->get('paypal_email'); ?>

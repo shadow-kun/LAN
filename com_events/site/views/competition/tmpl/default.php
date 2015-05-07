@@ -21,6 +21,11 @@
 		<strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_END_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->competition->competition_end))); ?></p>
 		
+		<?php if(!empty($this->competition->event)) : ?>
+			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_EVENT_LABEL', true); ?></strong> - 
+				<?php echo $this->escape($this->competition->event); ?> </p>
+		<?php endif; ?>
+		
 		<?php if(!empty($this->competition->params->competition_organisers)) : ?>
 			<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_ORGANISERS_LABEL', true); ?></strong> - 
 				<?php echo $this->escape($this->competition->params->competition_organisers); ?> </p>

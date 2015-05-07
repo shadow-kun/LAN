@@ -29,59 +29,11 @@
 	
 	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a> <strong> - </strong> 
 		<a href="<?php echo JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id); ?>"><?php echo JText::_('COM_EVENTS_EVENT_PREPAY_TITLE', true) ?></a></h2>
-	<?php if(($this->currentUser->status <= 2)) : ?>	
-		<div class="row-fluid">
-			
-			<?php if($this->event->params->prepay !== '') 
-			// Gets global setting if not explicitly set.
-			{
-				$prepay = intval($this->event->params->prepay);
-			} 
-			else
-			{
-				// Set as disabled for now.
-				$prepay = intval($this->params->get('prepay'));
-			}
-			
-			if($prepay == 2)
-			{			
-				echo '<p>' . JText::_('COM_EVENTS_EVENT_PREPAY_MSG_MANDATORY') . '</p>';
-			}
-			elseif ($prepay == 1)
-			{
-				echo '<p>' . JText::_('COM_EVENTS_EVENT_PREPAY_MSG_OPTIONAL') . '</p>';
-			}
-			else 
-			{
-				echo '<p>' . JText::_('COM_EVENTS_EVENT_PREPAY_MSG_DISABLED') . '</p>';
-			}?>
-			</br >
-		</div>
-		<?php if($prepay > 0) : ?>
-			<div class="row-fluid">
-				<table class="list table table-striped">
-					<thead>
-						<tr>
-							<th width="20%">
-								<?php echo JText::_('COM_EVENTS_EVENT_PREPAY_TABLE_PAYMENT_TYPE_TITLE'); ?>
-							</th>
-							<th>
-								<?php echo JText::_('COM_EVENTS_EVENT_PREPAY_TABLE_PAYMENT_DESC_TITLE'); ?>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php echo $this->_prepay->render(); ?>
-					</tbody>
-				</table>
-			</div>
-		<?php endif; ?>
-	<?php else :
-		echo '<div class="row-fluid"><p>' . JText::_('COM_EVENTS_EVENT_PREPAY_MSG_PAID') . '</p></div>';
-	endif; ?>
+	
 		
+		<?php echo EventsHelpersView::load('event','_prepay','phtml'); ?>
 		
-	<input type="hidden" name="option" value="com_lan" />
+	<input type="hidden" name="option" value="com_events" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="view" value="event" />
 	<input type="hidden" id="eventid" name="event" value="<?php echo $this->event->id; ?>" />

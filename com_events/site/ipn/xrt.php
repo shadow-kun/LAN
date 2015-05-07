@@ -1,5 +1,4 @@
 <?php define('_JEXEC', 1);
-	echo 'test';
 	if (file_exists('../../../defines.php'))
 	{
 		include_once '../../../defines.php';
@@ -49,7 +48,7 @@
 		}
 		else 
 		{
-			$item_number = 15673;
+			$item_number = 51685;
 		}
 		
 		if(isset($_POST['mc_gross']) == true)
@@ -79,8 +78,10 @@
 			$result = $db->setQuery($query)->loadObject();
 			$db->query();
 			
+			$event = $result->id;
+			$user = $result->user;
+			
 	
-		var_dump(json_decode($result->params)->paypal_global);
 	
 	if(json_decode($result->params)->paypal_global == 0)
 	{
@@ -96,7 +97,6 @@
 		$db->query();
 		
 		$pparams = json_decode($results2->params);
-		var_dump($pparams);
 		$pCurrency = $pparams->paypal_currency;
 		$pEmail = $pparams->paypal_email;
 	}
@@ -107,7 +107,18 @@
 	}
 	$pAmount = json_decode($result->params)->cost_prepay;
 	
-	var_dump($pCurrency);
-	echo 'Mail: ' . $pEmail;
-	echo 'Amount: ' . $pAmount . '</p>'; 
+	
+	//if($prepay == 2)
+							{
+								
+								include('../models/default.php');  
+								include('../models/event.php');  
+								
+								$model = new EventsModelsEvent();
+								{
+									//$model->sendTicket(43, 261);
+									$model->sendTicket(1,515);
+								}
+								
+							}
 	?>

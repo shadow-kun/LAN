@@ -16,11 +16,11 @@
 	// Set up the acknowledgement request headers
 	$header  = "POST /cgi-bin/webscr HTTP/1.1\r\n";                    // HTTP POST request
 	$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-	$header .= "Host: www.paypal.com\r\n";  // www.paypal.com for a live site 
+	//$header .= "Host: www.paypal.com\r\n";  // www.paypal.com for a live site 
 	$header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
 	
 	// Open a socket for the acknowledgement request
-	$fp = fsockopen('ssl://www.paypal.com', 443, $errno, $errstr, 30);
+	$fp = fsockopen('tls://www.paypal.com', 443, $errno, $errstr, 30);
 
 	$stuff = null;
 	if (!$fp) 
@@ -39,7 +39,6 @@
 			
 			if (stripos($res, "VERIFIED") !== false) // Response contains VERIFIED - process notification
 			{
-				
 				// Authentication protocol is complete - OK to process notification contents
 				
 				// Possible processing steps for a payment include the following:
@@ -145,9 +144,8 @@
 					// Check that the payment_status is Completed
 					if(strcmp(JRequest::getVar('payment_status'), 'Completed') == 0)
 					{
-					
 						// Check that payment_amount/payment_currency are correct
-						$query->select('a.id AS id, a.params AS params');
+						$query->select('a.id AS id, a.params AS params, a.body AS body, a.title AS title');
 						$query->from('#__events_events AS a');
 						
 						$query->select('p.user AS user, p.status AS status');
@@ -158,23 +156,30 @@
 						// Runs query
 						$result = $db->setQuery($query)->loadObject();
 						$db->query();
-						$event = $result->id;
+						$event = $result;
+						$user = $result->user;
 						
-						if(json_decode($result->params)->paypal_global == 0)
+						$query	= $db->getQuery(true);
+						$query->select('a.params');
+						$query->from('#__extensions AS a');
+						
+						// Selects current user.
+						$query->where('name = "com_events"');
+										
+						// Runs query
+						$results2 = $db->setQuery($query)->loadObject();
+						$db->query();
+						
+						$pparams = json_decode($results2->params);
+						$prepay = json_decode($result->params)->prepay;
+						if($prepay === '')
 						{
-							$query	= $db->getQuery(true);
-							$query->select('a.params');
-							$query->from('#__extensions AS a');
+							$prepay = $pparams->prepay;
+						}
 							
-							// Selects current user.
-							$query->where('name = "com_events"');
-											
-							// Runs query
-							$results2 = $db->setQuery($query)->loadObject();
-							$db->query();
 							
-							$pparams = json_decode($results2->params);
-							$pCurrency = $pparams->paypal_currency;
+						if(json_decode($result->params)->paypal_global == 0)
+						{	$pCurrency = $pparams->paypal_currency;
 							$pEmail = $pparams->paypal_email;
 						}
 						else
@@ -209,7 +214,7 @@
 							$query	= $db->getQuery(true);
 							$query->select('count(id) AS id');
 							$query->from('#__events_players');
-							$query->where($db->quoteName('event') . ' = ' . $event . ' AND ' . $db->quoteName('status') . ' = 4');
+							$query->where($db->quoteName('event') . ' = ' . $event->id . ' AND ' . $db->quoteName('status') . ' = 4');
 							$prepaids = $db->setQuery($query)->loadObject();
 							
 							// Gets data to update
@@ -217,7 +222,7 @@
 							$fields = $db->quoteName('players_prepaid') . ' = ' . $prepaids->id;
 							
 							// Sets the conditions of which event and which player to update
-							$conditions = array($db->quoteName('id') . ' = ' . $event);
+							$conditions = array($db->quoteName('id') . ' = ' . $event->id);
 							
 							// Executes Query
 							$query->update($db->quoteName('#__events_events'));
@@ -227,6 +232,16 @@
 							$db->setQuery($query);
 							
 							$db->query();
+							
+							if($prepay == 2)
+							{
+								
+								include('../models/default.php');  
+								include('../models/event.php');  
+								
+								$model = new EventsModelsEvent();
+								$model->sendTicket($event->id, $user);
+							}	
 						}
 						
 					}
