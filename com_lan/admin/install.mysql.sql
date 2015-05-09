@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__lan_permissions` (
 CREATE TABLE IF NOT EXISTS `#__lan_settings` (
 	`id` int(11) UNSIGNED NOT NULL,
 	`name` varchar(45) NOT NULL,
-	`value` mediumtext DEFAULT NULL,
+	`value` text DEFAULT NULL,
 	PRIMARY KEY (`id`)
 );
 	

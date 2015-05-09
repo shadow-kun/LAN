@@ -11,6 +11,11 @@
 	JHtml::_('behavior.tooltip');
 	JHtml::_('behavior.formvalidation');
 	JHtml::_('behavior.keepalive');
+	
+	
+	$listOrder	= $this->escape($this->state->get('list.ordering'));
+	$listDirn	= $this->escape($this->state->get('list.direction'));
+	
 ?>
 <script type="text/javascript">
 	// Attach a behaviour to the submit button to check validation.
@@ -52,65 +57,190 @@
 			<div class="span8">
 				<fieldset class="adminform">
 					<?php echo $this->form->getLabel('body'); ?>
-					<!--<div class="clr"></div>-->
 					<?php echo $this->form->getInput('body'); ?>
 				</fieldset>
 			</div>
-			
-			<div class="span3">
-				<?php echo $this->loadTemplate('details'); ?>
-			</div>
-			
-			<div class="span3">
-				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_GENERAL_SETTINGS', true) ?></h3>
+			<div class="span3 form-vertical">
+				
+				<div class="control-group ">
+					<div class="control-label"><?php echo $this->form->getLabel('event_start_time'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('event_start_time'); ?></div>
+				</div>
+				
+				<div class="control-group ">
+					<div class="control-label"></div>
+					<div class="controls">
+						<select name="jform[event_start_hour]" class="span2">
+							<?php for($h = 0; $h < 24; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_start_hour)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									 echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									 echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select> : <select name="jform[event_start_minute]" class="span2">
+							<?php for($h = 0; $h < 60; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_start_minute)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group ">
+					<div class="control-label"><?php echo $this->form->getLabel('event_end_time'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('event_end_time'); ?></div>
+					
+				</div>
+				
+				<div class="control-group ">
+					<div class="control-label"></div>
+					<div class="controls">
+						<select name="jform[event_end_hour]" class="span2">
+							<?php for($h = 0; $h < 24; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_end_hour)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									 echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									 echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select> : <select name="jform[event_end_minute]" class="span2">
+							<?php for($h = 0; $h < 60; $h++)
+							{
+								echo '<option ';
+								if((int) $h == $this->item->event_end_minute)
+								{
+									echo 'selected ';
+								}
+								
+								if($h < 10)
+								{
+									echo 'value=0' . $h . '>0' . $h . '</option>';
+								}
+								else
+								{
+									echo 'value=' . $h . '>' . $h . '</option>';
+								}
+							}
+						?>
+						</select>
+					</div>
+				</div>
+				
+				<?php echo $this->loadTemplate('location'); ?>
+				
 				<p><?php echo $this->form->getLabel('category_id'); ?>
 				<?php echo $this->form->getInput('category_id'); ?></p>
-					
-				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
+			</div>
+			
+		</div>
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'additions', JText::_('COM_LAN_EVENT_TAB_TERMS', true)); ?>
+		
+		<div class="row-fluid">
+			<div class="span6">
+				<fieldset class="adminform">
+					<?php echo $this->form->getLabel('terms'); ?>
+					<?php echo $this->form->getInput('terms'); ?>
+				</fieldset>
+			</div>
+			<div class="span3">
+				<fieldset class="adminform">
+					<?php echo $this->form->getLabel('terms_global'); ?>
+					<?php echo $this->form->getInput('terms_global'); ?>
+				</fieldset>
 			</div>
 		</div>
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'additions', JText::_('COM_LAN_EVENT_TAB_PLAYERS', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'players', JText::_('COM_LAN_EVENT_TAB_PLAYERS', true)); ?>
 		
 		<div class="row-fluid">
 			<div class="span8">
 				<!-- Player Listing To Be Inserted Here -->
 				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_LIST', true) ?></h3>
+				<div class="control-group ">
+					<div class="control-label"><?php echo $this->form->getLabel('add_user'); ?></div>
+					<div class="controls" ><?php echo $this->form->getInput('add_user'); ?> <?php echo $this->form->getInput('add_user_status'); ?></div>
+				</div>
+				<?php echo $this->loadTemplate('players'); ?>
 			</div>
 			
 			<div class="span3">
 				<fieldset class="adminform">
 					<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_PLAYERS_SUMMARY', true) ?></h3>
-					<p><?php echo $this->form->getLabel('players_max'); ?>
-					<?php echo $this->form->getInput('players_max'); ?></p>
 					
 					<p><?php echo $this->form->getLabel('players_current'); ?>
-					<?php echo $this->form->getInput('players_current'); ?></p>
-					
+					<?php echo $this->form->getInput('players_current'); ?>
+										
 					<p><?php echo $this->form->getLabel('players_confirmed'); ?>
 					<?php echo $this->form->getInput('players_confirmed'); ?></p>
+					
+					<p><?php echo $this->form->getLabel('players_prepaid'); ?>
+					<?php echo $this->form->getInput('players_prepaid'); ?></p>
+					
+					<p><?php echo $this->form->getLabel('players_max'); ?>
+					<?php echo $this->form->getInput('players_max'); ?></p>
 					
 					<p><?php echo $this->form->getLabel('players_prepay'); ?>
 					<?php echo $this->form->getInput('players_prepay'); ?></p>
 					
-					<p><?php echo $this->form->getLabel('players_prepaid'); ?>
-					<?php echo $this->form->getInput('players_prepaid'); ?></p>
 				</fieldset>
 			</div>
 		</div>
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_LAN_EVENT_TAB_PUBLISHING', true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_LAN_EVENT_TAB_SETTINGS', true)); ?>
 		<div class="row-fluid">
-			<div class="span6">
+			<div class="span4">
+				<h3><?php echo JText::_('COM_LAN_EVENT_SUBHEADING_SETTINGS_PUBLISHING_TITLE', true) ?></h3>
+				<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
+			</div>
+			<div class="span4">
 				<?php echo JHtml::_('sliders.start','event-sliders-'.$this->item->id, array('useCookie' => 1)); ?>
 
 				<?php echo $this->loadTemplate('params'); ?>
 
-				<?php echo $this->loadTemplate('metadata'); ?>
 			</div>
 		</div>
 		<?php echo JHtml::_('bootstrap.endTab'); ?>

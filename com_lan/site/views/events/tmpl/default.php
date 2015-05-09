@@ -26,16 +26,25 @@
 			?>
 			<div class="media well well-small span12">
 				<div class="media-body">
-					<a class="pull-right" href="<?php echo JRoute::_('index.php?option=com_lan&view=event&id=' . $item->id); ?>">
+					<!--<a class="pull-right" href="<?php echo JRoute::_('index.php?option=com_lan&view=event&id=' . $item->id); ?>">
 						<img src="http://www.gravatar.com/avatar/<?php echo md5(strtolower(trim($this->profile->email))); ?>?s=150" />
-					</a>
+					</a>-->
 					<h2><a href="<?php echo JRoute::_('index.php?option=com_lan&view=event&id=' . $item->id); ?>"><?php echo $this->escape($item->title); ?></a></h2>
 					<h4><?php echo date('jS', strtotime($this->escape($item->event_start_time))); ?> - <?php echo date('jS F Y', strtotime($this->escape($item->event_end_time))); ?></h4>
-					<p><strong><?php echo JText::_('COM_LAN_EVENTS_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($item->players_current); ?> / <?php echo $this->escape($item->players_max); ?><br />
+					<?php if(isset($item->params->location))
+					{ 
+						echo '<h4>' . JText::_('COM_LAN_EVENTS_LIST_LOCATION') . ': ' . $this->escape($item->params->location) . '</h4>';
+					}?>
+					<p><strong><?php echo JText::_('COM_LAN_EVENTS_LIST_PLAYERS'); ?></strong> - <?php echo $this->escape($item->players_current); ?> / <?php echo $this->escape($item->players_confirmed); ?> / <?php echo $this->escape($item->players_max); ?><br />
 					<strong><?php echo JText::_('COM_LAN_EVENTS_LIST_PREPAID'); ?></strong> - <?php echo $this->escape($item->players_prepaid); ?> / <?php echo $this->escape($item->players_prepay); ?></p>
-					<p>Summary Details of event</p>
+					<?php 
+						$tokens = explode('<hr id="system-readmore" />',$item->body);
+						echo $tokens[0];
+					?>
 				</div>
 			</div>
+			<div class="clr"></div>
 		<?php endforeach; ?>
 	</div>
+	<?php echo JHtml::_( 'form.token' ); ?>
 </form>

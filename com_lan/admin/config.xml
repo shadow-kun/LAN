@@ -2,10 +2,67 @@
 <!-- $Id$ -->
 <config>
 	<fieldset
+		name="lanparty"
+		label="COM_LAN_CONFIG_FIELDSET_GENERAL_LABEL"
+		description="COM_LAN_CONFIG_FIELDSET_GENERAL_DESC"
+		>
+		
+	</fieldset>
+	<fieldset
+		name="events"
+		label="COM_LAN_CONFIG_FIELDSET_EVENTS_LABEL"
+		description="COM_LAN_CONFIG_FIELDSET_EVENTS_DESC"
+		>
+		
+		<field
+			name="waitlist"
+			type="radio"
+			label="COM_LAN_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_LABEL"
+			description="COM_LAN_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_DESC"
+			default="1"
+		>
+			<option value="1">COM_LAN_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_OPTION_WAIT</option>
+			<option value="0">COM_LAN_CONFIG_FIELDSET_EVENTS_FIELD_WAITLIST_OPTION_NOWAIT</option>
+		</field>
+	</fieldset>
+	
+	<fieldset
+		name="terms"
+		label="COM_LAN_CONFIG_FIELDSET_TERMS_LABEL"
+		description="COM_LAN_CONFIG_FIELDSET_TERMS_DESC"
+		>
+		
+		<field name="terms"
+			type="editor"
+			label="COM_LAN_CONFIG_FIELDSET_TERMS_FIELD_TERMS_LABEL"
+			description="COM_LAN_CONFIG_FIELDSET_TERMS_FIELD_TERMS_DESC"
+			class="inputbox"
+			filter="safehtml"
+			buttons="true" />
+	
+	</fieldset>
+	
+	<fieldset
+		name="emails"
+		label="COM_LAN_CONFIG_FIELDSET_EMAILS_LABEL"
+		description="COM_LAN_CONFIG_FIELDSET_EMAILS_DESC"
+		>
+		
+		<field name="emailregistration"
+			type="editor"
+			label="COM_LAN_CONFIG_FIELDSET_EMAILS_FIELD_REGISTRATION_LABEL"
+			description="COM_LAN_CONFIG_FIELDSET_EMAILS_FIELD_REGISTRATION_DESC"
+			class="inputbox"
+			filter="safehtml"
+			buttons="true" />
+	
+	</fieldset>
+	
+	<fieldset
 		name="permissions"
 		label="JCONFIG_PERMISSIONS_LABEL"
 		description="JCONFIG_PERMISSIONS_DESC"
-	>
+		>
 	
 		<field
 			name="rules"

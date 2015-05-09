@@ -14,7 +14,7 @@
 	* @subpackage	com_lan
 	*/
 	
-	class LANHelper
+	abstract class LANHelper
 	{
 		/**
 		 * Configure the Linkbar.
@@ -26,18 +26,21 @@
 		 * @since 0.0
 		 */
 		 
-		public static function addSubmenu($vName)
+		public static function addSubmenu($submenu)
 		{
-		JSubMenuHelper::addEntry(
-			JText::_('COM_LAN_SUBMENU_EVENTS'),
-			'index.php?option=com_lan&view=events',
-			$vName == 'events'
-			);
-		JSubMenuHelper::addEntry(
-			JText::_('COM_LAN_SUBMENU_CATEGORIES'),
-			'index.php?option=com_categories&extension=com_lan',
-			$vName == 'categories'
-			);
+			JSubMenuHelper::addEntry(
+				JText::_('COM_LAN_SUBMENU_EVENTS'),	'index.php?option=com_lan&view=events',	$submenu == 'events');
+			JSubMenuHelper::addEntry(
+				JText::_('COM_LAN_SUBMENU_CATEGORIES'),	'index.php?option=com_categories&extension=com_lan', $submenu == 'categories');
+				
+			// set some global property
+			$document = JFactory::getDocument();
+			//$document->addStyleDeclaration('.icon-48-helloworld ' .
+			//                               '{background-image: url(../media/com_helloworld/images/tux-48x48.png);}');
+			if ($vName == 'categories') 
+			{
+					$document->setTitle(JText::_('COM_LAN_ADMINISTRATION_CATEGORIES'));
+			}
 		}
 
 
