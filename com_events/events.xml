@@ -32,6 +32,7 @@
 		<folder>views</folder>
 		<filename>index.html</filename>
 		<filename>events.php</filename>
+		<filename>router.php</filename>
 	</files> 
 
 	<scriptfile>install.php</scriptfile>
