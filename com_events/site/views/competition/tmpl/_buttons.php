@@ -63,17 +63,25 @@
 				{
 					if(strtotime($this->competition->competition_start) > time())
 					{
-						echo ($this->currentTeams['unregistered'] == 1) ? '<select id="registerTeamID" name="registerTeamID" readonly >' : '<select id="registerTeamID" name="registerTeamID" >';
-						foreach ($this->currentTeams as $t => $team)
-						{				
-							if(!isset($team->entryid) && isset($team->name))
-							{
-								echo '<option value="' . $team->id . '">' . $team->name . '</option>';
-							}
-						}
-						echo '</select>';
 						
-						echo '<a class="btn btn-primary dd-button" onclick="registerCompetitionTeam()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REGISTER_LABEL', true) . '</a> ';
+						if($this->canRegister == true)
+						{
+							echo ($this->currentTeams['unregistered'] == 1) ? '<select id="registerTeamID" name="registerTeamID" readonly >' : '<select id="registerTeamID" name="registerTeamID" >';
+							foreach ($this->currentTeams as $t => $team)
+							{				
+								if(!isset($team->entryid) && isset($team->name))
+								{
+									echo '<option value="' . $team->id . '">' . $team->name . '</option>';
+								}
+							}
+							echo '</select>';
+							
+							echo '<a class="btn btn-primary dd-button" onclick="registerCompetitionTeam()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REGISTER_LABEL', true) . '</a> ';
+						}
+						else
+						{
+							echo '<p>' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_NO_CHECKIN_LABEL', true) . ' ';
+						}
 					}
 				}
 				
