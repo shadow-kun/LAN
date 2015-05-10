@@ -28,7 +28,8 @@
 			$query = $db->getQuery(true)
 						->select('id AS id, title AS title, event_start_time AS startTime, event_end_time AS endTime, players_max AS playersMax, players_current AS playersCurrent, params')
 						->from($db->quoteName('#__events_events'))
-						->where('event_end_time > "' . date('Y-m-d H:i:s', time()) . '"');
+						->where('event_end_time > "' . date('Y-m-d H:i:s', time()) . '"')
+						->order('startTime ASC');
 						
 			//Prepare the query
 			$db->setQuery($query);

@@ -49,8 +49,15 @@
 			}
 			else
 			{
-				echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $event->id) . '">';
-				echo JText::_('MOD_EVENTS_EVENT_REGISTER_LABEL', true) . '</a> | ';
+				if(time() >= strtotime(json_decode($event->params)->registration_open_time))
+				{
+					echo '<p><a href="' .  JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $event->id) . '">';
+					echo JText::_('MOD_EVENTS_EVENT_REGISTER_LABEL', true) . '</a> | ';
+				}
+				else
+				{
+					echo '<p>';
+				}
 			}
 		} 
 		
