@@ -87,10 +87,12 @@
 				// gets hours and minutes for drop down boxes
 				$result->event_start_hour = substr($result->event_start_time, 11, 2);
 				$result->event_start_minute = substr($result->event_start_time, 14, 2);
+				$result->event_start_time = substr($result->event_start_time, 0, 10);
 				
 				// gets hours and minutes for drop down boxes
 				$result->event_end_hour = substr($result->event_end_time, 11, 2);
 				$result->event_end_minute = substr($result->event_end_time, 14, 2);
+				$result->event_end_time = substr($result->event_end_time, 0, 10);
 				
 				
 				// gets hours and minutes for drop down boxes
