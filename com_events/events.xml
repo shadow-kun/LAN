@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.3.0" method="upgrade">
+<extension type="component" version="3.4.0" method="upgrade">
 	<name>COM_EVENTS</name>
 	<creationDate>2014-12-16</creationDate>
 	<author>ZoR Systems</author>
 	<authorEmail>info@zor.systems</authorEmail>
 	<authorUrl>http://zor.systems</authorUrl>
-	<copyright>ZoR Systems, 2014</copyright>
+	<copyright>ZoR Systems, 2014-2015</copyright>
 	<license>GPL v2.0</license>
-	<version>0.1.0</version>
+	<version>1.1.0</version>
 	<description>COM_EVENTS_DESCRIPTION</description>
 	
 	<install>
@@ -72,6 +72,12 @@
 				view="events" img="class:events" alt="Events/Events">com_events_events</menu>
 			<menu link="option=com_events&amp;view=players" 
 				view="players" img="class:events-players" alt="Events/Players">com_events_players</menu>
+			<menu link="option=com_events&amp;view=shop" 
+				view="shop" img="class:events-shop" alt="Events/Shop">com_events_shop</menu>
+			<menu link="option=com_events&amp;view=items" 
+				view="items" img="class:events-stores" alt="Events/Shop/Items">com_events_shop_items</menu>
+			<menu link="option=com_events&amp;view=stores" 
+				view="stores" img="class:events-stores" alt="Events/Shop/Stores">com_events_shop_stores</menu>
 			<menu link="option=com_events&amp;view=teams" 
 				view="teams" img="class:events-teams" alt="Events/Players">com_events_teams</menu>
 		</submenu>

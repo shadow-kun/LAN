@@ -1,0 +1,139 @@
+<?php defined( '_JEXEC' ) or die( 'Restricted access' );
+	/**
+	 * @package		Events Party!
+	 * @subpackage	com_events
+	 * @copyright	Copyright 2014 Daniel Johnson. All Rights Reserved.
+	 * @license		GNU General Public License version 2 or later.
+	 */
+
+	//JHtml::addIncludePath(JPATH_COMPONENT.'helpers/html');
+	JHtml::stylesheet('com_events/admin.css', null, true);
+	JHtml::_('behavior.tooltip');
+	JHtml::_('behavior.formvalidation');
+	JHtml::_('behavior.keepalive');
+	
+	
+	$listOrder	= $this->escape($this->state->get('list.ordering'));
+	$listDirn	= $this->escape($this->state->get('list.direction'));
+	
+?>
+<script type="text/javascript">
+	// Attach a behaviour to the submit button to check validation.
+	Joomla.submitbutton = function(task)
+	{
+		var form = document.id('store-form');
+		if (task == 'store.cancel' || document.formvalidator.isValid(form)) {
+			<?php echo $this->form->getField('body')->save(); ?>
+			Joomla.submitform(task, form);
+		}
+		else {
+			<?php JText::script('COM_EVENTS_ERROR_N_INVALID_FIELDS'); ?>
+			// Count the fields that are invalid.
+			var elements = form.getElements('fieldset').concat(Array.from(form.elements));
+			var invalid = 0;
+
+			for (var i = 0; i < elements.length; i++) {
+				if (document.formvalidator.validate(elements[i]) == false) {
+					valid = false;
+					invalid++;
+				}
+			}
+
+			alert(Joomla.JText._('COM_EVENTS_ERROR_N_INVALID_FIELDS').replace('%d', invalid));
+		}
+	}
+</script>
+
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=store&layout=edit&id='.(int) $this->store->id); ?>"
+	method="post" name="adminForm" id="store-form" class="form-validate">
+	<?php echo JLayoutHelper::render('joomla.edit.title_alias', $this); ?>
+	
+	
+		
+		
+	<div class="form-horizontal"> <!--class="width-60 fltlft"-->
+		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
+
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_EVENTS_SHOP_STORE_TAB_GENERAL', true)); ?>
+		
+		<div class="row-fluid">
+			<div class="span8">
+				<fieldset class="adminform">
+					<?php echo $this->form->getLabel('body'); ?>
+					<?php echo $this->form->getInput('body'); ?>
+				</fieldset>
+			</div>
+			
+			<div class="span4 form-vertical">		
+				<div class="control-group ">
+					<div class="control-label"><?php echo $this->form->getLabel('category_id'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('category_id'); ?></div>
+				</div>
+			</div>
+			
+			<div class="span4">
+				<fieldset class="adminform">
+					<?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
+				</fieldset>
+			</div>
+		</div>
+		
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'items', JText::_('COM_EVENTS_SHOP_STORE_TAB_ITEMS', true)); ?>
+		<div class="span8">
+			<?php foreach($this->groups as $group => $g)
+			{ ?>
+				<div>
+					<h3><?php echo $g->title; ?> <button name="removeGroup" class="btn" value=<?php echo $g->id ?> onclick="Joomla.submitbutton('store.removegroup')"  ><?php echo JText::_('COM_EVENTS_SHOP_STORE_GROUP_REMOVE_LABEL'); ?></button></h3>
+					<table class="adminlist table table-striped">
+					<?php foreach($g->items as $item => $i)
+					{ ?>
+						<tr class="row<?php echo $item % 2; ?>">
+							<td width="70%"><?php echo $i->title; ?></td>
+							<td width="10%"><?php echo JText::_('COM_EVENTS_CURRENCY_SYMBOL') . $i->amount; ?></td>
+							<td><button name="removeItem" class="btn" value="<?php echo $g->id . '-' . $i->id; ?>" onclick="Joomla.submitbutton('store.removeitem')"  ><?php echo JText::_('COM_EVENTS_SHOP_STORE_ITEM_REMOVE_LABEL'); ?></button></td>
+						</tr>
+					<?php } ?>
+					</table>
+				</div>
+			<?php }	?>
+		</div>
+		
+		<div class="span4">
+			<?php // Controls ?> 
+				
+				<fieldset class="adminform">	
+					<div class="control-group ">
+						<?php echo $this->form->getLabel('add_group'); ?>
+						<?php echo $this->form->getInput('add_group'); ?>
+					</div>
+					
+					<div class="control-group ">
+						<?php echo JText::_('COM_EVENTS_SHOP_STORE_ITEM_ADD_LABEL'); ?>
+						
+						<?php echo $this->form->getLabel('add_item'); ?>
+						<?php echo $this->form->getInput('add_item'); ?>
+						
+						<?php echo $this->form->getLabel('add_item_group'); ?>
+						<?php echo $this->form->getInput('add_item_group'); ?>
+					</div>
+				</fieldset>
+				
+			
+			<fieldset class="adminform">
+			<?php echo JHtml::_('sliders.start','event-sliders-'.$this->store->id, array('useCookie' => 1)); ?>
+			</fieldset>
+		</div>
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'analytics', JText::_('COM_EVENTS_SHOP_STORE_TAB_ANALYTICS', true)); ?>
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+	</div>
+
+	<input type="hidden" name="task" value="store" />
+	<?php echo JHtml::_('form.token'); ?>
+</form>

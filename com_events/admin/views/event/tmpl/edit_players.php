@@ -15,7 +15,7 @@
 	
 ?>
 
-<table class="adminlist table table-striped"">
+<table class="adminlist table table-striped">
 	
 	<thead>
 		<tr>
