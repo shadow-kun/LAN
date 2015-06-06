@@ -29,6 +29,7 @@
 			$query = $db->getQuery(true);
 			$query->select('id,title');
 			$query->from('#__events_shop_store_groups');
+			$query->where('store = ' . $db->quote(JRequest::getInt('id')));
 			$db->setQuery((string)$query);
 			$messages = $db->loadObjectList();
 			$options = array();

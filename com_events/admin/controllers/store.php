@@ -91,7 +91,6 @@
 			
 			$app->enqueueMessage(JText::_('COM_EVENTS_SHOP_STORE_MSG_GROUP_REMOVED') . $item[0] . $item[1] , 'notice');
 			
-			
 			//return parent::cancel($key);
 			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_events&view=store&layout=edit&id=' . JRequest::getInt('id'), false));
 		}

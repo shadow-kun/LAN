@@ -9,7 +9,7 @@
 	/**
 	 * Events Form Field class for the Events component
 	 */
-	class JFormFieldStoreItems extends JFormFieldList
+	class JFormFieldItems extends JFormFieldList
 	{
 		/**
 		 * The field type.

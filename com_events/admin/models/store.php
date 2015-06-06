@@ -103,7 +103,7 @@
 			$query->from('#__events_shop_store_groups AS g');
 						
 			// Selects the store that is required.
-			$query->where('g.store = ' . (int) JRequest::getVar('id'));
+			$query->where('g.store = ' . JRequest::getInt('id'));
 			
 			$query->order('g.title ASC');
 			//echo nl2br(str_replace('#__','joom_',$query));
