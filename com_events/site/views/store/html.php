@@ -30,11 +30,22 @@
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			// Gets Store Details
-			$this->store = $this->model->getStore($id);
-			
-			// Sets PHtml Items
-			//$this->_terms = EventsHelpersView::load('event','_terms','phtml');
-			//$this->_terms->event = $id;
+			if(strcasecmp(JRequest::getVar('layout'), 'orders') == 0)
+			{
+				if(!empty($id))
+				{
+					$this->orders = $this->model->getOrders($id);
+				}
+				else
+				{
+					$this->orders = $this->model->getOrders();
+				}
+			}
+			else
+			{
+				$this->store = $this->model->getStore($id);
+				$this->groups = $this->model->getGroups($id);
+			}
 			
 			//display
 			return parent::render();

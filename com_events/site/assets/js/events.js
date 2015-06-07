@@ -132,6 +132,26 @@ function confirmEventUser()
     });
 }
 
+function orderStoreNew()
+{
+	var storeid = document.getElementById('storeid').value;
+	var attendeeInfo = {};
+	jQuery("#details :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+	
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=order&format=raw&tmpl=component&view=store&type=new&id=' + storeid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			jQuery("#details").replaceWith(data.html);
+			jQuery("#buttons").replaceWith(data.buttons);
+		}
+    });
+}
 function registerEventUser()
 {
 	var eventid = document.getElementById('eventid').value;
@@ -239,6 +259,7 @@ function showCompetitionEntrants()
 		}
     });
 }
+
 
 function showOptionTeamLeader()
 {
