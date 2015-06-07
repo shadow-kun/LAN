@@ -30,7 +30,7 @@
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			// Gets Store Details
-			if(strcasecmp(JRequest::getVar('layout'), 'orders') == 0)
+			if(strcasecmp(JRequest::getVar('layout'), 'orders') == 0 || strcasecmp(JRequest::getVar('layout'), 'payments') == 0)
 			{
 				if(!empty($id))
 				{

@@ -122,6 +122,13 @@
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
 				break;
+			
+			case 'payments':
+                $vars['view'] = 'store';
+                $vars['layout'] = 'payments';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
         }
         return $vars;
 	}

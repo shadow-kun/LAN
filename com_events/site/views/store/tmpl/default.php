@@ -65,6 +65,7 @@
 			</div>
 			<div id=buttons">
 					<p align="right"><button class="btn " ><?php echo JText::_('COM_EVENTS_SHOP_STORE_BUTTON_BACK', true); ?></button>
+						<a class="btn" href="index.php?option=com_events&view=orders"><?php echo JText::_('COM_EVENTS_SHOP_STORE_BUTTON_ORDERS_SUBMITTED', true); ?></a>
 						<a class="btn btn-primary" onclick="orderStoreNew()" href="javascript:void(0);" ><?php echo JText::_('COM_EVENTS_SHOP_STORE_BUTTON_ORDER', true); ?></a></p>
 			</div>
 			<?php endforeach; ?>
