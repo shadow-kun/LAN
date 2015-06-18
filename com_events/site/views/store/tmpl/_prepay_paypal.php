@@ -6,18 +6,18 @@
 	 * @license		GNU General Public License version 2 or later.
 	 */
 
-	if($this->event->params->paypal_global == 0)
+	//if($this->event->params->paypal_global == 0)
 	{
 		$paypalEmail		= $this->params->get('paypal_email');// Event Setting
-		$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
+		$paypalAmount	 	= $this->order->amount;// Event Setting
 		$paypalCurrency 	= $this->params->get('paypal_currency'); // Event Setting
-		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
-		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
-		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
-		$paypalItemNumber	= 'E-' . (int) $this->currentUser->id;
+		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=store&layout=orders'; // Send to event page
+		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=store&layout=orders'; // Send to event page
+		$paypalItem			= 'Store Purchase';
+		$paypalItemNumber	= 'S-' . (int) $this->order->id;
 		$paypalSandbox 		= intval($this->params->get('paypal_sandbox'));
 	}
-	else
+	/*else
 	{
 		$paypalEmail		= $this->event->params->paypal_email;// Event Setting
 		$paypalAmount	 	= $this->event->params->cost_prepay;// Event Setting
@@ -27,7 +27,7 @@
 		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
 		$paypalItemNumber	= 'E-' . (int) $this->currentUser->id;
 		$paypalSandbox 		= intval($this->event->params->paypal_sandbox);
-	}
+	}*/
 
 	$paypalSiteSandbox = "www.sandbox.paypal.com"; 
 	$paypalSiteProduction = "www.paypal.com";

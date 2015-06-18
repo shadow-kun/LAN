@@ -170,7 +170,15 @@
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>
-			
+			<field name="paypal"
+				type="radio"
+				label="COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_LABEL"
+				description="COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_DESC">
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_OPTION_DISABLE</option>
+				<option value="1">COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_OPTION_OPTIONAL</option>
+				<option value="2">COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_OPTION_MANDATORY</option>
+			</field>
 		</fieldset>
 	</fields>
 </form>

@@ -132,6 +132,13 @@
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'analytics', JText::_('COM_EVENTS_SHOP_STORE_TAB_ANALYTICS', true)); ?>
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'parameters', JText::_('COM_EVENTS_SHOP_STORE_TAB_PARAMETERS', true)); ?>
+		
+		
+		<?php echo $this->loadTemplate('params'); ?>
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
 	</div>
 
 	<input type="hidden" name="task" value="store" />

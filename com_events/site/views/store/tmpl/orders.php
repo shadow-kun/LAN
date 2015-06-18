@@ -25,6 +25,29 @@
 				<?php $total = 0; ?>
 				<div class="group" >
 					<h3><?php echo $order->title . JText::_('COM_EVENTS_SHOP_STORE_ORDERS_ID_LABEL') . ' - ' . $order->id; ?></h3>
+					<?php switch($order->status)
+					{
+						case -2:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_CANCELLED';
+							break;
+						case -1:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_FAILED';
+							break;
+						case 0:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_REQUIRED_PRE_PAYMENT';
+							break;
+						case 1:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_REQUIRED';
+							break;
+						case 2:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_PAID';
+							break;
+						case 4:
+							$status = 'COM_EVENTS_SHOP_STORE_ORDERS_STATUS_COLLECTED';
+							break;
+					}?>
+							
+					<p><strong><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_STATUS_LABEL') . '</strong> - ' . JText::_($status); ?></p>
 					<table class="list table table-striped" style="width: 100%">
 						<tr>
 							<th width="75%" align="left">

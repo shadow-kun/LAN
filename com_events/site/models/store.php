@@ -179,7 +179,7 @@
 			return $result;
 		}
 		
-		public function getOrders($store = null)
+		public function getOrders($store = null, $order = null)
 		{
 			
 			/*if ($this->_item === null)
@@ -193,17 +193,25 @@
 					$query	= $db->getQuery(true);
 					
 					// Select the required fields from the table.
-					$query->select('o.id, o.user, o.store, o.status, o.params, o.items');
+					$query->select('o.id, o.user, o.store, o.status, o.amount, o.params, o.items');
 					$query->from('#__events_shop_orders AS o');
 								
 					// Selects the store that is required.
 					if(!empty($store))
 					{
-						//$query->where('o.store = ' . $store);
+						$query->where('o.store = ' . $store);
+					}
+					else 
+					{
+						if(!empty($order))
+						{
+							$query->where('o.id = ' . $order);
+						}
+					
+						// Sets user
+						$query->where('o.user = ' . JFactory::getUser()->id);
 					}
 					
-					// Sets user
-					$query->where('o.user = ' . JFactory::getUser()->id);
 					$query->where('o.items NOT LIKE "[]"');
 					
 					// Sets order as last entry first
@@ -272,7 +280,7 @@
 			
 			if($user == 0)
 			{
-				return true;
+				return false;
 			}
 			
 			// Gets database connection
@@ -318,20 +326,6 @@
 			$db->query();
 			
 			$query	= $db->getQuery(true);
-			
-			/*$currentPlayers = $this->items->a.players_current;
-			
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
-
-			$conditions = array($db->quoteName('id') . ' = ' . intval($pk));
-			
-			$query->update($db->quoteName('#__events_events'));
-			$query->set($fields);
-			$query->where($conditions);
-			
-			$db->setQuery($query);
-			
-			$db->query();*/
 			
 			return true;
 		}

@@ -14,14 +14,37 @@
 	JHtml::_('behavior.formvalidation');
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_events&view=store&layout=payments'); ?>"
-	method="post" name="adminForm" id="store-form" class="form-validate">	
 	<div class="span5 well">
-		
+		<div class="row-fluid">
+				<table class="list table table-striped">
+					<thead>
+						<tr>
+							<th width="20%">
+								<?php echo JText::_('COM_EVENTS_SHOP_ORDER_PAYMENT_TABLE_PAYMENT_TYPE_TITLE'); ?>
+							</th>
+							<th>
+								<?php echo JText::_('COM_EVENTS_SHOP_ORDER_PAYMENT_TABLE_PAYMENT_DESC_TITLE'); ?>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php $p = 0; 
+						$paypal = intval(json_decode($this->store->params->paypal));
+						if($paypal > 0)
+						{
+							echo EventsHelpersView::load('store','_prepay_paypal','phtml');
+							$p++;
+						}
+						
+						if($paypal < 2)
+						{ ?>
+							<tr class="row<?php echo $p % 2; ?>">
+								<td><?php echo JText::_('COM_EVENTS_SHOP_ORDER_PAYMENT_ONSITE_LABEL'); ?></td>
+								<td><?php echo JText::_('COM_EVENTS_SHOP_ORDER_PAYMENT_ONSITE_DESC'); ?></td>
+							</tr>
+						<?php $p++; } ?>
+					</tbody>
+				</table>
+			</div>
 	</div>
-	<?php echo JHtml::_( 'form.token' ); ?>
 	
-	<input type="hidden" name="option" value="com_events" />
-    <input type="hidden" name="task" value="" />
-    <input type="hidden" name="view" value="checkin" />
-</form>

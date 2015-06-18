@@ -40,16 +40,23 @@
 	// Sets Variable for payment
 		if(isset($_POST['item_number']) == true)
 		{
-			$item_number = JRequest::getInt('item_number');
+			//$item_number = JRequest::getVar('item_number');
+			$item_number = intval(substr(JRequest::getVar('item_number'), 2));
+			
 		}
 		else if (isset($_POST['item_number1']) == true)
 		{
-			$item_number = JRequest::getInt('item_number1');
+			//$item_number = JRequest::getVar('item_number1');
+			$item_number = intval(substr(JRequest::getVar('item_number1'), 2));
 		}
 		else 
 		{
-			$item_number = 51685;
+			
+			$item_number = intval(substr('E-21', 2));
+			//$item_number = 51685;
 		}
+		
+		echo $item_number;
 		
 		if(isset($_POST['mc_gross']) == true)
 		{
@@ -117,7 +124,7 @@
 								$model = new EventsModelsEvent();
 								{
 									//$model->sendTicket(43, 261);
-									$model->sendTicket(1,515);
+									//$model->sendTicket(1,515);
 								}
 								
 							}

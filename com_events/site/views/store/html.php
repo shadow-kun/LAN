@@ -34,7 +34,8 @@
 			{
 				if(!empty($id))
 				{
-					$this->orders = $this->model->getOrders($id);
+					$this->order = $this->model->getOrders(null, $id)[0];
+					$this->store = $this->model->getStore(intval($this->order->store));
 				}
 				else
 				{
