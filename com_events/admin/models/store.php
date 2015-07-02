@@ -135,6 +135,60 @@
 		}
 		
 		/**
+		* Method to get an Event.
+		*
+		* @param integer An optional id of the object to get, otherwise the id from the model state is used.
+		* @return mixed Category data object on success, false on failure.
+		* @since 1.6
+		*/
+		
+		public function getOrders($pk = null)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('o.id AS id, o.created_date, o.user, o.store, o.amount, o.status, o.note, o.items, o.params');
+			$query->from('#__events_shop_orders AS o');
+						
+			// Selects the store that is required.
+			$store = JRequest::getInt('id');
+			if(!empty($store))
+			{
+				$query->where('o.store = ' . $store);
+			}
+			
+			$query->order('o.id ASC');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			foreach($result as $o => $order)
+			{
+				$items = json_decode($order->items);
+				
+				foreach($items as $i => $item)
+				{
+					$query	= $db->getQuery(true);
+					$query->select('i.title');
+					$query->from('#__events_shop_items AS i');
+					$query->where('i.id = ' . $item->id);
+					
+					$title = $db->setQuery($query)->loadResult();	
+					$db->query();			
+					$items[$i]->title = $title;
+					
+					
+				}
+				
+				$result[$o]->items = $items;
+				
+			}
+			
+			return $result;
+		}
+		
+		/**
 		* A protected method to get a set of ordering conditions.
 		*
 		* @param JTable $table A record object.

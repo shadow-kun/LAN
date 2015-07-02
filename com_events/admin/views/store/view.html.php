@@ -28,7 +28,13 @@
 		* @since 1.0
 		*/
 		protected $groups;
-
+		
+		/**
+		* @var JObject The data for the record being displayed.
+		* @since 0.0
+		*/
+		protected $orders;
+		
 		/**
 		* @var JForm The form object for this record.
 		* @since 0.0
@@ -55,6 +61,7 @@
 			$this->groups	= $this->get('Groups');
 			$this->form		= $this->get('Form');
 			$this->state	= $this->get('State');
+			$this->orders	= $this->get('Orders'/*, $this->store->id*/);
 
 			// Check for errors.
 			if (count($errors = $this->get('Errors'))) 
