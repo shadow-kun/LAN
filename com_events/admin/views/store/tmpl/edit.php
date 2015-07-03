@@ -170,5 +170,6 @@
 	</div>
 
 	<input type="hidden" name="task" value="store" />
+	<input type="hidden" id="storeid" name="id" value="<?php echo $this->store->id; ?>"	/>
 	<?php echo JHtml::_('form.token'); ?>
 </form>

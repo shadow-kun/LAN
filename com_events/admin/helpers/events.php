@@ -26,16 +26,7 @@
 		 * @since 0.0
 		 */
 		 
-		function load()
-		{
-			$document = JFactory::getDocument();
-
-			//stylesheets
-			//$document->addStylesheet(JURI::base().'components/com_events/assets/css/style.css');
-			 
-			//javascripts
-			$document->addScript(JURI::base().'administrator/components/com_events/assets/js/events.js');
-		}
+		
 		 
 		public static function addSubmenu($submenu)
 		{

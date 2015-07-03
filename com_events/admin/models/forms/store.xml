@@ -190,6 +190,7 @@
 				description="COM_EVENTS_SHOP_STORE_FIELD_ORDER_START_DATE_DESC"
 				format="%Y-%m-%d"
 				required="false"
+				onchange="filterOrders();"
 				/>
 			
 			<field name="filter_end_date"
@@ -198,6 +199,7 @@
 				description="COM_EVENTS_SHOP_STORE_FIELD_ORDER_END_DATE_DESC"
 				format="%Y-%m-%d"
 				required="false"
+				onchange="filterOrders();"
 				/>
 		</fieldset>
 	</fields>

@@ -1,3 +1,4 @@
+
 function filterOrders()
 {
 	var details = {};
@@ -6,10 +7,11 @@ function filterOrders()
 	});
 	details["startDate"] = document.getElementById('jform_params_filter_start_date').value;
 	details["endDate"] = document.getElementById('jform_params_filter_end_date').value;
+	details["id"] = document.getElementById('storeid').value;
 	console.log(details);
-	
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=store&format=raw&tmpl=component&type=filterorder',
+	window.location.href = 'index.php?option=com_events&view=store&layout=edit&id=' + details["id"] + '&startdate=' + details["startDate"] + '&enddate=' + details["endDate"];
+	/*jQuery.ajax({
+		url:
 		type:'POST', 
 		data:details,
 		dataType:'JSON',
@@ -17,5 +19,5 @@ function filterOrders()
 		{
 			jQuery("#form-order-details").replaceWith(data.html);
 		}
-    });
+    });*/
 }
