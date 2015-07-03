@@ -79,6 +79,30 @@
 				{
 					$result->modified_time = null;
 				}
+				
+				$startdate = JRequest::getVar('startdate');
+				
+				if (!empty($startdate)) 
+				{
+					
+					$result->params['filter_start_date'] = $startdate;
+				}
+				
+				$enddate = JRequest::getVar('enddate');
+				
+				if (!empty($enddate)) 
+				{
+					
+					$result->params['filter_end_date'] = $enddate;
+				}
+				
+				$status = JRequest::getInt('status');
+				if (!empty($enddate)) 
+				{
+					
+					$result->params['filter_status'] = $status;
+				}
+					
 			}
 			
 			
@@ -158,6 +182,44 @@
 				$query->where('o.store = ' . $store);
 			}
 			
+			$startdate = JRequest::getVar('startdate');
+			if(!empty($startdate))
+			{
+				$date = new JDate($startdate);
+				$query->where('o.created_date >= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$enddate = JRequest::getVar('enddate');
+			if(!empty($enddate))
+			{
+				$date = new JDate($enddate);
+				$query->where('o.created_date <= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$status = JRequest::getInt('status');
+			if(!empty($status))
+			{
+				switch($status)
+				{
+					// Unpaid
+					case 0: case 1:
+						$query->where('o.status = 0 OR o.status = 1');
+						break;
+					// Paid but not collected
+					case 2:
+						$query->where('o.status = 2');
+						break;
+					// Collected only
+					case 3:
+						$query->where('o.status = 3');
+						break;
+					// Paid or Collected
+					case 4:
+						$query->where('o.status = 2 OR o.status = 3');
+						break;
+				}
+			}
+			
 			$query->order('o.id ASC');
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();
@@ -186,6 +248,73 @@
 			}
 			
 			return $result;
+		}
+		
+		public function getOrdersSummary($pk = null)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('o.id AS id, o.store, o.amount, o.status, o.note, o.items, o.params');
+			$query->from('#__events_shop_orders AS o');
+						
+			// Selects the store that is required.
+			$store = JRequest::getInt('id');
+			if(!empty($store))
+			{
+				$query->where('o.store = ' . $store);
+			}
+			
+			$startdate = JRequest::getVar('startdate');
+			if(!empty($startdate))
+			{
+				$date = new JDate($startdate);
+				$query->where('o.created_date >= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$enddate = JRequest::getVar('enddate');
+			if(!empty($enddate))
+			{
+				$date = new JDate($enddate);
+				$query->where('o.created_date <= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$query->order('o.id ASC');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			$summaryItems = array();
+			foreach($result as $o => $order)
+			{
+				$items = json_decode($order->items);
+				
+				foreach($items as $i => $item)
+				{
+					
+					
+					// Sort each item and quantity so that they are grouped together. 
+					$summaryItems[$item->id][$order->status]['quantity'] += $item->quantity; 
+					$summaryItems[$item->id][$order->status]['amount'] += $item->amount * $item->quantity;
+				}
+			}
+			
+			//$summaryItems = (object) $summaryItems;
+			
+			foreach($summaryItems as $i => $item)
+			{
+				$query	= $db->getQuery(true);
+				$query->select('i.title');
+				$query->from('#__events_shop_items AS i');
+				$query->where('i.id = ' . $i);
+				
+				$title = $db->setQuery($query)->loadResult();	
+				$db->query();			
+				$summaryItems[$i]['title'] = $title;
+			}
+			
+			return $summaryItems;
 		}
 		
 		/**

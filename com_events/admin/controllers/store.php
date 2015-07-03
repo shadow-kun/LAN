@@ -209,6 +209,73 @@
 				}
 			}
 			
+			$store = intval(JRequest::getInt('id'));
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('o.id AS id, o.store, o.status');
+			$query->from('#__events_shop_orders AS o');
+						
+			// Selects the team that is required.
+			$query->where('o.store = ' . $store);
+						
+			// Runs query
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			foreach ($result as $o => $order) :
+			{
+				$status = JRequest::getVar('order_status_change#' . $order->id);
+				
+				if($order->status != $status)
+				{
+					
+					
+					// If status is to remove the user 
+					if($status == -2)
+					{
+						$query	= $db->getQuery(true);
+						
+						// Sets delete statement and clauses
+						$query->delete($db->quoteName('#__events_shop_orders'));
+						
+						// Sets conditions for a single order.
+						$query->where($db->quoteName('store') . ' = ' . $store);
+						$query->where($db->quoteName('id') . ' = ' . $order->id);
+						
+						// Set the query and execute item
+						$db->setQuery($query);
+						$db->query();
+						
+						
+						$query	= $db->getQuery(true);
+						
+						$db->query();
+			
+						
+					}
+					else
+					{
+						$query	= $db->getQuery(true);
+						
+						// Sets data to be updated
+						$query->set($db->quoteName('status') . ' = ' . (int) $status);
+						
+						// Sets conditions to change the status for an event.
+						$query->where($db->quoteName('store') . ' = ' . $store);
+						$query->where($db->quoteName('id') . ' = ' . $order->id);
+						
+						// Executes Query
+						$query->update($db->quoteName('#__events_shop_orders'));
+						
+						// Set the query and execute item
+						$db->setQuery($query);							
+						$db->query();
+					}
+				}
+								
+			}			
+			endforeach;
 			
 			parent::save($key, $urlVar);
 		}

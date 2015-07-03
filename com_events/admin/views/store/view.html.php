@@ -36,6 +36,12 @@
 		protected $orders;
 		
 		/**
+		* @var JObject The data for the record being displayed.
+		* @since 0.0
+		*/
+		protected $ordersSummary;
+		
+		/**
 		* @var JForm The form object for this record.
 		* @since 0.0
 		*/
@@ -57,11 +63,12 @@
 		public function display($tpl = null)
 		{
 			// Intialiase variables.
-			$this->store	= $this->get('Item');
-			$this->groups	= $this->get('Groups');
-			$this->form		= $this->get('Form');
-			$this->state	= $this->get('State');
-			$this->orders	= $this->get('Orders'/*, $this->store->id*/);
+			$this->store			= $this->get('Item');
+			$this->groups			= $this->get('Groups');
+			$this->form				= $this->get('Form');
+			$this->state			= $this->get('State');
+			$this->orders			= $this->get('Orders');
+			$this->ordersSummary	= $this->get('OrdersSummary');
 
 			// Check for errors.
 			if (count($errors = $this->get('Errors'))) 

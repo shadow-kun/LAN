@@ -201,6 +201,18 @@
 				required="false"
 				onchange="filterOrders();"
 				/>
+				
+			<field name="filter_status"
+				type="list"
+				label="COM_EVENTS_SHOP_STORE_FIELD_ORDER_STATUS_LABEL"
+				description="COM_EVENTS_SHOP_STORE_FIELD_ORDER_STATUS_DESC"
+				onchange="filterOrders();">
+				<option value="">COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_NONE</option>
+				<option value="1">COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_UNPAID_ONLY</option>
+				<option value="2">COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_PAID_ONLY</option>
+				<option value="3">COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_COLLECTED_ONLY</option>
+				<option value="4">COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_PAID_COLLECTED</option>
+			</field>
 		</fieldset>
 	</fields>
 </form>

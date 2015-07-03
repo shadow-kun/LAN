@@ -131,10 +131,27 @@
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'orders', JText::_('COM_EVENTS_SHOP_STORE_TAB_ORDERS', true)); ?>
 		
-		
+		<?php var_dump($this->ordersSummary); ?>
 		<?php echo $this->loadTemplate('orders'); ?>
 		
-		<div class="span3">
+		<div class="span4">
+			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_LABEL'); ?></h3>
+			
+			<table class="adminlist table table-striped">
+				<?php foreach($this->ordersSummary as $i => $item)
+				{ ?>
+					<tr class="row<?php echo $i % 2; ?>">
+						<td><?php echo $item->title; ?></td>
+						<td width="5%"><?php echo $item[1]->quantity; ?></td>
+						<td width="5%"><?php echo $item[2]->quantity; ?></td>
+						<td width="5%"><?php echo $item[3]->quantity; ?></td>
+						<td width="5%"><?php echo $item[4]->quantity; ?></td>
+						
+							
+					</tr>
+				<?php } ?>
+				</table>
+			
 			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SETTINGS_LABEL'); ?></h3>
 			<?php $fieldSets = $this->form->getFieldsets('params');
 			foreach ($fieldSets as $name => $fieldSet) :
