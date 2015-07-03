@@ -158,6 +158,8 @@
 				COM_EVENTS_SHOP_STORE_FIELD_ADD_ITEM_GROUP_NONE</option>
 		</field>
 			
+		
+			
 	</fieldset>
 	
 	<fields name="params">
@@ -179,6 +181,24 @@
 				<option value="1">COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_OPTION_OPTIONAL</option>
 				<option value="2">COM_EVENTS_SHOP_STORE_PARAMS_PAYPAL_OPTION_MANDATORY</option>
 			</field>
+		</fieldset>
+		
+		<fieldset name="order_filter" label="COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_FIELDSET_LABEL">
+			<field name="filter_start_date"
+				type="calendar"
+				label="COM_EVENTS_SHOP_STORE_FIELD_ORDER_START_DATE_LABEL"
+				description="COM_EVENTS_SHOP_STORE_FIELD_ORDER_START_DATE_DESC"
+				format="%Y-%m-%d"
+				required="false"
+				/>
+			
+			<field name="filter_end_date"
+				type="calendar"
+				label="COM_EVENTS_SHOP_STORE_FIELD_ORDER_END_DATE_LABEL"
+				description="COM_EVENTS_SHOP_STORE_FIELD_ORDER_END_DATE_DESC"
+				format="%Y-%m-%d"
+				required="false"
+				/>
 		</fieldset>
 	</fields>
 </form>

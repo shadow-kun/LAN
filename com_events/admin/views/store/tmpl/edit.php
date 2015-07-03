@@ -151,6 +151,27 @@
 			<?php }	?>
 		</div>
 		
+		<div class="span3">
+			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SETTINGS_LABEL'); ?></h3>
+			<?php $fieldSets = $this->form->getFieldsets('params');
+			foreach ($fieldSets as $name => $fieldSet) :
+				if($name == "order_filter") :
+					/*echo JHtml::_('sliders.panel',JText::_($fieldSet->label), $name.'-params');*/
+					if (isset($fieldSet->description) && trim($fieldSet->description)) :
+						echo '<p class="tip">'.$this->escape(JText::_($fieldSet->description)).'</p>';
+					endif; ?>
+					<fieldset class="panelform">
+						<ul class="adminformlist">
+						<?php foreach ($this->form->getFieldset($name) as $field) : ?>
+							<li><?php echo $field->label; ?>
+							<?php echo $field->input; ?></li>
+						<?php endforeach; ?>
+						</ul>
+					</fieldset>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'analytics', JText::_('COM_EVENTS_SHOP_STORE_TAB_ANALYTICS', true)); ?>
