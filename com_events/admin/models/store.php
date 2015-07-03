@@ -280,6 +280,30 @@
 				$query->where('o.created_date <= ' . $db->quote($date->tosql(true)));
 			}
 			
+			$status = JRequest::getInt('status');
+			if(!empty($status))
+			{
+				switch($status)
+				{
+					// Unpaid
+					case 0: case 1:
+						$query->where('o.status = 0 OR o.status = 1');
+						break;
+					// Paid but not collected
+					case 2:
+						$query->where('o.status = 2');
+						break;
+					// Collected only
+					case 3:
+						$query->where('o.status = 3');
+						break;
+					// Paid or Collected
+					case 4:
+						$query->where('o.status = 2 OR o.status = 3');
+						break;
+				}
+			}
+			
 			$query->order('o.id ASC');
 			//echo nl2br(str_replace('#__','joom_',$query));
 			$result = $db->setQuery($query)->loadObjectList();

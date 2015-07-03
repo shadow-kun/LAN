@@ -213,7 +213,7 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('o.id AS id, o.store, o.status');
+			$query->select('o.id AS id, o.store, o.status, o.amount');
 			$query->from('#__events_shop_orders AS o');
 						
 			// Selects the team that is required.
@@ -236,6 +236,8 @@
 					{
 						$query	= $db->getQuery(true);
 						
+						$query	= $db->getQuery(true);
+						
 						// Sets delete statement and clauses
 						$query->delete($db->quoteName('#__events_shop_orders'));
 						
@@ -251,8 +253,30 @@
 						$query	= $db->getQuery(true);
 						
 						$db->query();
-			
 						
+						// If a payment has been made, record the removal of the payment for logs and auditing purposes.
+						if($order->status > 1)
+						{
+							$amount = -($order->amount);
+							
+							$query	= $db->getQuery(true);
+							
+							// Sets columns
+							$colums = array('user', 'orderID', 'amount', 'params');
+							
+							// Sets values
+							$values = array(JFactory::getUser()->id, $order->id, $amount, "'" . json_encode(array("payment_method" => "ACP Override", "payment_status" => "Deleted By User")) . "'" );
+							//$values = array($db->quote($data['add_item_group']), $db->quote($data['add_item']));
+							
+							// Prepare Insert Query $db->quoteName('unconfirmed')
+							$query  ->insert($db->quoteName('#__events_payments'))
+									->columns($db->quoteName($colums))
+									->values(implode(',', $values));
+							
+							// Set the query and execute item
+							$db->setQuery($query);
+							$db->query();
+						}
 					}
 					else
 					{
@@ -271,6 +295,37 @@
 						// Set the query and execute item
 						$db->setQuery($query);							
 						$db->query();
+						
+						// If there is a monetary amount changed for the order, records that in the payment logs
+						if(($status < 2 && $order->status > 1) || ($status > 1 && $order->status < 2))
+						{
+							$amount = 0;
+							if($status < 2)
+							{
+								$amount = -($order->amount);
+							}
+							else
+							{
+								$amount = $order->amount;
+							}
+							$query	= $db->getQuery(true);
+							
+							// Sets columns
+							$colums = array('user', 'orderID', 'amount', 'params');
+							
+							// Sets values
+							$values = array(JFactory::getUser()->id, $order->id, $amount, "'" . json_encode(array("payment_method" => "ACP Override", "payment_status" => "")) . "'" );
+							//$values = array($db->quote($data['add_item_group']), $db->quote($data['add_item']));
+							
+							// Prepare Insert Query $db->quoteName('unconfirmed')
+							$query  ->insert($db->quoteName('#__events_payments'))
+									->columns($db->quoteName($colums))
+									->values(implode(',', $values));
+							
+							// Set the query and execute item
+							$db->setQuery($query);
+							$db->query();
+						}
 					}
 				}
 								

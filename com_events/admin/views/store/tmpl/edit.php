@@ -131,22 +131,32 @@
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'orders', JText::_('COM_EVENTS_SHOP_STORE_TAB_ORDERS', true)); ?>
 		
-		<?php var_dump($this->ordersSummary); ?>
 		<?php echo $this->loadTemplate('orders'); ?>
 		
 		<div class="span4">
 			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_LABEL'); ?></h3>
 			
 			<table class="adminlist table table-striped">
+				<tr>
+					<th><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_TABLE_ITEM_HEADING'); ?></th>
+					<th><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_TABLE_UNPAID_HEADING'); ?></th>
+					<th><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_TABLE_PAID_HEADING'); ?></th>
+					<th><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_TABLE_COLLECTED_HEADING'); ?></th>
+					<th><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SUMMARY_TABLE_SALES_HEADING'); ?></th>
+				</tr>
 				<?php foreach($this->ordersSummary as $i => $item)
 				{ ?>
 					<tr class="row<?php echo $i % 2; ?>">
-						<td><?php echo $item->title; ?></td>
-						<td width="5%"><?php echo $item[1]->quantity; ?></td>
-						<td width="5%"><?php echo $item[2]->quantity; ?></td>
-						<td width="5%"><?php echo $item[3]->quantity; ?></td>
-						<td width="5%"><?php echo $item[4]->quantity; ?></td>
-						
+						<td><?php echo $item['title']; ?></td>
+						<?php for((int) $j = 1; $j < 4; $j++) 
+						{
+							if(empty($item[$j]['quantity']))
+							{
+								$item[$j]['quantity'] = 0;
+							}
+							echo '<td width="5%">' . $item[$j]['quantity'] . '</td>';
+						} ?>
+						<td width="10%"><?php echo JText::_('COM_EVENTS_CURRENCY_SYMBOL') . number_format((float)($item[2]['amount'] + $item[3]['amount']), 2, '.', ''); ?></td>
 							
 					</tr>
 				<?php } ?>
