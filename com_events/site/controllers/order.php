@@ -43,6 +43,31 @@
 					$renderView = EventsHelpersView::load('store','_result-neworder-failure','phtml');
 				}
 			}
+			if($view == 'adminstore')
+			{
+				$model = new EventsModelsStore();
+				
+				$order = intval(JRequest::getInt('id'));
+				$status = intval(JRequest::getInt('status'));
+				// If the user has signed up for the event and isn't paid then allow it to be removed.
+				
+				if(JFactory::getUser()->authorise('core.edit.state','com_events'))
+				{
+					if($model->updateOrder($order, $status))
+					{
+						$return['success'] = true;
+					}
+					else
+					{
+						
+						$return['success'] = false;
+					}
+				}
+				else
+				{
+					$return['success'] = false;
+				}
+			}
 			
 			ob_start();
 			echo $renderView->render();

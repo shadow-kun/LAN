@@ -152,6 +152,22 @@ function orderStoreNew()
 		}
     });
 }
+
+function orderStatusChange(orderid)
+{
+	var ordervalue = document.getElementById('order' + orderid).value;
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=order&format=raw&tmpl=component&view=adminstore&type=update&id=' + orderid + '&status=' + ordervalue,
+		type:'POST',
+		data:ordervalue,
+		dataType:'JSON',
+		success:function(data)
+		{
+			
+		}
+    });
+}
+
 function registerEventUser()
 {
 	var eventid = document.getElementById('eventid').value;

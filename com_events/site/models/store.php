@@ -333,6 +333,32 @@
 			
 			return true;
 		}
+		
+		public function updateOrder($order = null, $status = null)
+		{
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+				
+			$query	= $db->getQuery(true);
+			
+			// Gets data to update
+			$fields = array($db->quoteName('status') . ' = ' . $db->quote($status));
+			
+			// Sets the conditions of which event and which player to update
+			$conditions = array($db->quoteName('id') . ' = ' . (intval($order)));
+			
+			// Executes Query
+			$query->update($db->quoteName('#__events_shop_orders'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			return true;
+		}
 	}
 	
 	
