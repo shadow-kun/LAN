@@ -42,11 +42,24 @@
 					$this->orders = $this->model->getOrders();
 				}
 			}
+			elseif(strcasecmp(JRequest::getVar('layout'), 'adminstore') == 0)
+			{
+				if(JFactory::getUser()->authorise('core.edit.state','com_events'))
+				{
+					$this->orders = $this->model->getOrders($id, null);
+				}
+				else
+				{
+					JError::raiseError(403, "Fobidden");
+				}
+			}
 			else
 			{
 				$this->store = $this->model->getStore($id);
 				$this->groups = $this->model->getGroups($id);
 			}
+			
+			
 			
 			//display
 			return parent::render();

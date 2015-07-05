@@ -113,8 +113,16 @@
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
 				break;
+				
+			case 'adminstore':
+                $vars['view'] = 'store';
+                $vars['layout'] = 'adminstore';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
 			case 'stores':
                 $vars['view'] = 'stores';
+				
                 break;
 			case 'orders':
                 $vars['view'] = 'store';
@@ -129,6 +137,7 @@
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
 				break;
+
         }
         return $vars;
 	}

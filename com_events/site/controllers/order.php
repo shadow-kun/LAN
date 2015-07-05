@@ -42,7 +42,6 @@
 					$return['success'] = false;
 					$renderView = EventsHelpersView::load('store','_result-neworder-failure','phtml');
 				}
-					
 			}
 			
 			ob_start();

@@ -193,13 +193,17 @@
 					$query	= $db->getQuery(true);
 					
 					// Select the required fields from the table.
-					$query->select('o.id, o.user, o.store, o.status, o.amount, o.params, o.items');
+					$query->select('o.id AS id, o.store AS store, o.status AS status, o.amount AS amount, o.params AS params, o.items AS items');
 					$query->from('#__events_shop_orders AS o');
 								
 					// Selects the store that is required.
 					if(!empty($store))
 					{
 						$query->where('o.store = ' . $store);
+						
+						$query->select('u.username AS user');
+						$query->join('LEFT', '#__users AS u ON u.id = o.user');
+						$query->order('u.username DESC, o.id ASC');
 					}
 					else 
 					{
@@ -210,12 +214,12 @@
 					
 						// Sets user
 						$query->where('o.user = ' . JFactory::getUser()->id);
+						// Sets order as last entry first
+						$query->order('o.id DESC');
 					}
 					
 					$query->where('o.items NOT LIKE "[]"');
 					
-					// Sets order as last entry first
-					$query->order('o.id DESC');
 					
 					//echo nl2br(str_replace('#__','joom_',$query));
 					$result = $db->setQuery($query)->loadObjectList();
