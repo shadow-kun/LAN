@@ -69,6 +69,7 @@
 			$this->state			= $this->get('State');
 			$this->orders			= $this->get('Orders');
 			$this->ordersSummary	= $this->get('OrdersSummary');
+			$this->payments			= $this->get('Payments');
 
 			// Check for errors.
 			if (count($errors = $this->get('Errors'))) 

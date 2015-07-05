@@ -154,6 +154,55 @@
 			$query	= $db->getQuery(true);
 			
 		}
+		
+		/**
+		* A protected method to get a set of ordering conditions.
+		*
+		* @param JTable $table A record object.
+		*
+		* @return array An array of conditions to add to add to ordering queries.
+		* @since 0.0
+		*/
+		public function getPayments($pk = null)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.created_time AS created_time, p.user AS user, p.transaction_id AS transaction_id, p.userEventID AS eventID, p.amount AS amount,' . 
+							'p.currency AS currency, p.params AS params');
+			$query->from('#__events_payments AS p');
+						
+			// Selects the store that is required.
+			$event = JRequest::getInt('id');
+			
+			$query->where('p.userEventID = ' . $event);
+			
+			$startdate = JRequest::getVar('startdate');
+			if(!empty($startdate))
+			{
+				$date = new JDate($startdate);
+				$query->where('p.created_date >= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$enddate = JRequest::getVar('enddate');
+			if(!empty($enddate))
+			{
+				$date = new JDate($enddate);
+				$query->where('p.created_date <= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$query->order('p.id ASC');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			foreach($result AS $r => $row)
+			{
+				$result[$r]->params = json_decode($row->params);
+			}
+			return $result;
+		}
 
 		/**
 		* A protected method to get a set of ordering conditions.

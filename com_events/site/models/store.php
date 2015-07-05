@@ -302,7 +302,7 @@
 						$quantity = JRequest::getInt('item' . $group->id . '-' . $item->id);
 						if(isset($quantity) && intval($quantity) > 0)
 						{
-							$items[$s] = (object) array('id' => $item->id, 'amount' => $item->amount, 'quantity' => $quantity, 't2' => $name, 'test' => 'item' . $group->id . '-' . $item->id);
+							$items[$s] = (object) array('id' => $item->id, 'amount' => $item->amount, 'quantity' => $quantity, 'status' => 0);
 							$amount += $item->amount * $quantity;
 							$s++;
 						}

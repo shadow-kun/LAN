@@ -186,6 +186,9 @@
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'analytics', JText::_('COM_EVENTS_SHOP_STORE_TAB_ANALYTICS', true)); ?>
 		
+		
+		<?php echo $this->loadTemplate('payments'); ?>
+		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'parameters', JText::_('COM_EVENTS_SHOP_STORE_TAB_PARAMETERS', true)); ?>
