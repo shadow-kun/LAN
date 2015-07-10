@@ -22,6 +22,35 @@ function addTeam()
 		}
     });
 }
+	
+// register an attendee to an event
+function addInternetToken()
+{
+	var localdata;
+	
+	jQuery.ajax({
+		url: 'http://192.168.0.251/vawesome/ip.php',
+		crossDomain: true,
+		datatype: 'text',
+		success:function(data) {
+			localdata = data;
+			alert(localdata);
+		}
+	});
+	
+    console.log(localdata);
+	
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=internet&format=raw&tmpl=component&type=addmachine',
+		type:'POST', 
+		data:localdata,
+		dataType:'JSON',
+		success:function(data)
+		{
+			//jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
 
 // register an attendee to an event
 function checkinUser(id)

@@ -488,7 +488,6 @@
 			}
 			
 			return true;
-			
 		}
 		
 		public function deleteCompetitionUser($competition, $user)
