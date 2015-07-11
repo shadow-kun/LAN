@@ -77,7 +77,7 @@
 			return $result;
 		}
 		
-		public function storeMachine()
+		public function storeMachine($ip, $mac)
 		{
 			$app = JFactory::getApplication();
 			
@@ -85,17 +85,14 @@
 			$db		= JFactory::getDbo();
 			$query	= $db->getQuery(true);
 			
-			if(JFactory::getUser()->authorise('core.edit.state','com_events'))
+			//if(JFactory::getUser()->authorise('core.edit.state','com_events'))
 			{
 				// Select the required fields from the table.
-				$query->select('i.id AS id, i.mac_address, i.interface');
+				$query->select('i.id AS id, i.ip_address, i.mac_address, i.interface');
 				$query->from('#__events_internet AS i');
 							
 				// Selects the competition that is required.
-				$query->where('p.competition = ' . $competition);
-				
-				// Selects current team.
-				$query->where('p.team = ' . $team);
+				$query->where('i.mac_address = ' . $db->quote($mac));
 				
 				// Selects only non cancelled entries. (Inactive as of current)
 				
@@ -106,17 +103,14 @@
 				// Checks to see if already registered for this competition
 				if(!(isset($result)))
 				{					
-					//Sets JSON Params data
-					$params = $db->quote(json_encode(array('status' => 1)));
-					
 					// Sets columns
-					$colums = array('id', 'competition', 'team', 'params');
-					
+					$colums = array('id', 'user', 'mac_address', 'ip_address', 'created_user_id', 'created_time', 'expire_time', 'interface', 'params');
 					// Sets values
-					$values = array('NULL', $competition, $team, $params);
+					$values = array('NULL', JFactory::getUser()->id, $db->quote($mac), $db->quote($ip), JFactory::getUser()->id, 'NULL', $db->quote('0000-00-00 00:00:00'), 
+						$db->quote('net'), 'NULL');
 					
 					// Prepare Insert Query $db->quoteName('unconfirmed')
-					$query  ->insert($db->quoteName('#__events_competition_teams'))
+					$query  ->insert($db->quoteName('#__events_internet'))
 							->columns($db->quoteName($colums))
 							->values(implode(',', $values));
 					
@@ -125,11 +119,6 @@
 					$db->query();
 				}
 			}
-			else
-			{
-				return false;
-			}
-			
 			
 			return true;
 			

@@ -74,8 +74,8 @@
 			$value = $app->getUserStateFromRequest($this->context.'.filter.published', 'filter_published', '');
 			$this->setState('filter.published', $value);
  
-			$value = $app->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
-			$this->setState('filter.category_id', $value);
+			//$value = $app->getUserStateFromRequest($this->context.'.filter.category_id', 'filter_category_id');
+			//$this->setState('filter.category_id', $value);
  
 			$value = $app->getUserStateFromRequest($this->context.'.filter.language', 'filter_language', '');
 			$this->setState('filter.language', $value);
@@ -174,13 +174,13 @@
 			}
 			
 			// Add the list ordering clause.
-			$orderCol 		= $this->state->get('list.ordering');
+			/*$orderCol 		= $this->state->get('list.ordering');
 			$orderDirn		= $this->state->get('list.direction');
 			if ($orderCol == 'a.ordering' || $orderCol == 'category_title') 
 			{
 				$orderCol = 'category_title ' . $orderDirn . ', a.ordering';
-			}
-			$query->order($db->escape($orderCol . ' ' . $orderDirn));
+			}-
+			$query->order($db->escape($orderCol . ' ' . $orderDirn));*/
 			
 			//echo nl2br(str_replace('#__','joom_',$query));
 			return $query;

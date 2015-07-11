@@ -15,10 +15,12 @@
 		
 		if(JFactory::getUser()->authorise('core.edit.state','com_events'))
 		{
-			echo '<button type="button" onclick="addInternetToken()">' . JText::_('COM_EVENTS_INTERNET_PERMISSIONS_DEFAULT_ADD_LABEL', true) . '</button>';
+			echo '<div id="button"><button type="button" onclick="addInternetToken()">' . JText::_('COM_EVENTS_INTERNET_PERMISSIONS_DEFAULT_ADD_LABEL', true) . '</button></div>';
 		}
 	?>
+	<div id="details" >
 	
+	</div>
 	<?php // user section ?>
 	<table>
 		<tr>

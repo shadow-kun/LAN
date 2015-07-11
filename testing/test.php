@@ -47,7 +47,7 @@
 					dump("currently the application is at" + invocation.readyState);
 			}
 			//]]>
-		
+			
 		
 		</script>
 	</header>
@@ -57,7 +57,13 @@
 			<input type="button" onclick="callOtherDomain()" value="Push Me!" ></input>
 		</div>
 		<div id="textDiv">
-		
+			<?php $input = '#text "? (192.168.0.26) at bc:ae:c5:12:6e:13 [ether] on eth0"';
+			
+			$ip = substr($input, stripos($input, '(') + 1, stripos($input, ')') - stripos($input, '(') - 1);
+			$mac = substr($input, stripos($input, 'at ') + 3, stripos($input, '[') - stripos($input, 'at ') - 5);
+			
+			echo $ip; 
+			echo $mac;?>
 		</div>
 	</body>
 </html>

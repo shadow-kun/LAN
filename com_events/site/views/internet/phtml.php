@@ -7,7 +7,6 @@
 	{
 		function render()
 		{
-			
 			return parent::render();
 		}
 	}

@@ -77,3 +77,18 @@ CREATE TABLE IF NOT EXISTS `#__events_shop_orders` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `#__events_shop_store_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(63) NOT NULL,
+  `store` int(11) NOT NULL,
+  `params` mediumtext,
+  `items` mediumtext,
+  PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `#__events_shop_store_group_items` (
+  `group` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
+  PRIMARY KEY (`group`,`item`)
+);
