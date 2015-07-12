@@ -137,6 +137,7 @@
 			label="COM_EVENTS_SHOP_STORE_FIELD_ADD_GROUP_LABEL"
 			description="COM_EVENTS_SHOP_STORE_FIELD_ADD_GROUP_DESC"
 			size="20" />
+			
 		<field name="add_item"
 			type="StoreItems"
 			label="COM_EVENTS_SHOP_STORE_FIELD_ADD_ITEM_LABEL"

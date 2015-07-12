@@ -156,7 +156,7 @@
 			}
 			 
 			// Filter by a single or group of categories.
-			$categoryId = $this->getState('filter.category_id');
+			/*$categoryId = $this->getState('filter.category_id');
 			if (is_numeric($categoryId)) {
 				$query->where('a.category_id = '.(int) $categoryId);
 			}
@@ -165,7 +165,7 @@
 				JArrayHelper::toInteger($categoryId);
 				$categoryId = implode(',', $categoryId);
 				$query->where('a.category_id IN ('.$categoryId.')');
-			}
+			}*/
 			 
 			// Filter on the language.
 			if ($language = $this->getState('filter.language')) 
@@ -174,13 +174,15 @@
 			}
 			
 			// Add the list ordering clause.
-			/*$orderCol 		= $this->state->get('list.ordering');
+			$orderCol 		= $this->state->get('list.ordering');
 			$orderDirn		= $this->state->get('list.direction');
-			if ($orderCol == 'a.ordering' || $orderCol == 'category_title') 
+			if ($orderCol == 'a.ordering' || $orderCol == 'category_title' || $orderCol == 'catid' || $orderCol == 'a.catid' ) 
 			{
-				$orderCol = 'category_title ' . $orderDirn . ', a.ordering';
-			}-
-			$query->order($db->escape($orderCol . ' ' . $orderDirn));*/
+				//$orderCol = 'category_title ' . $orderDirn . ', a.ordering';
+				$orderCol = 'title' . $orderDirn . ', a.title';
+			}
+			
+			//$query->order($db->escape($orderCol . ' ' . $orderDirn));
 			
 			//echo nl2br(str_replace('#__','joom_',$query));
 			return $query;
@@ -205,7 +207,6 @@
 			$id .= ':'.$this->getState('filter.search');
 			$id .= ':'.$this->getState('filter.access');
 			$id .= ':'.$this->getState('filter.published');
-			$id .= ':'.$this->getState('filter.category_id');
 			$id .= ':'.$this->getState('filter.language');
 		 
 			return parent::getStoreId($id);

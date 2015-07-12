@@ -14,7 +14,7 @@
 	* @subpackage	com_events
 	*/
 	
-	abstract class EventsHelper
+	class EventsHelper
 	{
 		/**
 		 * Configure the Linkbar.

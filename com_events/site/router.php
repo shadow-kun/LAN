@@ -92,7 +92,7 @@
 				}
                 break;
             case 'team':
-                $vars['view'] = 'teams';
+                $vars['view'] = 'team';
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
                 switch($segments[2])

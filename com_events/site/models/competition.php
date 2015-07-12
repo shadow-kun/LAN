@@ -213,7 +213,7 @@
 			$query->join('LEFT', '#__events_team_players AS tp on tp.team = t.id');
 
 			// Selects the competition that is required.
-			//$query->where('ct.competition = ' . JRequest::getVar('id',NULL));
+			//$query->where('ct.competition = ' . intval(JRequest::getInt('id',NULL)));
 			
 			// Selects current user.
 			$query->where('tp.user = ' . JFactory::getUser()->id);

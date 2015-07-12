@@ -20,6 +20,8 @@
 	if($controller = $app->input->get('controller','default')) {
 		require_once (JPATH_COMPONENT.'/controllers/'.$controller.'.php');
     }
+	// Require helper file
+	JLoader::register('EventsHelper', JPATH_COMPONENT . '/helpers/events.php');
 	
 	jimport('joomla.application.component.controller');
 		
