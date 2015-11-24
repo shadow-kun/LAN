@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.4.0" client="site" method="upgrade">
+    <name>MOD_EVENTS_INTERNET_PERMISSIONS_TITLE</name>
+    <author>ZoR Systems</author>
+	<creationDate>2015-06-07</creationDate>
+	<copyright>ZoR Systems, 2014</copyright>
+	<authorEmail>info@zor.systems</authorEmail>
+	<authorUrl>http://zor.systems</authorUrl>
+	<license>GPL v2.0</license>
+    <version>1.0.0</version>
+    <description>A module to allow access to the internet (external firewall required).</description>
+	
+    <files>
+        <filename>mod_events_internet_permissions.xml</filename>
+        <filename module="mod_events_internet_permissions">mod_events_internet_permissions.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+		<folder>tmpl</folder>
+		<folder>language</folder>
+		<folder>controllers</folder>
+		<folder>sql</folder>
+    </files>
+	
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_events_internet_permissions.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.mod_events_internet_permissions.sys.ini</language>
+	</languages>
+	
+    <config>
+    </config>
+	
+	<install>
+     <sql>
+         <file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
+     </sql>
+	</install>
+	 
+	<uninstall>
+		 <sql>
+			 <file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
+		 </sql>
+	</uninstall>
+	
+	<update> 
+		<schemas>
+			<schemapath type="mysql">sql/mysql/updates</schemapath> 
+		</schemas> 
+	</update>
+</extension>
