@@ -175,8 +175,8 @@
 						
 			// Selects the store that is required.
 			$event = JRequest::getInt('id');
-			
-			$query->where('p.userEventID = ' . $event);
+			$query->join('LEFT', '#__events_players AS u ON u.id = p.userEventID');
+			$query->where('u.event = ' . $event);
 			
 			$startdate = JRequest::getVar('startdate');
 			if(!empty($startdate))

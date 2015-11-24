@@ -21,14 +21,14 @@
 			// Gets current view.
 			$view = $app->input->get('view', 'event');
 			$eventView = null;
-			
 			// if calling from the event view.
-			if($view == 'event')
+			if(strcasecmp($view, 'event') == 0)
 			{
 				$model = new EventsModelsEvent();
-					
+				$id = JRequest::getInt('id');
+				
 				// Gets the current user that is logged in
-				$event = $model->getEvent();
+				$event = $model->getEvent($id);
 				$currentUser = $model->getCurrentUser();
 					
 				// If the user has signed up for the event and isn't paid then allow it to be removed.

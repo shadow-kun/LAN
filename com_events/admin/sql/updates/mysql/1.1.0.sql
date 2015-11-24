@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `#__events_shop_item_groups` (
 
 CREATE TABLE IF NOT EXISTS `#__events_shop_orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user` int(11) unsigned NOT NULL DEFAULT '0',
   `amount` decimal(10,2) not null DEFAULT '0.00',
   `status` int(11) NOT NULL DEFAULT '0',

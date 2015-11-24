@@ -84,12 +84,17 @@
                 break;
 			case 'teams':
                 $vars['view'] = 'teams';
-                $id = explode(':', $segments[1]);
-                $vars['id'] = (int) $id[0];
-				$if($segments[2] === 'myteams');
+                //$id = explode(':', $segments[1]);
+                //$vars['id'] = (int) $id[0];
+				switch($segments[1])
 				{
-					$vars['layout'] = 'myteams';
-				}
+					case 'myteams':
+						$vars['layout'] = 'myteams';
+						break;
+					case 'add':
+						$vars['layout'] = 'add';
+						break;
+				}	
                 break;
             case 'team':
                 $vars['view'] = 'team';

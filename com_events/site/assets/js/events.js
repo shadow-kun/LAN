@@ -174,7 +174,7 @@ function confirmEventUser()
 	});
     
 	jQuery.ajax({
-		url:'index.php?option=com_events&controller=confirmation&format=raw&tmpl=component&id=' + eventid,
+		url:'index.php?option=com_events&controller=confirmation&format=raw&view=event&tmpl=component&id=' + eventid,
 		type:'POST', 
 		data:attendeeInfo,
 		dataType:'JSON',

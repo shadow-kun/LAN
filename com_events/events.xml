@@ -7,7 +7,7 @@
 	<authorUrl>http://zor.systems</authorUrl>
 	<copyright>ZoR Systems, 2014-2015</copyright>
 	<license>GPL v2.0</license>
-	<version>1.1.0</version>
+	<version>0.2.0</version>
 	<description>COM_EVENTS_DESCRIPTION</description>
 	
 	<install>
