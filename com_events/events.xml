@@ -5,9 +5,9 @@
 	<author>ZoR Systems</author>
 	<authorEmail>info@zor.systems</authorEmail>
 	<authorUrl>http://zor.systems</authorUrl>
-	<copyright>ZoR Systems, 2014-2015</copyright>
+	<copyright>ZoR Systems, 2014-2016</copyright>
 	<license>GPL v2.0</license>
-	<version>0.2.0</version>
+	<version>0.2.3</version>
 	<description>COM_EVENTS_DESCRIPTION</description>
 	
 	<install>
