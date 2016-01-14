@@ -104,9 +104,9 @@
 				if(!(isset($result)))
 				{					
 					// Sets columns
-					$colums = array('id', 'user', 'mac_address', 'ip_address', 'created_user_id', 'created_time', 'expire_time', 'interface', 'params');
+					$colums = array('id', 'user', 'mac_address', 'ip_address', 'created_user_id', /*'created_time',*/ 'expire_time', 'interface', 'params');
 					// Sets values
-					$values = array('NULL', JFactory::getUser()->id, $db->quote($mac), $db->quote($ip), JFactory::getUser()->id, 'NULL', $db->quote('0000-00-00 00:00:00'), 
+					$values = array('NULL', JFactory::getUser()->id, $db->quote($mac), $db->quote($ip), JFactory::getUser()->id, /*'NULL',*/ $db->quote('0000-00-00 00:00:00'), 
 						$db->quote('net'), 'NULL');
 					
 					// Prepare Insert Query $db->quoteName('unconfirmed')

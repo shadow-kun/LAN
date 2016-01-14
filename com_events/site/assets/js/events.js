@@ -22,43 +22,50 @@ function addTeam()
 		}
     });
 }
-// Stuff for getting internet data
-	var localdata = {};
-	var invocation = new XMLHttpRequest();
-	var url = 'http://192.168.0.251/vawesome/ip.php';
-	var invocationHistoryText;
 	
-	function handler(evtXHR)
+// Stuff for getting internet data
+var localdata = {};
+var invocation = new XMLHttpRequest();
+var url = 'http://192.168.0.251/vawesome/ip.php';
+var invocationHistoryText;
+
+function handler(evtXHR)
+{
+	if (invocation.readyState == 4)
 	{
-		if (invocation.readyState == 4)
+		if (invocation.status == 200)
 		{
-				if (invocation.status == 200)
-				{
-					var response = invocation.responseXML;
-					var invocationHistory = response.getElementsByTagName('machine').item(0).firstChild.data;
-					//invocationHistory = document.createTextNode(invocationHistory);
-					
-					var localdata = invocationHistory;
-					
-					jQuery.ajax({
-						url:'index.php?option=com_events&controller=internet&format=raw&tmpl=component&view=addmachine&machine="' + invocationHistory + '"',
-						type:'POST', 
-						data:localdata,
-						dataType:'text',
-						success:function(data)
-						{
-							jQuery("#details").replaceWith(data.html);
-						}
-					});
-				}
-				else
-					alert("Errors Occured");
+			var response = invocation.responseXML;
+			var invocationHistory = response.getElementsByTagName('machine').item(0).firstChild.data;
+			//invocationHistory = document.createTextNode(invocationHistory);
+			
+			var localdata = invocationHistory;
+			
+			location.reload();
 		}
-	}	
+		else
+		{
+			alert("Errors Occured");
+		}
+	}
+}	
+
 // register an attendee to an event
 function addInternetToken()
 {
+	
 	localdata = '';
+	
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=internet&format=raw&tmpl=component&view=inprogress',
+		type:'POST', 
+		data:localdata,
+		dataType:'JSON',
+		success:function(data)
+		{
+			jQuery("#details").replaceWith(data.html);
+		}
+    });
 			
 	if(invocation)
 	{    

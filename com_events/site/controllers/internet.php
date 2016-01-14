@@ -67,7 +67,18 @@
 				$return['buttons'] = $html;
 			}
 			
-			
+			elseif($view == 'inprogress')
+			{
+				$return['success'] = true;
+				$renderView = EventsHelpersView::load('internet','_in_progress','phtml');
+				
+				ob_start();
+				echo $renderView->render();
+				$html = ob_get_contents();
+				ob_clean();
+				 
+				$return['html'] = $html;
+			}
 			
 			echo json_encode($return);
 		}
