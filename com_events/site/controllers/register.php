@@ -108,7 +108,7 @@
 				
 				// Gets current view.
 				$competition 	= JRequest::getInt('id');
-				$team 	= JRequest::getInt('team');
+				$team 			= JRequest::getInt('team');
 				$type 			= JRequest::getVar('type');
 				$user			= JFactory::getUser()->id;
 				

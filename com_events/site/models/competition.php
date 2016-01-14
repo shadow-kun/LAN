@@ -79,7 +79,8 @@
 					$data->params = json_decode($data->params);
 					
 					// Loads competition event if linked.
-					if(!empty($data->params->competition_event))
+					$competition_event = $data->params->competition_event;
+					if(!empty($competition_event))
 					{
 						$query = $db->getQuery(true);
 						$query->select('title');
@@ -103,7 +104,7 @@
 					}
 					else
 					{
-						$this->setError($e);
+						JError::raiseError(500, $e->getMessage());
 						$this->_item[$pk] = false;
 					}
 				}
@@ -136,8 +137,11 @@
 				$signup = intval(JComponentHelper::getParams('com_events')->get('competition_signup'));
 			}
 			
-			if($signup == 1)
+			$competition_event = $cparams->competition_event;
+			
+			if($signup == 1 && !empty($competition_event))
 			{
+				
 				// Gets the event params
 				$query	= $db->getQuery(true);
 				$query->select('params');
@@ -150,7 +154,7 @@
 			
 			
 				
-			if($signup == 0 || ($signup == 1 && in_array(intval($event->usergroup), JAccess::getGroupsByUser(JFactory::getUser()->id, $true)) == true))
+			if($signup == 0 || empty($competition_event) || (!empty($competition_event) && ($signup == 1 && in_array(intval($event->usergroup), JAccess::getGroupsByUser(JFactory::getUser()->id, $true)) == true)))
 			{
 				$return = true;
 			}
@@ -213,13 +217,16 @@
 			$query->join('LEFT', '#__events_team_players AS tp on tp.team = t.id');
 
 			// Selects the competition that is required.
-			//$query->where('ct.competition = ' . JRequest::getVar('id',NULL));
+			//$query->where('ct.competition = ' . intval(JRequest::getInt('id',NULL)));
 			
 			// Selects current user.
 			$query->where('tp.user = ' . JFactory::getUser()->id);
 			
 			// Selects only users of moderator status and above.
 			$query->where('tp.status >= 2');
+			
+			// Ensures only active teams are able to be selected
+			$query->where('t.published = 1 or t.published = 2');
 			
 			// Runs query
 			$result = $db->setQuery($query)->loadObjectList();
@@ -271,6 +278,7 @@
 			
 			// Selects the event that is required.
 			$query->where('p.competition = ' . JRequest::getInt('id'));
+			$query->where('t.published = 1 or t.published = 2');
 			
 			// Add the list ordering clause.
 			$orderCol 		= $this->state->get('list.ordering');
@@ -355,6 +363,7 @@
 		public function storeCompetitionUser($competition, $user)
 		{
 			$app = JFactory::getApplication();
+			$return = false;
 			
 			// Gets database connection
 			$db		= JFactory::getDbo();
@@ -374,6 +383,7 @@
 			
 			// Runs query
 			$result = $db->setQuery($query)->loadObject();
+			
 			$db->query();
 				
 			// Checks to see if already registered for this competition
@@ -415,7 +425,8 @@
 					
 				}
 				
-				if($signup == 0 || ($signup == 1 && in_array(intval($event->usergroup), JAccess::getGroupsByUser($user, $true))))
+				
+				if($signup == 0 || ($signup == 1 && (empty($event) || (in_array(intval($event->usergroup), JAccess::getGroupsByUser($user, $true))))))
 				{
 					//Sets JSON Params data
 					$params = $db->quote(json_encode(array('status' => 1)));
@@ -434,11 +445,12 @@
 					// Set the query and execute item
 					$db->setQuery($query);
 					$db->query();
+					$return = true;
 				}
 			}
 			
-			return true;
 			
+			return $return;
 		}
 		
 		public function storeCompetitionTeam($competition, $team)
@@ -488,7 +500,6 @@
 			}
 			
 			return true;
-			
 		}
 		
 		public function deleteCompetitionUser($competition, $user)

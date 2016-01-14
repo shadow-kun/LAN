@@ -30,11 +30,13 @@
 				}
 				
 			}
+			
 			if(!empty($id))
 			{
 				$this->player = $this->model->getPlayer($id);
 				
-				$this->groupCheckin = $this->model->getCheckinGroup($id);
+				
+				//$this->groupCheckin = $this->model->getCheckinGroup($id);
 			}
 			// Gets Event Details
 			//$this->event = $this->model->getEvent($this->player->event);

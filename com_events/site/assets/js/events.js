@@ -22,6 +22,59 @@ function addTeam()
 		}
     });
 }
+// Stuff for getting internet data
+	var localdata = {};
+	var invocation = new XMLHttpRequest();
+	var url = 'http://192.168.0.251/vawesome/ip.php';
+	var invocationHistoryText;
+	
+	function handler(evtXHR)
+	{
+		if (invocation.readyState == 4)
+		{
+				if (invocation.status == 200)
+				{
+					var response = invocation.responseXML;
+					var invocationHistory = response.getElementsByTagName('machine').item(0).firstChild.data;
+					//invocationHistory = document.createTextNode(invocationHistory);
+					
+					var localdata = invocationHistory;
+					
+					jQuery.ajax({
+						url:'index.php?option=com_events&controller=internet&format=raw&tmpl=component&view=addmachine&machine="' + invocationHistory + '"',
+						type:'POST', 
+						data:localdata,
+						dataType:'text',
+						success:function(data)
+						{
+							jQuery("#details").replaceWith(data.html);
+						}
+					});
+				}
+				else
+					alert("Errors Occured");
+		}
+	}	
+// register an attendee to an event
+function addInternetToken()
+{
+	localdata = '';
+			
+	if(invocation)
+	{    
+		invocation.open('GET', url, true);
+		invocation.onreadystatechange = handler;
+		invocation.send(); 
+	}
+	else
+	{
+		invocationHistoryText = "No Invocation TookPlace At All";
+		var textNode = document.createTextNode(invocationHistoryText);
+		var textDiv = document.getElementById("details");
+		textDiv.appendChild(textNode);
+	}
+	
+}
 
 // register an attendee to an event
 function checkinUser(id)
@@ -121,13 +174,49 @@ function confirmEventUser()
 	});
     
 	jQuery.ajax({
-		url:'index.php?option=com_events&controller=confirmation&format=raw&tmpl=component&id=' + eventid,
+		url:'index.php?option=com_events&controller=confirmation&format=raw&view=event&tmpl=component&id=' + eventid,
 		type:'POST', 
 		data:attendeeInfo,
 		dataType:'JSON',
 		success:function(data)
 		{
 			jQuery("#details").replaceWith(data.html);
+		}
+    });
+}
+
+function orderStoreNew()
+{
+	var storeid = document.getElementById('storeid').value;
+	var attendeeInfo = {};
+	jQuery("#details :input").each(function(idx,ele){
+		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
+	});
+	
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=order&format=raw&tmpl=component&view=store&type=new&id=' + storeid,
+		type:'POST',
+		data:attendeeInfo,
+		dataType:'JSON',
+		success:function(data)
+		{
+			jQuery("#details").replaceWith(data.html);
+			jQuery("#buttons").replaceWith(data.buttons);
+		}
+    });
+}
+
+function orderStatusChange(orderid)
+{
+	var ordervalue = document.getElementById('order' + orderid).value;
+	jQuery.ajax({
+		url:'index.php?option=com_events&controller=order&format=raw&tmpl=component&view=adminstore&type=update&id=' + orderid + '&status=' + ordervalue,
+		type:'POST',
+		data:ordervalue,
+		dataType:'JSON',
+		success:function(data)
+		{
+			
 		}
     });
 }
@@ -239,6 +328,7 @@ function showCompetitionEntrants()
 		}
     });
 }
+
 
 function showOptionTeamLeader()
 {

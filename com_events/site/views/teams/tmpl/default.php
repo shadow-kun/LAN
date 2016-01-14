@@ -19,7 +19,7 @@
 			echo '<div><a href="' . JRoute::_('index.php?option=com_users&view=login') . '" class="btn btn-primary">' . 
 				JText::_('COM_EVENTS_EVENT_SUMMARY_LOGIN', true) . '</a></div>';
 		} else { 
-			echo '<div><a name="newTeam" class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=team&layout=add', false) . '" ">' .
+			echo '<div><a name="newTeam" class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=teams&layout=add', false) . '" ">' .
 				JText::_('COM_EVENTS_TEAMS_SUMMARY_NEW_LABEL') . '</a></div>';
 		} ?>
 		<div class="clr"></div>

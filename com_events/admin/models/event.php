@@ -87,10 +87,12 @@
 				// gets hours and minutes for drop down boxes
 				$result->event_start_hour = substr($result->event_start_time, 11, 2);
 				$result->event_start_minute = substr($result->event_start_time, 14, 2);
+				$result->event_start_time = substr($result->event_start_time, 0, 10);
 				
 				// gets hours and minutes for drop down boxes
 				$result->event_end_hour = substr($result->event_end_time, 11, 2);
 				$result->event_end_minute = substr($result->event_end_time, 14, 2);
+				$result->event_end_time = substr($result->event_end_time, 0, 10);
 				
 				
 				// gets hours and minutes for drop down boxes
@@ -151,6 +153,55 @@
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
 			
+		}
+		
+		/**
+		* A protected method to get a set of ordering conditions.
+		*
+		* @param JTable $table A record object.
+		*
+		* @return array An array of conditions to add to add to ordering queries.
+		* @since 0.0
+		*/
+		public function getPayments($pk = null)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.id AS id, p.created_time AS created_time, p.user AS user, p.transaction_id AS transaction_id, p.userEventID AS eventID, p.amount AS amount,' . 
+							'p.currency AS currency, p.params AS params');
+			$query->from('#__events_payments AS p');
+						
+			// Selects the store that is required.
+			$event = JRequest::getInt('id');
+			$query->join('LEFT', '#__events_players AS u ON u.id = p.userEventID');
+			$query->where('u.event = ' . $event);
+			
+			$startdate = JRequest::getVar('startdate');
+			if(!empty($startdate))
+			{
+				$date = new JDate($startdate);
+				$query->where('p.created_date >= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$enddate = JRequest::getVar('enddate');
+			if(!empty($enddate))
+			{
+				$date = new JDate($enddate);
+				$query->where('p.created_date <= ' . $db->quote($date->tosql(true)));
+			}
+			
+			$query->order('p.id ASC');
+			//echo nl2br(str_replace('#__','joom_',$query));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			foreach($result AS $r => $row)
+			{
+				$result[$r]->params = json_decode($row->params);
+			}
+			return $result;
 		}
 
 		/**
@@ -224,7 +275,21 @@
 			{
 				$table->alias = JApplication::stringURLSafe($table->title);
 			}
-
+			
+			// Checks for duplicate aliases			
+			//die('Result: ' . $this->aliasDuplicateCheck($table->alias, $table->id));
+			if($this->aliasDuplicateCheck($table->alias , $table->id) === true)
+			{
+				// If there is a duplicate, then add a number to the end of the alias and retry until that alias is free.
+				$duplicateID = 1;
+			
+				while ($this->aliasDuplicateCheck($table->alias . '-' . $duplicateID, $table->id) === true)
+				{
+					$duplicateID++;
+				}
+				$table->alias = $table->alias . '-' . $duplicateID;
+			}
+			
 			if (empty($table->id)) 
 			{
 				// For a new record.
@@ -292,5 +357,42 @@
 		protected function getPlayerListQuery()
 		{	
 			
+		}
+		
+		protected function aliasDuplicateCheck($alias, $id)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('e.id AS id');
+			$query->from('#__events_events AS e');
+						
+			// Selects the store that is required.
+			$query->where('e.alias = ' . $db->quote($alias));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			// verifies number of results and returns a result appropriate.
+			if ($db->getNumRows() == 0)
+			{
+				return false;
+			}
+			if ($db->getNumRows() == 1)
+			{
+				// Needs to be verified that the result is the current item.
+				if($id == $result[0]->id)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}

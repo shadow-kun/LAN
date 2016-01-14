@@ -14,7 +14,7 @@
 	* @subpackage	com_events
 	*/
 	
-	abstract class EventsHelper
+	class EventsHelper
 	{
 		/**
 		 * Configure the Linkbar.
@@ -25,6 +25,8 @@
 		 *
 		 * @since 0.0
 		 */
+		 
+		
 		 
 		public static function addSubmenu($submenu)
 		{

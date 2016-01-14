@@ -188,18 +188,6 @@
 				<option value="0">COM_EVENTS_COMPETITION_FIELD_PARAM_OFFICIAL_OPTION_NO</option>
 				<option value="1">COM_EVENTS_COMPETITION_FIELD_PARAM_OFFICIAL_OPTION_YES</option>
 			</field>
-			<field name="competition_start"
-				type="text"
-				label="COM_EVENTS_COMPETITION_FIELD_PARAM_START_LABEL"
-				description="COM_EVENTS_COMPETITION_FIELD_PARAM_START_DESC"
-				class="inputbox"
-				size="45" />
-			<field name="competition_end"
-				type="text"
-				label="COM_EVENTS_COMPETITION_FIELD_PARAM_END_LABEL"
-				description="COM_EVENTS_COMPETITION_FIELD_PARAM_END_DESC"
-				class="inputbox"
-				size="45" />
 			<field name="competition_team"
 				type="list"
 				label="COM_EVENTS_COMPETITION_FIELD_PARAM_TEAM_LABEL"
@@ -221,8 +209,8 @@
 			</field>
 			<field name="competition_organisers"
 				type="text"
-				label="COM_EVENTS_COMPETITION_FIELD_PARAM_TOURNAMENT_LABEL"
-				description="COM_EVENTS_COMPETITION_FIELD_PARAM_TOURNAMENT_DESC"
+				label="COM_EVENTS_COMPETITION_FIELD_PARAM_ORGANISERS_LABEL"
+				description="COM_EVENTS_COMPETITION_FIELD_PARAM_ORGANISERS_DESC"
 				class="inputbox"
 				size="45" />
 			<field name="competition_event"

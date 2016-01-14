@@ -84,15 +84,20 @@
                 break;
 			case 'teams':
                 $vars['view'] = 'teams';
-                $id = explode(':', $segments[1]);
-                $vars['id'] = (int) $id[0];
-				$if($segments[2] === 'myteams');
+                //$id = explode(':', $segments[1]);
+                //$vars['id'] = (int) $id[0];
+				switch($segments[1])
 				{
-					$vars['layout'] = 'myteams';
-				}
+					case 'myteams':
+						$vars['layout'] = 'myteams';
+						break;
+					case 'add':
+						$vars['layout'] = 'add';
+						break;
+				}	
                 break;
             case 'team':
-                $vars['view'] = 'teams';
+                $vars['view'] = 'team';
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
                 switch($segments[2])
@@ -108,6 +113,36 @@
 						break;
                 }
                 break;
+			case 'store':
+                $vars['view'] = 'store';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
+				
+			case 'adminstore':
+                $vars['view'] = 'store';
+                $vars['layout'] = 'adminstore';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
+			case 'stores':
+                $vars['view'] = 'stores';
+				
+                break;
+			case 'orders':
+                $vars['view'] = 'store';
+                $vars['layout'] = 'orders';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
+			
+			case 'payments':
+                $vars['view'] = 'store';
+                $vars['layout'] = 'payments';
+                $id = explode(':', $segments[1]);
+                $vars['id'] = (int) $id[0];
+				break;
+
         }
         return $vars;
 	}

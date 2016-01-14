@@ -14,7 +14,7 @@
 		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
-		$paypalItemNumber	= (int) $this->currentUser->id;
+		$paypalItemNumber	= 'E-' . (int) $this->currentUser->id;
 		$paypalSandbox 		= intval($this->params->get('paypal_sandbox'));
 	}
 	else
@@ -25,7 +25,7 @@
 		$paypalCancel		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalReturn		= JURI::root() . 'index.php?option=com_events&view=event&id=' . $this->event->id; // Send to event page
 		$paypalItem			= 'Event Ticket'; // Website Setting or Event Setting?
-		$paypalItemNumber	= (int) $this->currentUser->id;
+		$paypalItemNumber	= 'E-' . (int) $this->currentUser->id;
 		$paypalSandbox 		= intval($this->event->params->paypal_sandbox);
 	}
 

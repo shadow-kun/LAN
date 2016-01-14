@@ -485,8 +485,8 @@
 					. '<strong>Name: </strong>' . $user1->name . '<br />'
 					. '<strong>Event Name: </strong>' . $db->escape($event->title) . '<br />'
 					. '<strong>Ticket ID: </strong>' . $result->id . '<br /></p> '
-					. '<p><img src="components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png" />'
-					. '<img src="components/com_events/assets/images/barcodes/ticket' . $result->id . '.gif" /></p></div>';
+					. '<p><img src="/components/com_events/assets/images/qrcodes/ticket' . $result->id . '.png" />'
+					. '<img src="/components/com_events/assets/images/barcodes/ticket' . $result->id . '.gif" /></p></div>';
 					
 			/* Needs to re-code images to ensure a full unc path */
 			$body = str_ireplace('src="', 'src="' . $host1, $body);

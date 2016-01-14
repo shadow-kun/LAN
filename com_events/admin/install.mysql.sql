@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `#__events_payments` (
   `userEventID` int(10) unsigned DEFAULT NULL,
   `user` int(10) unsigned DEFAULT NULL,
   `transaction_id` varchar(63) CHARACTER SET 'utf8' DEFAULT NULL,
-  `item_number` varchar(30) CHARACTER SET 'utf8' DEFAULT NULL,
+  `orderID` int(30) DEFAULT NULL,
   `amount` float NOT NULL DEFAULT '0',
   `currency` varchar(10) CHARACTER SET 'utf8' DEFAULT NULL,
   `params` text CHARACTER SET 'utf8',
@@ -145,5 +145,18 @@ CREATE TABLE IF NOT EXISTS `#__events_team_players` (
   `status` int(11) NOT NULL,
   `note` text CHARACTER SET 'utf8',
   `params` mediumtext CHARACTER SET 'utf8',
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `#__events_internet` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user` int(11) unsigned NOT NULL DEFAULT '0',
+  `mac_address` varchar(12) NOT NULL,
+  `ip_address` varchar(16) NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `created_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expire_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `interface` varchar(16) NOT NULL DEFAULT 'net',
+  `params` mediumtext,
   PRIMARY KEY (`id`)
 );

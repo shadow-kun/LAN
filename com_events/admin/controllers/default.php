@@ -35,6 +35,14 @@
 			// Load the component helper.
 			require_once (JPATH_COMPONENT.'/helpers/events.php');
 			
+			$document = JFactory::getDocument();
+
+			//stylesheets
+			//$document->addStylesheet(JURI::base().'components/com_events/assets/css/style.css');
+			 
+			//javascripts
+			$document->addScript(JURI::base().'components/com_events/assets/js/events.js');
+			
 			// Display the view
 			parent::display();
 			

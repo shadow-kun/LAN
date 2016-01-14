@@ -237,6 +237,12 @@
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>
 		
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'payments', JText::_('COM_EVENTS_EVENT_TAB_PAYMENTS', true)); ?>
+		
+		<?php echo $this->loadTemplate('payments'); ?>
+		
+		<?php echo JHtml::_('bootstrap.endTab'); ?>
+		
 		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'settings', JText::_('COM_EVENTS_EVENT_TAB_SETTINGS', true)); ?>
 		<div class="row-fluid">
 			<div class="span2">
