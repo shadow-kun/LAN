@@ -328,6 +328,13 @@
 			}
 		}
 		
+		/**
+		* Verify if the alias is a duplicate.
+		*
+		* @return 		Boolean
+		* @since		0.2.2
+		*/
+		
 		protected function aliasDuplicateCheck($alias, $id)
 		{
 			$db		= $this->getDbo();
