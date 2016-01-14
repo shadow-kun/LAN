@@ -277,7 +277,6 @@
 			}
 			
 			// Checks for duplicate aliases			
-			//die('Result: ' . $this->aliasDuplicateCheck($table->alias, $table->id));
 			if($this->aliasDuplicateCheck($table->alias , $table->id) === true)
 			{
 				// If there is a duplicate, then add a number to the end of the alias and retry until that alias is free.
