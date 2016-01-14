@@ -193,6 +193,19 @@
 			{
 				$table->alias = JApplication::stringURLSafe($table->title);
 			}
+			
+			// Checks for duplicate aliases			
+			if($this->aliasDuplicateCheck($table->alias , $table->id) === true)
+			{
+				// If there is a duplicate, then add a number to the end of the alias and retry until that alias is free.
+				$duplicateID = 1;
+			
+				while ($this->aliasDuplicateCheck($table->alias . '-' . $duplicateID, $table->id) === true)
+				{
+					$duplicateID++;
+				}
+				$table->alias = $table->alias . '-' . $duplicateID;
+			}
 
 			if (empty($table->id)) 
 			{
@@ -248,6 +261,43 @@
 
 				// Put array back together, comma delimited.
 				$this->metakey = implode(', ', $newKeys);
+			}
+		}
+		
+		protected function aliasDuplicateCheck($alias, $id)
+		{
+			$db		= $this->getDbo();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('e.id AS id');
+			$query->from('#__events_teams AS e');
+						
+			// Selects the store that is required.
+			$query->where('e.alias = ' . $db->quote($alias));
+			$result = $db->setQuery($query)->loadObjectList();
+			$db->query();
+			
+			// verifies number of results and returns a result appropriate.
+			if ($db->getNumRows() == 0)
+			{
+				return false;
+			}
+			if ($db->getNumRows() == 1)
+			{
+				// Needs to be verified that the result is the current item.
+				if($id == $result[0]->id)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
 			}
 		}
 	}
