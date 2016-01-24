@@ -27,9 +27,10 @@
 				
 
 	
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a> <strong> - </strong> 
+	<?php if((intval($this->event->params->show_title) == 1) || ((strlen($this->event->params->show_title) === 0) && (intval($this->params->get('show_title')) == 1))) : ?> 
+		<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a> <strong> - </strong> 
 		<a href="<?php echo JRoute::_('index.php?option=com_events&view=event&layout=prepay&id=' . $this->event->id); ?>"><?php echo JText::_('COM_EVENTS_EVENT_PREPAY_TITLE', true) ?></a></h2>
-	
+	<?php endif; ?>
 		
 		<?php echo EventsHelpersView::load('event','_prepay','phtml'); ?>
 		

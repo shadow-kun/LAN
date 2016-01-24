@@ -17,7 +17,9 @@
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=team&id='.(int) $this->team->id); ?>"
 	method="post" name="adminForm" id="team-form" class="form-validate">
 	
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=teams'); ?>"><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_TEAMS_LABEL', true); ?></a> - <a href="<?php echo JRoute::_('index.php?option=com_events&view=team&id=' . $this->team->id); ?>"><?php echo $this->escape($this->team->title); ?></a></h2>
+	<?php if((intval($this->team->params->show_title) == 1) || ((strlen($this->team->params->show_title) === 0) && (intval($this->params->get('show_title')) == 1))) : ?> 
+		<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=teams'); ?>"><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_TEAMS_LABEL', true); ?></a> - <a href="<?php echo JRoute::_('index.php?option=com_events&view=team&id=' . $this->team->id); ?>"><?php echo $this->escape($this->team->title); ?></a></h2>
+	<?php endif; ?>
 	<div class="form-horizontal">
 		
 		<!-- Need to have a restrict access cause here -->

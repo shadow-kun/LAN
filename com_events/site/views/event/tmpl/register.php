@@ -16,8 +16,10 @@
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=event&id='.(int) $this->event->id); ?>"
 	method="post" name="adminForm" id="event-register-form" class="form-validate">
 	
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a> <strong> - </strong> 
+	<?php if((intval($this->event->params->show_title) == 1) || ((strlen($this->event->params->show_title) === 0) && (intval($this->params->get('show_title')) == 1))) : ?> 
+		<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a> <strong> - </strong> 
 		<a href="<?php echo JRoute::_('index.php?option=com_events&view=event&layout=register&id=' . $this->event->id); ?>"><?php echo JText::_('COM_EVENTS_EVENT_REGISTER_TITLE', true) ?></a></h2>
+	<?php endif; ?>
 	
 	<?php 
 		$waitlist = $this->event->params->waitlist_override;
