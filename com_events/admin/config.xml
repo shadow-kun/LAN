@@ -117,7 +117,8 @@
 			type="rules"
 			label="JCONFIG_PERMISSIONS_LABEL"
 			class="inputbox"
-			filters="rules"
+			validate="rules"
+			filter="rules"			
 			component="com_events"
 			section="component" />
 	</fieldset>

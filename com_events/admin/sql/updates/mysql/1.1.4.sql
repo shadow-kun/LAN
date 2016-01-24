@@ -1,0 +1,1 @@
+update #__assets set rules = '{"core.manage":{"6":1},"core.configuration":{"6":1,"7":1,"8":1},"core.admin":[],"core.create":[],"core.delete":[],"core.edit":{"8":1},"core.edit.state":{"8":1}}' where name ='com_events' and title='com_events';
