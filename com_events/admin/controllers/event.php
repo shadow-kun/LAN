@@ -36,11 +36,25 @@
 			
 			// Gets database connection
 			$db		= JFactory::getDbo();
-			$query	= $db->getQuery(true);			
+			$query	= $db->getQuery(true);	
+
+			// Get event data for transaction data.
 			
+			$query->select('e.params as params');
+			$query->from('#__events_events AS e');
+						
+			// Selects the team that is required.
+			$query->where('e.id = ' . $event);
+				
+			$eventData = $db->setQuery($query)->loadObject();
+			$db->query();
+				
+			// Explodes the parameters section
+			$eventData->params = json_decode($eventData->params);
 			
 			if(!(empty($data['add_user'])))
 			{
+				$query	= $db->getQuery(true);	
 				// Select the required fields from the table.
 				$query->select('e.id AS id, e.event, e.status, e.params');
 				$query->from('#__events_players AS e');
@@ -70,7 +84,52 @@
 					// Set the query and execute item
 					$db->setQuery($query);
 					$db->query();
-									
+					
+					if(intval($data['add_user_status']) > 2)
+					{
+						// Checks if pre-paid or paid at the event.
+						if(intval($data['add_user_status']) == 3)
+						{
+							$price = $eventData->params->cost_event;
+						} 
+						else 
+						{
+							$price = $eventData->params->cost_prepay;
+						}
+						
+						// Get new userEventID for the newly created record.
+						$query	= $db->getQuery(true);
+						
+						// Select the required fields from the table.
+						$query->select('e.id');
+						$query->from('#__events_players AS e');
+						
+						// Selects the team that is required.
+						$query->where('e.event = ' . $event AND 'e.user = ' . intval($data['add_user']));
+						
+						$eventUserID = $db->setQuery($query)->loadResult();
+						$db->query();
+						
+						$query	= $db->getQuery(true);
+			
+						// Sets JSON Params data
+						$params = $db->quote(json_encode(array('payment_method' => 'Manual (ACP)', 'payment_status' => $db->quote('Completed - Added User'))));
+					
+						// Sets columns
+						$colums = array(/*'id', 'created_time',*/ 'userEventID', 'eventID', 'transaction_id', 'amount', 'currency', 'params', 'user');
+
+						// Sets values
+						$values = array(/*'NULL', 'NULL',*/ $eventUserID, $event, $db->quote($user->username . ' (ID - ' . $user->id . ')'), $price, 'NULL', $params, intval($data['add_user']));
+
+						// Prepare Insert Query $db->quoteName('unconfirmed')
+						$query  ->insert($db->quoteName('#__events_payments'))
+								->columns($db->quoteName($colums))
+								->values(implode(',', $values));
+						
+						// Set the query and execute item
+						$db->setQuery($query);
+						$db->query();
+					}
 					
 					// Returns a notice message stating user has been added to the team.
 					$app->enqueueMessage(JFactory::getUser($data['add_user'])->username . JText::_('COM_EVENTS_EVENT_MSG_PLAYER_ADDED'), 'notice');
@@ -105,6 +164,40 @@
 					// If status is to remove the user 
 					if($status == -2)
 					{
+						// If there is money paid for already, log the change in the payment logs.
+						if($player->status > 2)
+						{
+							// Checks if pre-paid or paid at the event.
+							if($player->status == 3)
+							{
+								$price = 0 - $eventData->params->cost_event;
+							} 
+							else 
+							{
+								$price = 0 - $eventData->params->cost_prepay;
+							}
+							
+							$query	= $db->getQuery(true);
+				
+							// Sets JSON Params data
+							$params = $db->quote(json_encode(array('payment_method' => 'Manual (ACP)', 'payment_status' => $db->quote('Refunded & Removed'))));
+						
+							// Sets columns
+							$colums = array(/*'id', 'created_time',*/ 'userEventID', 'eventID', 'transaction_id', 'amount', 'currency', 'params', 'user');
+
+							// Sets values
+							$values = array(/*'NULL', 'NULL',*/ $player->id, $event, $db->quote($user->username . ' (ID - ' . $user->id . ')'), $price, 'NULL', $params, $player->user);
+
+							// Prepare Insert Query $db->quoteName('unconfirmed')
+							$query  ->insert($db->quoteName('#__events_payments'))
+									->columns($db->quoteName($colums))
+									->values(implode(',', $values));
+							
+							// Set the query and execute item
+							$db->setQuery($query);
+							$db->query();
+						}
+						
 						$query	= $db->getQuery(true);
 						
 						// Sets delete statement and clauses
@@ -127,6 +220,70 @@
 					}
 					else
 					{
+						if($player->status < 3 && $status > 2)
+						{
+							// Checks if pre-paid or paid at the event.
+							if($status == 3)
+							{
+								$price = $eventData->params->cost_event;
+							} 
+							else 
+							{
+								$price = $eventData->params->cost_prepay;
+							}
+							
+							$query	= $db->getQuery(true);
+				
+							// Sets JSON Params data
+							$params = $db->quote(json_encode(array('payment_method' => 'Manual (ACP)', 'payment_status' => $db->quote('Completed - Updated User'))));
+						
+							// Sets columns
+							$colums = array(/*'id', 'created_time',*/ 'userEventID', 'eventID', 'transaction_id', 'amount', 'currency', 'params', 'user');
+
+							// Sets values
+							$values = array(/*'NULL', 'NULL',*/ $player->id, $event, $db->quote($user->username . ' (ID - ' . $user->id . ')'), $price, 'NULL', $params, $player->user);
+
+							// Prepare Insert Query $db->quoteName('unconfirmed')
+							$query  ->insert($db->quoteName('#__events_payments'))
+									->columns($db->quoteName($colums))
+									->values(implode(',', $values));
+							
+							// Set the query and execute item
+							$db->setQuery($query);
+							$db->query();
+						}
+						else if($player->status > 2 && $status < 3)
+						{
+							// Checks if pre-paid or paid at the event.
+							if($player->status == 3)
+							{
+								$price = 0 - $eventData->params->cost_event;
+							} 
+							else 
+							{
+								$price = 0 - $eventData->params->cost_prepay;
+							}
+							
+							$query	= $db->getQuery(true);
+				
+							// Sets JSON Params data
+							$params = $db->quote(json_encode(array('payment_method' => 'Manual (ACP)', 'payment_status' => $db->quote('Refunded - Updated User'))));
+						
+							// Sets columns
+							$colums = array(/*'id', 'created_time',*/ 'userEventID', 'eventID', 'transaction_id', 'amount', 'currency', 'params', 'user');
+
+							// Sets values
+							$values = array(/*'NULL', 'NULL',*/ $player->id, $event, $db->quote($user->username . ' (ID - ' . $user->id . ')'), $price, 'NULL', $params, $player->user);
+
+							// Prepare Insert Query $db->quoteName('unconfirmed')
+							$query  ->insert($db->quoteName('#__events_payments'))
+									->columns($db->quoteName($colums))
+									->values(implode(',', $values));
+							
+							// Set the query and execute item
+							$db->setQuery($query);
+							$db->query();
+						}
 						$query	= $db->getQuery(true);
 						
 						// Sets data to be updated

@@ -169,14 +169,13 @@
 			$query	= $db->getQuery(true);
 			
 			// Select the required fields from the table.
-			$query->select('p.id AS id, p.created_time AS created_time, p.user AS user, p.transaction_id AS transaction_id, p.userEventID AS eventID, p.amount AS amount,' . 
-							'p.currency AS currency, p.params AS params');
+			$query->select('p.id AS id, p.created_time AS created_time, p.user AS user, p.transaction_id AS transaction_id, p.userEventID AS userEventID, p.eventID AS event, '. ' p.amount AS amount, p.currency AS currency, p.params AS params');
 			$query->from('#__events_payments AS p');
 						
 			// Selects the store that is required.
 			$event = JRequest::getInt('id');
-			$query->join('LEFT', '#__events_players AS u ON u.id = p.userEventID');
-			$query->where('u.event = ' . $event);
+			/*$query->join('LEFT', '#__events_players AS u ON u.id = p.userEventID');*/
+			$query->where('p.eventID = ' . $event);
 			
 			$startdate = JRequest::getVar('startdate');
 			if(!empty($startdate))

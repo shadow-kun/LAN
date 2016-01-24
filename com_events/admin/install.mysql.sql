@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `#__events_payments` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `userEventID` int(10) unsigned DEFAULT NULL,
+  `eventID` int(10) unsigned DEFAULT NULL,
   `user` int(10) unsigned DEFAULT NULL,
   `transaction_id` varchar(63) CHARACTER SET 'utf8' DEFAULT NULL,
   `orderID` int(30) DEFAULT NULL,

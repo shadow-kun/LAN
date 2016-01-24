@@ -21,6 +21,7 @@
 					<tr class="row<?php echo $i % 2; ?>">
 						<td><?php echo $payment->id; ?></td>
 						<td><?php echo $payment->created_time; ?></td>
+						<?php var_dump($payment->user); ?>
 						<td><?php echo JFactory::getUser($payment->user)->name . '(' . JText::_('COM_EVENTS_EVENT_PAYMENTS_USERID_LABEL') . ' - ' . $payment->user . ')'; ?></td>
 						<td><?php echo JText::_('COM_EVENTS_CURRENCY_SYMBOL') . number_format($payment->amount, 2); ?></td>
 						<td><?php echo $payment->currency; ?></td>
