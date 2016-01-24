@@ -13,7 +13,9 @@
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=competition&id='.(int) $this->competition->id); ?>"
 	method="post" name="adminForm" id="competition-form" class="form-validate">
 	
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=competitions'); ?>" ><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_COMPETITIONS'); ?></a> - <a href="<?php echo JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id); ?>"><?php echo $this->escape($this->competition->title); ?></a></h2>
+	<?php if((intval($this->competition->params->show_title) == 1) || ((strlen($this->competition->params->show_title) === 0) && (intval($this->params->get('show_title')) == 1))) : ?> 
+		<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=competitions'); ?>" ><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_COMPETITIONS'); ?></a> - <a href="<?php echo JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id); ?>"><?php echo $this->escape($this->competition->title); ?></a></h2>
+	<?php endif; ?>
 					
 	<div class="form-horizontal">
 		<p><strong><?php echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_START_LABEL', true); ?></strong> - 
