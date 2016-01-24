@@ -7,6 +7,17 @@
 		description="COM_EVENTS_CONFIG_FIELDSET_GENERAL_DESC"
 		>
 		
+		<field
+			name="show_title"
+			type="radio"
+			label="COM_EVENTS_CONFIG_FIELDSET_GENERAL_FIELD_SHOW_TITLE_LABEL"
+			description="COM_EVENTS_CONFIG_FIELDSET_GENERAL_FIELD_SHOW_TITLE_DESC"
+			default="1"
+		>
+			<option value="1">COM_EVENTS_CONFIG_FIELDSET_GENERAL_FIELD_SHOW_TITLE_OPTION_ENABLED</option>
+			<option value="0">COM_EVENTS_CONFIG_FIELDSET_GENERAL_FIELD_SHOW_TITLE_OPTION_DISABLED</option>
+		</field>
+		
 	</fieldset>
 	<fieldset
 		name="events"

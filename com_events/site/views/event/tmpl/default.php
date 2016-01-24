@@ -37,7 +37,6 @@
 	{
 		$confirmations = intval($this->params->get('confirmations_override'));
 	}
-	
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_events&view=event&id='.(int) $this->event->id); ?>"
@@ -48,8 +47,10 @@
 			<img src="<?php echo $this->event->params->event_image; ?>" style="max-width:200px; float:right;" />
 		</div>
 	<?php endif; ?>
-	<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a></h2>
-		
+	<?php if((intval($this->event->params->show_title) == 1) || ((strlen($this->event->params->show_title) === 0) && (intval($this->params->get('show_title')) == 1))) : ?> 
+		<h2><a href="<?php echo JRoute::_('index.php?option=com_events&view=event&id=' . $this->event->id); ?>"><?php echo $this->escape($this->event->title); ?></a></h2>
+	<?php endif; ?>
+	
 	<div class="form-horizontal">
 		<p><strong><?php echo JText::_('COM_EVENTS_EVENT_SUMMARY_START_TIME_LABEL', true); ?></strong> - 
 			<?php echo date('g:i A l, jS F Y', strtotime($this->escape($this->event->event_start_time))); ?><br />
