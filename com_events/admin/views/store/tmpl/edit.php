@@ -164,23 +164,6 @@
 				</table>
 			
 			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SETTINGS_LABEL'); ?></h3>
-			<?php /*$fieldSets = $this->form->getFieldsets('params');
-			foreach ($fieldSets as $name => $fieldSet) :
-				if($name == "order_filter") :
-					/*echo JHtml::_('sliders.panel',JText::_($fieldSet->label), $name.'-params');*/
-					/*if (isset($fieldSet->description) && trim($fieldSet->description)) :
-						echo '<p class="tip">'.$this->escape(JText::_($fieldSet->description)).'</p>';
-					endif; ?>
-					<fieldset class="panelform">
-						<ul class="adminformlist">
-						<?php foreach ($this->form->getFieldset($name) as $field) : ?>
-							<li><?php echo $field->label; ?>
-							<?php echo $field->input; ?></li>
-						<?php endforeach; ?>
-						</ul>
-					</fieldset>
-				<?php endif; ?>
-			<?php endforeach;*/ ?>
 			<p><?php echo JText::_('COM_EVENTS_SHOP_STORE_FIELD_ORDER_START_DATE_LABEL'); ?></p>
 			<p><?php echo JHTML::calendar($app->getUserState('com_events.store.orders.start_date'),'orders_start_date', 'orders_start_date', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>' validate[\'required\']', 'onchange'=> 'Joomla.submitbutton(\'store.setStoreParameters\');',)); ?></p>
 			<p><?php echo JText::_('COM_EVENTS_SHOP_STORE_FIELD_ORDER_END_DATE_LABEL'); ?></p>
