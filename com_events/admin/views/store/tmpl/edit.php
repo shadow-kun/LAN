@@ -12,10 +12,11 @@
 	JHtml::_('behavior.formvalidation');
 	JHtml::_('behavior.keepalive');
 	
+	$app  	     = JFactory::getApplication();
 	
-	$listOrder	= $this->escape($this->state->get('list.ordering'));
-	$listDirn	= $this->escape($this->state->get('list.direction'));
-	
+	$listOrder	 = $this->escape($this->state->get('list.ordering'));
+	$listDirn	 = $this->escape($this->state->get('list.direction'));
+	$orderStatus = $app->getUserState('com_events.store.orders.status');
 ?>
 <script type="text/javascript">
 	// Attach a behaviour to the submit button to check validation.
@@ -163,11 +164,11 @@
 				</table>
 			
 			<h3><?php echo JText::_('COM_EVENTS_SHOP_STORE_ORDERS_SETTINGS_LABEL'); ?></h3>
-			<?php $fieldSets = $this->form->getFieldsets('params');
+			<?php /*$fieldSets = $this->form->getFieldsets('params');
 			foreach ($fieldSets as $name => $fieldSet) :
 				if($name == "order_filter") :
 					/*echo JHtml::_('sliders.panel',JText::_($fieldSet->label), $name.'-params');*/
-					if (isset($fieldSet->description) && trim($fieldSet->description)) :
+					/*if (isset($fieldSet->description) && trim($fieldSet->description)) :
 						echo '<p class="tip">'.$this->escape(JText::_($fieldSet->description)).'</p>';
 					endif; ?>
 					<fieldset class="panelform">
@@ -179,7 +180,39 @@
 						</ul>
 					</fieldset>
 				<?php endif; ?>
-			<?php endforeach; ?>
+			<?php endforeach;*/ ?>
+			<p><?php echo JText::_('COM_EVENTS_SHOP_STORE_FIELD_ORDER_START_DATE_LABEL'); ?></p>
+			<p><?php echo JHTML::calendar($app->getUserState('com_events.store.orders.start_date'),'orders_start_date', 'orders_start_date', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>' validate[\'required\']', 'onchange'=> 'Joomla.submitbutton(\'store.setStoreParameters\');',)); ?></p>
+			<p><?php echo JText::_('COM_EVENTS_SHOP_STORE_FIELD_ORDER_END_DATE_LABEL'); ?></p>
+			<p><?php echo JHTML::calendar($app->getUserState('com_events.store.orders.end_date'),'orders_end_date', 'orders_end_date', '%Y-%m-%d',array('size'=>'8','maxlength'=>'10','class'=>' validate[\'required\']', 'onchange'=> 'Joomla.submitbutton(\'store.setStoreParameters\');',)); ?></p>
+			
+			<p><?php echo JText::_('COM_EVENTS_SHOP_STORE_FIELD_ORDER_STATUS_LABEL'); ?></p>
+			
+			<p><select name="orders_status" onchange="Joomla.submitbutton('store.setStoreParameters')">
+				<option value="">
+					<?php echo JText::_('COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_NONE', true); ?></option>
+				<option value="1" 
+					<?php if($orderStatus == 1) : 
+						echo 'selected'; 
+						endif; ?>
+					><?php echo JText::_('COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_UNPAID_ONLY', true); ?></option>
+				<option value="2" 
+					<?php if($order->status == 2) :
+						echo 'selected'; 
+						endif; ?>
+					><?php echo JText::_('COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_PAID_ONLY', true); ?></option>
+				<option value="3" 
+					<?php if($order->status == 3) :
+						echo 'selected'; 
+					endif; ?>
+					><?php echo JText::_('COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_COLLECTED_ONLY', true); ?></option>
+				<option value="4" 
+					<?php if($order->status == 4) :
+						echo 'selected'; 
+					endif; ?>
+					><?php echo JText::_('COM_EVENTS_SHOP_STORE_PARAMS_ORDER_FILTER_STATUS_OPTION_PAID_COLLECTED', true); ?></option>
+			</select></p>
+			
 		</div>
 		
 		<?php echo JHtml::_('bootstrap.endTab'); ?>

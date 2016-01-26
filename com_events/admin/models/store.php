@@ -43,6 +43,26 @@
 
 			return $form;
 		}
+		
+		/**
+		* Method to update orders based off parameters entered.
+		*
+		*/
+		/*public function setOrderParameters ($data = array())
+		{
+			$return['success'] = false;
+			
+			$ordersView = EventsHelpersView::load('store','edit_orders','phtml');
+						
+			ob_start();
+			echo $ordersView->render();
+			$html = ob_get_contents();
+			ob_clean();
+			 
+			$return['html'] = $html;
+				
+			echo json_encode($return);
+		}*/
 
 		/**
 		* Method to get an Event.
@@ -84,6 +104,7 @@
 				
 				if (!empty($startdate)) 
 				{
+					
 					
 					$result->params['filter_start_date'] = $startdate;
 				}
@@ -168,6 +189,7 @@
 		
 		public function getOrders($pk = null)
 		{
+			$app    = JFactory::getApplication();
 			$db		= $this->getDbo();
 			$query	= $db->getQuery(true);
 			
@@ -182,21 +204,22 @@
 				$query->where('o.store = ' . $store);
 			}
 			
-			$startdate = JRequest::getVar('startdate');
+			$startdate = $app->getUserState('com_events.store.orders.start_date');
 			if(!empty($startdate))
 			{
 				$date = new JDate($startdate);
 				$query->where('o.created_date >= ' . $db->quote($date->tosql(true)));
 			}
 			
-			$enddate = JRequest::getVar('enddate');
+			$enddate = $app->getUserState('com_events.store.orders.end_date');
 			if(!empty($enddate))
 			{
 				$date = new JDate($enddate);
 				$query->where('o.created_date <= ' . $db->quote($date->tosql(true)));
 			}
 			
-			$status = JRequest::getInt('status');
+			//$status = JRequest::getInt('status');
+			$status = $app->getUserState('com_events.store.orders.status');
 			if(!empty($status))
 			{
 				switch($status)
@@ -370,14 +393,14 @@
 			if(!empty($startdate))
 			{
 				$date = new JDate($startdate);
-				$query->where('p.created_date >= ' . $db->quote($date->tosql(true)));
+				$query->where('p.created_time >= ' . $db->quote($date->tosql(true)));
 			}
 			
 			$enddate = JRequest::getVar('enddate');
 			if(!empty($enddate))
 			{
 				$date = new JDate($enddate);
-				$query->where('p.created_date <= ' . $db->quote($date->tosql(true)));
+				$query->where('p.created_time <= ' . $db->quote($date->tosql(true)));
 			}
 			
 			$query->order('p.id ASC');

@@ -121,6 +121,23 @@
 			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_events&view=store&layout=edit&id=' . JRequest::getInt('id'), false));
 		}
 		
+		public function setStoreParameters($key = null, $urlVar = null)
+		{
+			$app            = JFactory::getApplication();
+			$db				= JFactory::getDbo();
+			$data           = JRequest::getVar('jform', array(), 'post', 'array');
+			
+			
+			//$app->setUserState('com_events.store.orders.start_date', $data['params']['filter_start_date']);
+			$app->setUserState('com_events.store.orders.start_date', JRequest::getVar('orders_start_date'));
+			$app->setUserState('com_events.store.orders.end_date', JRequest::getVar('orders_end_date'));
+			
+			$app->setUserState('com_events.store.orders.status', JRequest::getInt('orders_status'));
+			//$app->setUserState('com_events.store.orders.end_date', $data['params']['filter_end_date']);			
+			// Reloads Page
+			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_events&view=store&layout=edit&id=' . JRequest::getInt('id') . '#orders', false));
+		}
+		
 		public function save ($key = null, $urlVar = null)
 		{
 			$app            = JFactory::getApplication();
@@ -334,5 +351,7 @@
 			
 			parent::save($key, $urlVar);
 		}
+		
+		
 	}
 ?>
