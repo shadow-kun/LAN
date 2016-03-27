@@ -61,7 +61,7 @@
 					$published = $this->getState('filter.published');
 					$archived = $this->getState('filter.archived');
 
-					if (is_numeric($published))
+					if (is_numeric($published) )
 					{
 						$query->where('(a.published = ' . (int) $published . ' OR a.published =' . (int) $archived . ')');
 					}
@@ -71,9 +71,9 @@
 
 					$data = $db->loadObject();
 
-					if (empty($data))
+					if (empty($data) || ((int) $data->published == -2 || (int) $data->published == 0))
 					{
-						return JError::raiseError(404, JText::_('COM_LAN_ERROR_COMPETITION_NOT_FOUND'));
+						return JError::raiseError(404, JText::_('COM_EVENTS_ERROR_COMPETITION_NOT_FOUND'));
 					}
 					
 					$data->params = json_decode($data->params);
