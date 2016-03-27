@@ -428,7 +428,9 @@
 				
 				if($signup == 0 || ($signup == 1 && (empty($event) || (in_array(intval($event->usergroup), JAccess::getGroupsByUser($user, $true))))))
 				{
-					//Sets JSON Params data
+					// Saves user data
+					$query	= $db->getQuery(true);
+					// Sets JSON Params data
 					$params = $db->quote(json_encode(array('status' => 1)));
 					
 					// Sets columns
@@ -445,6 +447,25 @@
 					// Set the query and execute item
 					$db->setQuery($query);
 					$db->query();
+					
+					// Sets the competition players stats 
+					$cparams->competition_players_signups = $this->getCompetitionPlayers($competition);
+					
+					$query	= $db->getQuery(true);
+			
+					$fields = 'params' . ' = ' . $db->quote(json_encode($cparams));
+
+					$conditions = array($db->quoteName('id') . ' = ' . $competition);
+					
+					// Updates params to competition
+					$query->update($db->quoteName('#__events_competitions'));
+					$query->set($fields);
+					$query->where($conditions);
+					
+					$db->setQuery($query);
+					
+					$db->query();
+					
 					$return = true;
 				}
 			}
@@ -497,6 +518,32 @@
 				// Set the query and execute item
 				$db->setQuery($query);
 				$db->query();
+				
+				// gets competition params
+				$query	= $db->getQuery(true);
+				$query->select('params');
+				$query->from('#__events_competitions');
+				$query->where('id = ' . $competition);
+				$cparams = $db->setQuery($query)->loadResult();
+				$db->query();
+				$cparams = json_decode($cparams);
+				
+				// Updates comp teams stats
+				$cparams->competition_teams_signups = $this->getCompetitionTeams($competition);
+						
+				$query	= $db->getQuery(true);
+		
+				$fields = 'params' . ' = ' . $db->quote(json_encode($cparams));
+
+				$conditions = array($db->quoteName('id') . ' = ' . $competition);
+				
+				$query->update($db->quoteName('#__events_competitions'));
+				$query->set($fields);
+				$query->where($conditions);
+				
+				$db->setQuery($query);
+				
+				$db->query();
 			}
 			
 			return true;
@@ -520,6 +567,33 @@
 			$db->setQuery($query);
 			$db->query();
 			
+			// gets competition params
+			$query	= $db->getQuery(true);
+			$query->select('params');
+			$query->from('#__events_competitions');
+			$query->where('id = ' . $competition);
+			$cparams = $db->setQuery($query)->loadResult();
+			$db->query();
+			$cparams = json_decode($cparams);
+			
+			// Updates comp users stats
+			$cparams->competition_players_signups = $this->getCompetitionPlayers($competition);
+					
+			$query	= $db->getQuery(true);
+	
+			$fields = 'params' . ' = ' . $db->quote(json_encode($cparams));
+
+			$conditions = array($db->quoteName('id') . ' = ' . $competition);
+			
+			$query->update($db->quoteName('#__events_competitions'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
+			$db->query();
+			
+			
 			return true;
 		}
 		
@@ -539,6 +613,32 @@
 						
 			// Set the query and execute item
 			$db->setQuery($query);
+			$db->query();
+			
+			// gets competition params
+			$query	= $db->getQuery(true);
+			$query->select('params');
+			$query->from('#__events_competitions');
+			$query->where('id = ' . $competition);
+			$cparams = $db->setQuery($query)->loadResult();
+			$db->query();
+			$cparams = json_decode($cparams);
+			//die(var_dump($cparams));
+			// Updates comp users stats
+			$cparams->competition_teams_signups = $this->getCompetitionTeams($competition);
+					
+			$query	= $db->getQuery(true);
+	
+			$fields = 'params' . ' = ' . $db->quote(json_encode($cparams));
+
+			$conditions = array($db->quoteName('id') . ' = ' . $competition);
+			
+			$query->update($db->quoteName('#__events_competitions'));
+			$query->set($fields);
+			$query->where($conditions);
+			
+			$db->setQuery($query);
+			
 			$db->query();
 			
 			return true;

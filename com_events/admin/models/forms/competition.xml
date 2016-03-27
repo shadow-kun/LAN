@@ -228,6 +228,14 @@
 				<option value="0">COM_EVENTS_COMPETITION_FIELD_PARAM_SIGNUP_OPTION_NO_REQUIREMENT</option>
 				<option value="1">COM_EVENTS_COMPETITION_FIELD_PARAM_SIGNUP_OPTION_CHECKIN_REQUIREMENT</option>
 			</field>
+			<field name="competition_players_signups"
+				type="hidden"
+				filter="unset"
+				default="0" />
+			<field name="competition_teams_signups"
+				type="hidden"
+				filter="unset"
+				default="0" />
 		</fieldset>
 	</fields>
 </form>
