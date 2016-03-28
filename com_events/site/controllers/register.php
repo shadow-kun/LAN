@@ -62,7 +62,6 @@
 						if($model->sendTicket($id))
 						{
 							$return['success'] = true;
-							//$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
 							$renderView = EventsHelpersView::load('event','result_success','html');
 						}
 						else
@@ -115,39 +114,44 @@
 				
 				if($type == 'team')
 				{
-					// If adding to the event is successful
+					// If adding to the competition is successful
 					if($model->storeCompetitionTeam($competition, $team))
 					{
 						$return['success'] = true;
-						$renderView = EventsHelpersView::load('competition','_details','phtml');
-						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						//$renderView = EventsHelpersView::load('competition','_details','phtml');
+						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						$renderView = EventsHelpersView::load('competition','result_success','html');
 					}
 					else
 					{
 						$return['success'] = false;
-						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						//$renderView = EventsHelpersView::load('competition','_details','phtml');
 						
-						$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+						$renderView = EventsHelpersView::load('event','result_failure','html');
 					}
 				}
 				else
 				{
 					
-					// If adding to the event is successful
+					// If adding to the competition is successful
 					if($model->storeCompetitionUser($competition, $user))
 					{
 						$return['success'] = true;
-						$renderView = EventsHelpersView::load('competition','_details','phtml');
-						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						//$renderView = EventsHelpersView::load('competition','_details','phtml');
+						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						$renderView = EventsHelpersView::load('competition','result_success','html');
 					}
 					else
 					{
 						$return['success'] = false;
-						$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						$renderView = EventsHelpersView::load('competition','_details','phtml');
+						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+						//$renderView = EventsHelpersView::load('competition','_details','phtml');
 						
-						$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+						$renderView = EventsHelpersView::load('event','result_failure','html');
+						
 					}
 				}
 			}

@@ -26,6 +26,11 @@
 				$segments[] = $query['layout'];
 				unset($query['layout']);
 	   }
+	   if (isset($query['action']))
+	   {
+				$segments[] = $query['action'];
+				unset($query['action']);
+	   }
 	   return $segments;
 	}
 	
@@ -51,6 +56,81 @@
                 $vars['view'] = 'competition';
                 $id = explode(':', $segments[1]);
                 $vars['id'] = (int) $id[0];
+				/*if($segments[3] == 'confirmteam' && ($segments[4] == 'success' || $segments[4] == 'failure'))
+				{
+					$segments[3] = $segments[4];
+				}*/
+				
+				switch($segments[2]) 
+				{
+					case 'register':
+						switch($segments[3]) 
+						{
+							case 'confirm':
+								$vars['controller'] = 'register';
+								$vars['layout'] = 'register';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'confirmteam':
+								$vars['controller'] = 'register';
+								$vars['layout'] = 'register';
+								$vars['type'] = 'team';
+								$vars['team'] = $segments[4];
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'register';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'register';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								
+								break;
+						}
+						break;
+					case 'unregister':
+						switch($segments[3]) 
+						{
+							case 'confirm':
+								$vars['controller'] = 'unregister';
+								$vars['layout'] = 'unregister';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'confirmteam':
+								$vars['controller'] = 'unregister';
+								$vars['layout'] = 'unregister';
+								$vars['type'] = 'team';
+								$vars['team'] = $segments[4];
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'unregister';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'unregister';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								break;
+						}
+						break;
+					case 'entrants':
+						$vars['layout'] = 'entrants';
+					default:
+						break;
+				}
                 break;
             case 'events':
                 $vars['view'] = 'events';
@@ -142,9 +222,6 @@
 								$vars['layout'] = 'unregister';
 								break;
 						}
-						break;
-					case 'test1':
-						
 						break;
                 }
                 break;

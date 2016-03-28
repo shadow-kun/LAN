@@ -1,6 +1,6 @@
 <div id="buttons" >
 	<?php if(JFactory::getUser()->guest) { 
-		echo '<p><a class="btn btn-primary dd-button" href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
+		echo '<p><a class="btn btn-primary" href="' . JRoute::_('index.php?option=com_users&view=login') . '">';
 		echo JText::_('COM_EVENTS_COMPETITION_SUMMARY_LOGIN_LABEL', true) . '</a>';
 	} else { 
 		if((int) $this->competition->params->competition_team == 0)
@@ -10,11 +10,13 @@
 				if($this->currentUser->status >= 0)
 					if(strtotime($this->competition->competition_start) > time())
 					{
-						echo '<p><a class="btn btn-primary dd-button" onclick="unregisterCompetitionUser()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_UNREGISTER_LABEL', true) . '</a> ';
+						//echo '<p><a class="btn btn-primary dd-button" onclick="unregisterCompetitionUser()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_UNREGISTER_LABEL', true) . '</a> ';
+						echo '<p><a class="btn btn-primary" href="' . JURI::current() . '/unregister/confirm" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_UNREGISTER_LABEL', true) . '</a>';
 					}
 					else 
 					{
-						echo '<p><a class="btn dd-button" onclick="unregisterCompetitionUser()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_FORFEIT_LABEL', true) . '</a> ';
+						//echo '<p><a class="btn dd-button" onclick="unregisterCompetitionUser()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_FORFEIT_LABEL', true) . '</a> ';
+						echo '<p><a class="btn btn-primary" href="' . JURI::current() . '/unregister/confirm" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_FORFEIT_LABEL', true) . '</a>';
 					}
 			}
 			else
@@ -23,7 +25,8 @@
 				{
 					if($this->canRegister == true)
 					{
-						echo '<p><a class="btn btn-primary dd-button" onclick="registerCompetitionUser()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_REGISTER_LABEL', true) . '</a> ';
+						//echo '<p><a class="btn btn-primary dd-button" onclick="registerCompetitionUser()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_REGISTER_LABEL', true) . '</a> ';
+						echo '<p><a class="btn btn-primary" href="' . JURI::current() . '/register/confirm" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_USER_REGISTER_LABEL', true) . '</a>';
 					}
 					else
 					{
@@ -51,11 +54,11 @@
 					
 					if(strtotime($this->competition->competition_start) > time())
 					{
-						echo '<a class="btn btn-primary dd-button" onclick="unregisterCompetitionTeam()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_UNREGISTER_LABEL', true) . ' </a> ';
+						echo '<a class="btn btn-primary" onclick="unregisterCompetitionTeam()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_UNREGISTER_LABEL', true) . ' </a> ';
 					}
 					else 
 					{
-						echo '<a class="btn dd-button" onclick="unregisterCompetitionTeam()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_FORFEIT_LABEL', true) . '</a> ';
+						echo '<a class="btn" onclick="unregisterCompetitionTeam()" href="javascript:void(0)" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_FORFEIT_LABEL', true) . '</a> ';
 					}
 				}
 			
@@ -76,7 +79,7 @@
 							}
 							echo '</select>';
 							
-							echo '<a class="btn btn-primary dd-button" onclick="registerCompetitionTeam()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REGISTER_LABEL', true) . '</a> ';
+							echo '<a class="btn btn-primary" onclick="registerCompetitionTeam()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_TEAM_REGISTER_LABEL', true) . '</a> ';
 						}
 						else
 						{
@@ -92,5 +95,6 @@
 			}
 		}
 	}
-	echo '<a class="btn dd-button" onclick="showCompetitionEntrants()" href="javascript:void(0)">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_ENTRANTS_LABEL', true) . '</a></p>';	?>
+	echo '<a class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id . '&layout=details') .'" >' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_DETAILS_LABEL', true) . '</a>';
+	echo '<a class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&view=competition&id=' . $this->competition->id . '&layout=entrants') . '">' . JText::_('COM_EVENTS_COMPETITION_SUMMARY_ENTRANTS_LABEL', true) . '</a></p>';	?>
 </div>
