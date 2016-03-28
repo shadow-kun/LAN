@@ -38,12 +38,12 @@
 					if($model->setConfirmAttendee())
 					{
 						$return['success'] = true;
-						$eventView = EventsHelpersView::load('event','_result-confirmation-success','phtml');
+						$eventView = EventsHelpersView::load('event','result_success','html');
 					}
 					else
 					{
 						$return['success'] = false;
-						$eventView = EventsHelpersView::load('event','_result-confirmation-failure','phtml');
+						$eventView = EventsHelpersView::load('event','result_failure','html');
 					}
 				}
 			}

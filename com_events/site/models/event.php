@@ -134,6 +134,36 @@
 			return $result;
 		}
 		
+		public function getEventRegistrations($event)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			$query->select('a.id');
+			$query->from('#__events_players AS a');
+			
+			$query->where('a.event = ' . (int) $event);
+			
+			$db->setQuery($query)->query();
+			return $db->getNumRows();
+			
+		}
+		
+		public function getEventConfirmations($event)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			$query->select('a.id');
+			$query->from('#__events_players AS a');
+			
+			$query->where('a.event = ' . (int) $event);
+			$query->where('a.status > 1');
+			
+			$db->setQuery($query)->query();
+			return $db->getNumRows();
+		}
+		
 		public function getUsers($pk = null, $orderCol = null, $orderDirn = null)
 		{			
 			$db		= $this->getDb();
@@ -238,7 +268,7 @@
 			$fields = $db->quoteName('status') . ' = 2';
 			
 			// Sets the conditions of which event and which player to update
-			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' . $user->id);
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id'), $db->quoteName('user') . ' = ' . $user->id);
 			
 			// Executes Query
 			$query->update($db->quoteName('#__events_players'));
@@ -255,9 +285,9 @@
 			
 			$confirmedPlayers = $this->items->a.players_confirmed;
 			
-			$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' + 1';
+			$fields = 'players_confirmed' . ' = ' . $this->getEventConfirmations(JRequest::getInt('id'));
 
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id'));
 			
 			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);
@@ -298,7 +328,7 @@
 			
 			$currentPlayers = $this->items->a.players_current;
 			
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' + 1';
+			$fields = 'players_current' . ' = ' . $this->getEventRegistrations(JRequest::getInt('id'));
 
 			$conditions = array($db->quoteName('id') . ' = ' . intval($pk));
 			
@@ -325,7 +355,7 @@
 			$query->select('a.players_confirmed', 'a.players_current');
 			$query->from('#__events_events AS a');
 				
-			$query->where('a.id = ' . (int) JRequest::getInt('id',NULL,'GET'));
+			$query->where('a.id = ' . (int) JRequest::getInt('id'));
 			$db->setQuery($query);
 
 			$this->event = $db->loadObject();
@@ -339,9 +369,10 @@
 			if($model->getCurrentUser()->status == 2)
 			{	
 				$confirmedPlayers = $this->event->a.players_confirmed;
-				$fields = 'players_confirmed' . ' = ' . $confirmedPlayers . ' - 1';
-
-				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+				// Re-checks all confirmations in the system and updates the value
+				$fields = 'players_confirmed' . ' = ' . $this->getEventConfirmations(JRequest::getInt('id'));
+				
+				$conditions = array($db->quoteName('id') . ' = ' . JRequest::getInt('id'));
 				
 				$query->update($db->quoteName('#__events_events'));
 				$query->set($fields);
@@ -354,7 +385,7 @@
 			}
 			
 			// Sets the conditions of the delete of the user with the event
-			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id',NULL,'GET'), $db->quoteName('user') . ' = ' .  $user->id);
+			$conditions = array($db->quoteName('event') . ' = ' . JRequest::getVar('id'), $db->quoteName('user') . ' = ' .  $user->id);
 			
 			$query->delete($db->quoteName('#__events_players'));
 			$query->where($conditions);
@@ -366,9 +397,11 @@
 			$query	= $db->getQuery(true);
 			
 			$currentPlayers = $this->event->a.players_current;
-			$fields = 'players_current' . ' = ' . $currentPlayers . ' - 1';
-
-			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getVar('id',NULL,'GET'));
+			
+			// Re-checks all entries to give an accurate number of registrations.
+			$fields = 'players_current' . ' = ' . $this->getEventRegistrations(JRequest::getInt('id'));
+			
+			$conditions = array($db->quoteName('id') . ' = ' . JRequest::getInt('id'));
 			
 			$query->update($db->quoteName('#__events_events'));
 			$query->set($fields);

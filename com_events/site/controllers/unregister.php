@@ -38,12 +38,12 @@
 					if($model->deleteAttendee())
 					{
 						$return['success'] = true;
-						$renderView = EventsHelpersView::load('event','_result-unregister-success','phtml');
+						$renderView = EventsHelpersView::load('event','result_success','html');
 					}
 					else
 					{
 						$return['success'] = false;
-						$renderView = EventsHelpersView::load('event','_result-unregister-failure','phtml');
+						$renderView = EventsHelpersView::load('event','result_failure','html');
 					}
 					
 				}	

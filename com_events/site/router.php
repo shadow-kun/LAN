@@ -69,16 +69,82 @@
 						$vars['layout'] = 'attendees';
 						break;
 					case 'confirmation':
-						$vars['layout'] = 'confirmation';
+						switch($segments[3]) 
+						{
+							case 'confirm':
+								$vars['controller'] = 'confirmation';
+								$vars['layout'] = 'confirmation';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'confirmation';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'confirmation';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'confirmation';
+								break;
+						}
 						break;
 					case 'prepay':
 						$vars['layout'] = 'prepay';
 						break;
 					case 'register':
-						$vars['layout'] = 'register';
+						switch($segments[3]) 
+						{
+							case 'confirm':
+								$vars['controller'] = 'register';
+								$vars['layout'] = 'register';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'register';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'register';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'register';
+								break;
+						}
 						break;
 					case 'unregister':
-						$vars['layout'] = 'unregister';
+						switch($segments[3]) 
+						{
+							case 'confirm':
+								$vars['controller'] = 'unregister';
+								$vars['layout'] = 'unregister';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'unregister';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'unregister';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'unregister';
+								break;
+						}
+						break;
+					case 'test1':
+						
 						break;
                 }
                 break;

@@ -45,7 +45,7 @@
 				{
 					
 					$return['success'] = false;
-					$renderView = EventsHelpersView::load('event','_result-register-failure','phtml');
+					$renderView = EventsHelpersView::load('event','result_failure','html');
 					
 					$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_DUPLICATE');
 				}
@@ -62,19 +62,20 @@
 						if($model->sendTicket($id))
 						{
 							$return['success'] = true;
-							$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
+							//$renderView = EventsHelpersView::load('event','_result-register-success','phtml');
+							$renderView = EventsHelpersView::load('event','result_success','html');
 						}
 						else
 						{
 							$return['success'] = false;
-							$renderView = EventsHelpersView::load('event','_result-register-failure','phtml');
+							$renderView = EventsHelpersView::load('event','result_failure','html');
 						}
 					}
 				}
 				else
 				{
 					$return['success'] = false;
-					$renderView = EventsHelpersView::load('event','_result-register-failure','phtml');
+					$renderView = EventsHelpersView::load('event','result_failure','html');
 					
 					$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_FAILURE');
 				}

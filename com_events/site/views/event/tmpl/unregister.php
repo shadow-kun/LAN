@@ -26,7 +26,7 @@
 			
 				<div class="center">
 					<p><button class="btn btn-primary" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_BACK', true); ?></button>
-						<a href="javascript:void(0);" onclick="unregisterEventUser()" class="btn" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_UNREGISTER', true); ?></a></p>
+						<a class="btn btn-primary" href="<?php echo JURI::current() . '/confirm'; ?>" ><?php echo JText::_('COM_EVENTS_EVENT_BUTTON_UNREGISTER', true); ?></a></p>
 				</div>
 			<?php }
 			else {

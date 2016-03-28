@@ -1,5 +1,5 @@
 <?php defined( '_JEXEC' ) or die( 'Restricted access' );
-	class EventsViewEventRaw extends JViewHtml
+	class EventsViewsEventRaw extends JViewHtml
 	{
 		function render()
 		{
