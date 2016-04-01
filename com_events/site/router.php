@@ -234,8 +234,31 @@
 					case 'myteams':
 						$vars['layout'] = 'myteams';
 						break;
-					case 'add':
-						$vars['layout'] = 'add';
+					case 'create':
+						switch($segments[2])
+						{
+							case 'confirm':
+								$vars['controller'] = 'team';
+								$vars['layout'] = 'create';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'create';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'create';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'create';
+								break;
+						}
+						break;
+					default:
 						break;
 				}	
                 break;
@@ -245,13 +268,35 @@
                 $vars['id'] = (int) $id[0];
                 switch($segments[2])
 				{
+					case 'details':
+						switch($segments[3])
+						{
+							case 'update':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'details';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'details';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'details';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'details';
+								break;
+						}
+						break;
 					case 'add':
 						$vars['layout'] = 'add';
 						break;
-					case 'details':
-						$vars['layout'] = 'details';
-						break;
 					case 'myteams':
+						$vars['view'] = 'teams';
 						$vars['layout'] = 'myteams';
 						break;
                 }

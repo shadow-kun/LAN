@@ -13,7 +13,7 @@
 	/*href="<?php echo JRoute::_('index.php?option=com_events&controller=edit&type=updateteamdetails&view=team&id=' . JRequest::getVar('id')); ?>" */
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_events&view=teams') ; ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_events&view=teams&layout=create&action=confirm') ; ?>"
 	method="post" name="adminForm" id="team-form">
 		<div class="form-horizontal"> <!--class="width-60 fltlft"-->
 			<div class="row-fluid">
@@ -25,8 +25,9 @@
 						<div><?php echo JText::_('COM_EVENTS_TEAM_EDIT_TITLE_LABEL');?><input type="text" id="title" name="title" value="" /><br /></div>
 						<div><?php echo JText::_('COM_EVENTS_TEAM_EDIT_DESC_LABEL');?><br /><textarea id="body" name="body" value="" cols="50" rows="10" ></textarea><br /></div>
 					</fieldset>
-					<div><a class="btn" value="cancel" ><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CANCEL_LABEL');?></a>
-					<a class="btn btn-primary" onclick="addTeam()" href="javascript:void(0)" ><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CREATE_TEAM_LABEL');?></a></div>
+					<div><a class="btn" value="cancel" href="<?php echo JRoute::_('index.php?option=com_events&view=teams'); ?>"><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CANCEL_LABEL');?></a>
+					<button class="btn btn-primary" value="submit"><?php echo JText::_('COM_EVENTS_TEAMS_CREATE_CREATE_LABEL');?></button>
+					</div>
 					
 				</div>
 				<?php } ?>

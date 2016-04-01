@@ -220,8 +220,10 @@
 			if(empty($title))
 			{
 				// If title is empty do not create team
-				$return['redirect'] = JRoute::_('index.php?option=com_events&view=teams', false);
-				$return['success'] = true;
+				//$return['redirect'] = JRoute::_('index.php?option=com_events&view=teams', false);
+				//$return['success'] = true;
+				
+				$return = false;
 			}
 			else
 			{
@@ -292,8 +294,10 @@
 				$db->setQuery($query);
 				$db->query();
 				
-				$return['redirect'] = JRoute::_('index.php?option=com_events&view=team&id=' . $id, false);
-				$return['success'] = true;
+				//$return['redirect'] = JRoute::_('index.php?option=com_events&view=team&id=' . $id, false);
+				//$return['success'] = true;
+				
+				$return = $id;
 			}
 			
 			return $return;

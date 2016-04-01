@@ -21,25 +21,52 @@
 			$return = array("success" => false);
 			
 			// Gets operation required
-			$type = JRequest::getVar('type');
+			$action = JRequest::getVar('action');
+			$layout = JRequest::getVar('layout');
+			$view = JRequest::getVar('view');
 			$renderView = null;
 			$renderButtons = null;
 			
+			$renderView = null;
+			$renderButtons = null;
 			
-			
-			// if calling from the event view.
-			if($type == 'updateteamdetails')
+			switch($view)
 			{
-				// Sets the model to team
-				$model = new EventsModelsTeam();
-				
-				$team = JRequest::getInt('id');
-				$body = JRequest::getVar('body');
-				$title = JRequest::getVar('title');
-				$model->setTeamDetails($team, $title, $body);
-				
-				$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false)); 
+				case 'team':
+					// Sets the model to team
+					$model = new EventsModelsTeam();
+					
+					switch($layout)
+					{
+						case 'details':
+							/*if($action != 'update')
+							{
+								return JError::raiseError(403, JText::_('COM_EVENTS_ERROR_TEAM_ACTION_FORBIDDEN'));
+							}*/
+							
+							// Gets required variables for update.
+							$team = JRequest::getInt('id');
+							$body = JRequest::getVar('body');
+							$title = JRequest::getVar('title');
+
+							// If set correctly show 
+							if($model->setTeamDetails($team, $title, $body))
+							{
+								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=details&action=success', false)); 
+							}
+							else
+							{
+								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=details&action=failure', false)); 
+							}
+							
+							$app->redirect($url);
+							break;
+					}
+					break;
+				default:
+					break;
 			}
+			// if calling from the event view.
 			/*ob_start();
 			echo $renderView->render();
 			$html = ob_get_contents();
@@ -49,6 +76,5 @@
 				
 			echo json_encode($return);*/
 			
-			$app->redirect($url);
 		}
 	}

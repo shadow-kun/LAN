@@ -12,8 +12,7 @@
 			$model = new EventsModelsTeams();
 			$this->teams = $model->listTeams($id,$view,FALSE);
 			
-			//display
-			echo $this->teams;
+			
 		}
 	}
 ?>
