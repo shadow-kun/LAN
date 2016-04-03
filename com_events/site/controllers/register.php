@@ -88,7 +88,7 @@
 				$user	= JFactory::getUser()->id;
 			
 				// If adding to the event is successful
-				if($model->storeTeamMember($team, $user, 0))
+				/*if()
 				{
 					$return['success'] = true;
 					$renderView = EventsHelpersView::load('team','_players','phtml');
@@ -100,7 +100,17 @@
 					$renderView = EventsHelpersView::load('team','_players','phtml');
 					
 					$return['msg'] = JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE');
+				}*/
+				
+				if($model->storeTeamMember($team, $user, 0))
+				{
+					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_SUCCESS'), 'message'); 
 				}
+				else
+				{
+					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE'), 'error');
+				}
+				$app->redirect(JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
 			}
 			else if($view == 'competition')
 			{

@@ -368,18 +368,43 @@
 								$vars['tmpl'] = 'component';
 								$vars['user'] = $segments[4];
 								break;
-							case 'update':
+							case 'remove':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'remove';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['user'] = $segments[4];
+								break;
+							case 'moderator':
 								$vars['controller'] = 'edit';
 								$vars['layout'] = 'update';
 								$vars['format'] = 'html';
 								$vars['tmpl'] = 'component';
+								$vars['action'] = 'moderator';
 								$vars['user'] = $segments[4];
-								$vars['action'] = $segments[5];
+								break;
+							case 'member':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'update';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['action'] = 'member';
+								$vars['user'] = $segments[4];
 								break;
 							default:
 								$vars['layout'] = 'default';
 								break;
 						}
+						break;
+					case 'register':
+						$vars['controller'] = 'register';
+						$vars['format'] = 'html';
+						$vars['tmpl'] = 'component';
+						break;
+					case 'unregister':
+						$vars['controller'] = 'unregister';
+						$vars['format'] = 'html';
+						$vars['tmpl'] = 'component';
 						break;
                 }
                 break;

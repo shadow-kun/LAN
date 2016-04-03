@@ -85,7 +85,7 @@
 							break;
 						case 'approve':
 							$team		= JRequest::getInt('id');
-							$user		= JRequest::getInt('user');
+							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 							
 							// Checks to see if the member is awaiting to be approved / rejected
 							if($model->getTeamUserStatus($team, $user) == 0)
@@ -110,19 +110,19 @@
 							break;
 						case 'reject':
 							$team		= JRequest::getInt('id');
-							$user		= JRequest::getInt('user');
-							
+							$user		= $model->getTeamUserId(JRequest::getInt('user'));
+														
 							// Checks to see if the member is awaiting to be approved / rejected
 							if($model->getTeamUserStatus($team, $user) == 0)
 							{
 								// Deletes application
-								if($model->deleteTeamMember($team, $user, 1))
+								if($model->deleteTeamMember($team, $user))
 								{
-									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_DELETION_SUCCESS'), 'message'); 
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_REJECT_SUCCESS'), 'message'); 
 								}
 								else
 								{
-									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_DELETION_FAILURE'), 'error');
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_REJECT_FAILURE'), 'error');
 								}
 							}
 							else
@@ -133,9 +133,34 @@
 							
 							$app->redirect($url);
 							break;
+						case 'remove':
+							$team		= JRequest::getInt('id');
+							$user		= $model->getTeamUserId(JRequest::getInt('user'));
+														
+							// Checks to see if the member is awaiting to be approved / rejected
+							if(($model->getTeamUserStatus($team, $user) == 1 && $model->getTeamUserStatus($team, JFactory::getUser()->id) >= 2) || ($model->getTeamUserStatus($team, $user) == 2 && $model->getTeamUserStatus($team, JFactory::getUser()->id) == 4))
+							{
+								// Deletes application
+								if($model->deleteTeamMember($team, $user))
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_REMOVE_SUCCESS'), 'message'); 
+								}
+								else
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_REMOVE_FAILURE'), 'error');
+								}
+							}
+							else
+							{
+								$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_REMOVE_FAILURE'), 'error');
+							}
+							$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+							
+							$app->redirect($url);
+							break;
 						case 'update':
 							$team		= JRequest::getInt('id');
-							$user		= JRequest::getInt('user');
+							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 							$action		= JRequest::getVar('action');
 							$status 	= null;
 							
@@ -158,7 +183,7 @@
 								// Sets Status if set
 								if($status == 1 || $status == 2)
 								{
-									if($model->setTeamMemberStatus($team, $user, 1))
+									if($model->setTeamMemberStatus($team, $user, $status))
 									{
 										$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_STATUS_CHANGE_SUCCESS'), 'message'); 
 									}

@@ -58,16 +58,18 @@
 					<?php if(isset($this->currentUser->status) && $this->currentUser->status >= 2) : ?>
 						<td class="left">
 							<?php if($user->status == 0) :
-								echo '<button name="selection" class="btn" value="team_status_reject#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REJECT_LABEL') . '</button> 
-									  <button name="selection" class="btn btn-primary" value="team_status_approve#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_APPROVE_LABEL') . '</button>';
+								echo '<a name="selection" class="btn" href="' . JRoute::_('index.php?option=com_events&view=team&layout=status&action=reject&id=' . $this->team->id . '&user='. $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REJECT_LABEL') . '</a> ';
+								echo '<a name="selection" class="btn btn-primary" href="' . JRoute::_('index.php?option=com_events&controller=edit&view=team&layout=status&action=approve&id=' . $this->team->id . '&user=' . $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_APPROVE_LABEL') . '</a>' ; 
 							elseif ($user->status == 1) :
-								echo '<button name="selection" class="btn" value="team_status_remove#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REMOVE_LABEL') . '</button>';
+								echo '<a name="selection" class="btn" href="' . JRoute::_('index.php?option=com_events&view=team&layout=status&action=remove&id=' . $this->team->id . '&user='. $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REMOVE_LABEL') . '</a> ';
 								if($this->currentUser->status == 4) :
-									echo '<button name="selection" class="btn" value="team_status_moderator#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_MODERATOR_LABEL') . '</button>';
+									echo '<a name="selection" class="btn" href="' . JRoute::_('index.php?option=com_events&view=team&layout=status&action=moderator&id=' . $this->team->id . '&user='. $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_MODERATOR_LABEL') . '</a> ';
 								endif;
 							elseif ($user->status == 2 && $this->currentUser->status == 4) :
-								echo '<button name="selection" class="btn" value="team_status_remove#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REMOVE_LABEL') . '</button>';
-								echo '<button name="selection" class="btn" value="team_status_member#' . $user->id . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_MEMBER_LABEL') . '</button>';
+								echo '<a name="selection" class="btn" href="' . JRoute::_('index.php?option=com_events&view=team&layout=status&action=remove&id=' . $this->team->id . '&user='. $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_REMOVE_LABEL') . '</a> ';
+								if($this->currentUser->status == 4) :
+									echo '<a name="selection" class="btn" href="' . JRoute::_('index.php?option=com_events&view=team&layout=status&action=member&id=' . $this->team->id . '&user='. $user->id) . '" >' . JText::_('COM_EVENTS_TEAM_STATUS_MEMBER_LABEL') . '</a> ';
+								endif;
 							endif; ?>
 						</td>
 					<?php endif; ?>

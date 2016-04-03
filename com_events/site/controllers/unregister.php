@@ -54,22 +54,18 @@
 				
 				// Gets current view.
 				$team = JRequest::getInt('id');
-				$user = (int) JFactory::getUser()->id;
-			
-				// If adding to the event is successful
-				if($model->deleteTeamMember($team, $user))
+				$user = (int) JFactory::getUser()->id;				
+				
+				// Remove user from team if not the team leader. Team leader must delete the group.
+				if($model->getTeamUserStatus($team, JFactory::getUser()->id) != 4 && $model->deleteTeamMember($team, $user))
 				{
-					$return['success'] = true;
-					$renderView = EventsHelpersView::load('team','_players','phtml');
-					$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
+					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_SUCCESS'), 'message'); 
 				}
 				else
 				{
-					$return['success'] = false;
-					$renderView = EventsHelpersView::load('team','_players','phtml');
-					
-					$return['msg'] = JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE');
+					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE'), 'error');
 				}
+				$app->redirect(JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
 			}
 			else if($view == 'competition')
 			{

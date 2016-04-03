@@ -350,13 +350,33 @@
 			return true;
 		}
 		
+		public function getTeamUserId($id)
+		{
+			// Gets database connection
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+			
+			// Select the required fields from the table.
+			$query->select('p.user');
+			$query->from('#__events_team_players AS p');
+				
+			// Selects current user.
+			$query->where('p.id = ' . $db->quote($id));
+				
+			// Runs query
+			$user = $db->setQuery($query)->loadResult();
+			$db->query();
+			
+			return $user;
+		}
+		
 		public function deleteTeamMember($team, $user)
 		{
 			// Gets database connection
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
 			
-			$conditions = array($db->quoteName('team') . ' = ' . (int) $team, $db->quoteName('user') . ' = ' .  (int) $user);
+			$conditions = array($db->quoteName('team') . ' = ' . $db->quote($team), $db->quoteName('user') . ' = ' .  $db->quote($user));
 			
 			$query->delete($db->quoteName('#__events_team_players'));
 			$query->where($conditions);
@@ -365,8 +385,8 @@
 			$db->setQuery($query);
 			$db->query();
 			
-			
-			return true;
+			$rows = $db->getAffectedRows($result);
+			return $rows;
 		}
 		
 		public function deleteTeam($team)

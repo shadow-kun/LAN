@@ -183,27 +183,6 @@ function orderStatusChange(orderid)
     });
 }
 
-function registerTeamMember()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=register&format=raw&tmpl=component&view=team&id=' + team,
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
-}
-
 function registerCompetitionTeam()
 {
 	var competitionid = document.getElementById('competitionid').value;
@@ -212,90 +191,6 @@ function registerCompetitionTeam()
 	window.location.assign(window.location.href + "/register/confirmteam/" + teamid);
 	
 	
-}
-
-function showOptionTeamLeader()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=showteamleader&id=' + team,
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
-}
-
-function showOptionTeamDetails()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=showteamdetails&id=' + team,
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
-}
-
-function showOptionTeamDelete()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=showteamdelete&id=' + team,
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
-}
-
-function unregisterTeamMember()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=unregister&format=raw&tmpl=component&view=team&id=' + team,
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
 }
 
 function unregisterCompetitionTeam()
