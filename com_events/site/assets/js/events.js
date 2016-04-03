@@ -121,30 +121,37 @@ function checkinUserPaymentCheckin(id)
 	checkinUser(id);
 }
 
-// register an attendee to an event
+
+
 function checkinSearchEntry()
 {
 	var barcode = document.getElementById('checkin_barcode').value;
-	var id = document.getElementById('checkin_registration_id').value;
-	var username = document.getElementById('checkin_username').value;
-	var eventid = document.getElementById('eventid').value;
-	
-	var attendeeInfo = {};
-	jQuery("#sources :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=checkin&format=raw&tmpl=component&search=search&barcode=' + barcode + '&id=' + id + '&username=' + username + '&eventid=' + eventid,
-		type:'POST', 
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
+	if(barcode != "undefined" && barcode !== null && barcode !== "")
+	{
+		//window.location.assign(window.location.href + '/checkin/' + barcode + '/search/barcode');
+		window.location.assign('index.php?option=com_events&controller=checkin&view=checkin&layout=search&action=barcode&id=' + barcode);
+	}
+	else
+	{
+		var registration = document.getElementById('checkin_registration_id').value;
+		if(registration != "undefined" && registration !== null && registration !== "")
 		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#payments").replaceWith(data.payments);
+			//window.location.assign(window.location.href + '/checkin/' + registration + '/search/registration');
+			window.location.assign('index.php?option=com_events&controller=checkin&view=checkin&layout=search&action=registration&id=' + registration);
 		}
-    });
+		else
+		{
+			var username = document.getElementById('checkin_username').value;
+			var eventid = document.getElementById('eventid').value;
+			window.location.assign('index.php?option=com_events&controller=checkin&view=checkin&layout=search&action=user&user=' + username + '&event=' + eventid);
+		}
+		
+	}
+	//var id = document.getElementById('checkin_registration_id').value;
+	
+	//window.location.assign(window.location.href + "/&barcode=" + barcode + "&id=" + id + "&username=" + username + "&eventid=" + eventid);
+	
+	
 }
 
 function orderStoreNew()

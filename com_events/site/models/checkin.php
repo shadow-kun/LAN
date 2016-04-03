@@ -127,7 +127,26 @@
 			return $result;
 		}
 		
-		public function getPlayerID($id = null, $event = null)
+		public function getUserName($user)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('a.id AS id');
+			$query->from('#__users AS a');
+											
+			// Selects the team that is required.
+			$query->where('a.name = ' . $db->quote($user));
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadResult();
+			$db->query();
+			
+			return intval($result);
+		}
+		
+		public function getPlayerID($user = null, $event = null)
 		{
 			$db		= $this->getDb();
 			$query	= $db->getQuery(true);
@@ -137,7 +156,7 @@
 			$query->from('#__events_players AS a');
 											
 			// Selects the team that is required.
-			$query->where('a.user = ' . $id);
+			$query->where('a.user = ' . $user);
 			
 			// Selects current user.
 			$query->where('a.event = ' . $event);

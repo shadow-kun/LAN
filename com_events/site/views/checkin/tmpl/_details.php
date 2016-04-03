@@ -25,7 +25,8 @@
 				{
 					echo '<font color="green">' . JText::_('COM_EVENTS_CHECKIN_ALLOWED') . '</font>';
 					//echo '<br /><a name="selection" class="btn btn-primary" value="" onclick="eventCheckIn()" >' . JText::_('COM_EVENTS_CHECKIN_USER_LABEL') . '</button>'
-					echo '</br><a href="javascript:void(0);" onclick="checkinUser(' . (int) $this->player->id . ')" class="btn btn-primary" >' . JText::_('COM_EVENTS_CHECKIN_USER_LABEL', true) . '</a>';
+					//echo '</br><a href="javascript:void(0);" onclick="checkinUser(' . (int) $this->player->id . ')" class="btn btn-primary" >' . JText::_('COM_EVENTS_CHECKIN_USER_LABEL', true) . '</a>';
+					echo '</br><a class="btn" href="' . JRoute::_('index.php?option=com_events&view=checkin&layout=confirm&id=' . $this->player->id, false) . '" >'. JText::_('COM_EVENTS_CHECKIN_USER_LABEL', true) . '</a> ';
 				}
 				break;
 			default:

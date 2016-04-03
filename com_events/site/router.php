@@ -36,6 +36,12 @@
 				$segments[] = $query['user'];
 				unset($query['user']);
 	   }
+	   // Check In Use
+	   if (isset($query['event']))
+	   {
+				$segments[] = $query['event'];
+				unset($query['event']);
+	   }
 	   return $segments;
 	}
 	
@@ -47,11 +53,53 @@
         {
 			case 'checkin':
                 $vars['view'] = 'checkin';
-				$if($segments[2] === 'qrcode');
+				$vars['format'] = 'html';
+				$id = explode(':', $segments[1]);
+				$vars['id'] = (int) $id[0];
+				
+				switch($segments[2]) 
 				{
-					$vars['layout'] = 'qrcode';
-					$id = explode(':', $segments[1]);
-					$vars['id'] = (int) $id[0];
+					case 'confirm':
+						$vars['controller'] = 'checkin';
+						$vars['layout'] = 'confirm';
+						$vars['format'] = 'html';
+						$vars['tmpl'] = 'component';
+						if($segments[2] == 'pay')
+						{
+							$vars['action'] = 'pay';
+						}
+						break;
+					case 'payonly':
+						$vars['controller'] = 'checkin';
+						$vars['layout'] = 'payonly';
+						$vars['format'] = 'html';
+						$vars['tmpl'] = 'component';
+						break;
+					case 'qrcode':
+						$vars['layout'] = 'qrcode';
+						break;
+					case 'search':
+						$vars['controller'] = 'checkin';
+						$vars['layout'] = 'search';
+						$vars['format'] = 'html';
+						$vars['tmpl'] = 'component';
+						switch($segments[3])
+						{
+							case 'barcode':
+								$vars['action'] = 'barcode';
+								break;
+							case 'registration':
+								$vars['action'] = 'registration';
+								break;
+							case 'user':
+								$vars['action'] = 'event';
+								$vars['event'] = $segments[3];
+								break;
+						}
+						break;
+					default:
+						$vars['layout'] = 'default';
+						break;
 				}
                 break;
 		    case 'competitions':

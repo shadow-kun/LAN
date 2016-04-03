@@ -35,7 +35,7 @@
 			$this->params = JComponentHelper::getParams('com_events');
 			
 			// if team details are set, ie. team exists
-			if(isset($id) && $id > 0)
+			/*if(isset($id) && $id > 0)
 			{
 				// Gets Competition Details
 				$this->player = $this->model->getPlayer($id);
@@ -46,7 +46,7 @@
 				
 				
 				$this->groupCheckin = $this->model->getCheckinGroup($id);
-			}
+			}*/
 			
 						
 			//display
