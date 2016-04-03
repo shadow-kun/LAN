@@ -18,38 +18,51 @@
 			
 			$return = array("success" => false);
 			
+			// Gets operation required
+			$action = JRequest::getVar('action');
+			$layout = JRequest::getVar('layout');
+			$view = JRequest::getVar('view');
+			$renderView = null;
+			$renderButtons = null;
+			
 			// Gets current view.
 			$type = $app->input->get('type', 'event');
 			$eventView = null;
 			
-			// if calling from the event view.
-			if($type == 'team')
+			switch($view)
 			{
-				$model = new EventsModelsTeam();
-				
-				$team = JRequest::getInt('id');
-				
-				// Gets the current user that is logged in
-				//$team = $model->getTeam();
-				$currentUser = $model->getCurrentUser();
+				case 'team':
+					// Sets the model to team
+					$model = new EventsModelsTeam();
 					
-				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				//if(isset($currentUser->status) && ((int) $currentUser->status == 4) 
-				{
-					if($model->deleteTeam($team))
+					switch($layout)
 					{
-						$return['html'] = JRoute::_('index.php?option=com_events&view=teams');
-						$return['success'] = true;
+						case 'delete':
+							/*if($action != 'update')
+							{
+								return JError::raiseError(403, JText::_('COM_EVENTS_ERROR_TEAM_ACTION_FORBIDDEN'));
+							}*/
+							
+							// Gets required variables for update.
+							$team = JRequest::getInt('id');
+							
+							if($model->deleteTeam($team))
+							{
+								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=success', false)); 
+							}
+							else
+							{
+								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false)); 
+							}
+
+							$app->redirect($url);
+							break;
 					}
-				}
+					break;
+				default:
+					break;
 			}
-			/*ob_start();
-			echo $eventView->render();
-			$html = ob_get_contents();
-			ob_clean();
-			 
-			$return['html'] = $html;*/
 				
-			echo json_encode($return);
+			return true;
 		}
 	}

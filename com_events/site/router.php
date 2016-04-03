@@ -292,8 +292,29 @@
 								break;
 						}
 						break;
-					case 'add':
-						$vars['layout'] = 'add';
+					case 'delete':
+						switch($segments[3])
+						{
+							case 'confirm':
+								$vars['controller'] = 'delete';
+								$vars['layout'] = 'delete';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'delete';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'delete';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'delete';
+								break;
+						}
 						break;
 					case 'myteams':
 						$vars['view'] = 'teams';
