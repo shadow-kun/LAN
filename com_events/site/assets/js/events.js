@@ -308,22 +308,12 @@ function unregisterCompetitionTeam()
 
 function updateOptionTeamLeader()
 {
-	var team = document.getElementById('teamid').value;
+	
 	var user = document.getElementById('teamleader').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=updateteamleader&id=' + team + '&user=' + user, 
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			jQuery("#details").replaceWith(data.html);
-			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
+	
+	window.location.assign(window.location.href + "/update/" + user);
+	//url:'index.php?option=com_events&controller=edit&tmpl=component&view=team&layout=leader&action=update&id=' + team + '&user=' + user, 
+	
 }
+
+

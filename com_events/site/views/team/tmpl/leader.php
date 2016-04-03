@@ -27,23 +27,24 @@
 		
 		<?php echo EventsHelpersView::load('team','_buttons','phtml'); ?>
 		
-		<div class="row-fluid">
-			<div class="span12">
-				<?php $tokens = explode('<hr id="system-readmore" />',$this->team->body);
-					if(count($tokens) === 1)
-					{
-						echo $tokens[0];
-					}
-					else
-					{
-						echo $tokens[1];
-					}
-				?>
+
+		<div id="details" >
+			<div>
+				<p><?php echo JText::_('COM_EVENTS_TEAM_LEADER_TEAM_LEADER_LABEL'); ?> - 
+				<select id="teamleader">
+					<?php foreach ($this->users as $u => $user) :
+						$user->max_ordering = 0;
+						$ordering	= ($listOrder == 'id');
+					?>
+						<option 
+							<?php if($user->user == 4) : echo 'selected'; endif; ?> value="<?php echo $user->userid; ?>"><?php echo $user->username; ?></option>
+					<?php endforeach; ?>
+				</select></p>
 			</div>
+			<div><a class="btn" href="<?php echo JRoute::_('index.php?option=com_events&view=team&id='.(int) $this->team->id); ?>"><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_CANCEL_LABEL');?></button>
+			<a class="btn btn-primary" onclick="updateOptionTeamLeader()" href="javascript:void(0)"><?php echo JText::_('COM_EVENTS_TEAM_SUMMARY_LEADER_CONFIRM_LABEL');?></a></div>
 		</div>
-		
-		<?php echo EventsHelpersView::load('team','_players','phtml'); ?>
-		
+
 		<input type="hidden" id="teamid" name="team" value="<?php echo $this->team->id; ?>" />
 		<input type="hidden" name="task" value="team" />
 		<?php echo JHtml::_( 'form.token' ); ?>

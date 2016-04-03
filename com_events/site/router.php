@@ -31,6 +31,11 @@
 				$segments[] = $query['action'];
 				unset($query['action']);
 	   }
+	   if (isset($query['user']))
+	   {
+				$segments[] = $query['user'];
+				unset($query['user']);
+	   }
 	   return $segments;
 	}
 	
@@ -319,6 +324,62 @@
 					case 'myteams':
 						$vars['view'] = 'teams';
 						$vars['layout'] = 'myteams';
+						break;
+					case 'leader':
+						switch($segments[3])
+						{
+							case 'update':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'leader';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['user'] = $segments[4];
+								break;
+							case 'success':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'leader';
+								$vars['result'] = 'success';
+								break;
+							case 'failure':
+								$vars['layout'] = 'results';
+								$vars['useraction'] = 'leader';
+								$vars['result'] = 'failure';
+								break;
+							default:
+								$vars['layout'] = 'leader';
+								break;
+						}
+						break;
+						
+					case 'status':
+						switch($segments[3])
+						{
+							case 'approve':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'approve';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['user'] = $segments[4];
+								break;
+							case 'reject':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'reject';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['user'] = $segments[4];
+								break;
+							case 'update':
+								$vars['controller'] = 'edit';
+								$vars['layout'] = 'update';
+								$vars['format'] = 'html';
+								$vars['tmpl'] = 'component';
+								$vars['user'] = $segments[4];
+								$vars['action'] = $segments[5];
+								break;
+							default:
+								$vars['layout'] = 'default';
+								break;
+						}
 						break;
                 }
                 break;

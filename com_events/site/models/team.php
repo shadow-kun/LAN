@@ -103,6 +103,28 @@
 			return $this->_item[$pk];
 		}
 		
+		public function getTeamUserStatus($team, $user)
+		{
+			$db		= $this->getDb();
+			$query	= $db->getQuery(true);
+						
+			// Select the required fields from the table.
+			$query->select('p.status');
+			$query->from('#__events_team_players AS p');
+						
+			// Selects the team that is required.
+			$query->where('p.team = ' . $db->quote($team));
+			
+			// Selects current user.
+			$query->where('p.user = ' . $db->quote($user));
+			
+			// Runs query
+			$result = $db->setQuery($query)->loadResult();
+			$db->query();
+			
+			return $result;
+		}
+		
 		public function getCurrentUser($pk = null)
 		{
 			$db		= $this->getDb();

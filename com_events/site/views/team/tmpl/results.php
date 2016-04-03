@@ -35,6 +35,16 @@
 					echo EventsHelpersView::load('team','_result-delete-failure','phtml'); 
 				}
 				break;
+			case 'leader':
+				if($result == 'success')
+				{
+					echo EventsHelpersView::load('team','_result-leader-success','phtml'); 
+				}
+				else
+				{
+					echo EventsHelpersView::load('team','_result-leader-failure','phtml'); 
+				}
+				break;
 			default:
 				break;
 		}

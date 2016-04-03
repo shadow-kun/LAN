@@ -57,59 +57,7 @@
 					$return['html'] = $html;
 					break;
 				default: 
-				{	
-					// returns details and buttons pages
-					if($type == 'showteamdetails')
-					{
-						$return['success'] = true;
-						$renderView = EventsHelpersView::load('team','_details','phtml');
-						$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
-					}
-					else if($type == 'showteamleader')
-					{
-						$return['success'] = true;
-						$renderView = EventsHelpersView::load('team','_leader','phtml');
-						$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
-					}
-					else if($type == 'showteamdelete')
-					{
-						$return['success'] = true;
-						$renderView = EventsHelpersView::load('team','_delete','phtml');
-						$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
-					}
-					else if($type == 'updateteamleader')
-					{
-						$team		= JRequest::getInt('id');
-						$newLeader	= JRequest::getInt('user');
-						$user		= JFactory::getUser()->id;
-														
-						if($model->setTeamMemberStatus($team, $user, 1))
-						{
-							if($model->setTeamMemberStatus((int) $team, (int) $newLeader, 4))
-							{
-								$return['success'] = true;
-							}
-						}
-						$renderView = EventsHelpersView::load('team','_players','phtml');
-						$renderButtons = EventsHelpersView::load('team','_buttons','phtml');
-					}
-					
-					ob_start();
-					echo $renderView->render();
-					$html = ob_get_contents();
-					ob_clean();
-					 
-					$return['html'] = $html;
-					
-					
-					echo $renderButtons->render();
-					$html = ob_get_contents();
-					ob_clean();
-					 
-					$return['buttons'] = $html;
-				}
-				echo json_encode($return);
-				break;
+					break;
 			}
 		}
 	}

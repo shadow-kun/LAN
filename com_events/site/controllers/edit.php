@@ -61,6 +61,125 @@
 							
 							$app->redirect($url);
 							break;
+						case 'leader':
+							$team		= JRequest::getInt('id');
+							$newLeader	= JRequest::getInt('user');
+							$user		= JFactory::getUser()->id;
+															
+							if($model->setTeamMemberStatus((int) $team, $user, 1))
+							{
+								if($model->setTeamMemberStatus((int) $team, (int) $newLeader, 4))
+								{
+									$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=leader&action=success', false)); 
+								}
+								else
+								{
+									$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=leader&action=failure', false)); 
+								}
+							}
+							else
+							{
+								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=leader&action=failure', false)); 
+							}
+							$app->redirect($url);
+							break;
+						case 'approve':
+							$team		= JRequest::getInt('id');
+							$user		= JRequest::getInt('user');
+							
+							// Checks to see if the member is awaiting to be approved / rejected
+							if($model->getTeamUserStatus($team, $user) == 0)
+							{
+								// Changes status to approve application
+								if($model->setTeamMemberStatus($team, $user, 1))
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_APPROVAL_SUCCESS'), 'message'); 
+								}
+								else
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_APPROVAL_FAILURE'), 'error');
+								}
+							}
+							else
+							{
+								$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_APPROVAL_FAILURE'), 'error');
+							}
+							$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+							
+							$app->redirect($url);
+							break;
+						case 'reject':
+							$team		= JRequest::getInt('id');
+							$user		= JRequest::getInt('user');
+							
+							// Checks to see if the member is awaiting to be approved / rejected
+							if($model->getTeamUserStatus($team, $user) == 0)
+							{
+								// Deletes application
+								if($model->deleteTeamMember($team, $user, 1))
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_DELETION_SUCCESS'), 'message'); 
+								}
+								else
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_DELETION_FAILURE'), 'error');
+								}
+							}
+							else
+							{
+								$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_DELETION_FAILURE'), 'error');
+							}
+							$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+							
+							$app->redirect($url);
+							break;
+						case 'update':
+							$team		= JRequest::getInt('id');
+							$user		= JRequest::getInt('user');
+							$action		= JRequest::getVar('action');
+							$status 	= null;
+							
+							// Sets status
+							switch($action)
+							{
+								case 'member':
+									$status = 1;
+									break;
+								case 'moderator':
+									$status = 2;
+									break;
+								default;
+									break;
+							}
+							
+							//Verifies that the user can be removed along with that the user isn't removing the team leader or has permission to do so.
+							if($model->getTeamUserStatus($team, JFactory::getUser()->id) >= 3)
+							{
+								// Sets Status if set
+								if($status == 1 || $status == 2)
+								{
+									if($model->setTeamMemberStatus($team, $user, 1))
+									{
+										$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_STATUS_CHANGE_SUCCESS'), 'message'); 
+									}
+									else
+									{
+										$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_STATUS_CHANGE_FAILURE'), 'error');
+									}
+								}
+								else
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_STATUS_CHANGE_FAILURE'), 'error');	
+								}
+							}
+							else
+							{
+								$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_MEMBER_STATUS_CHANGE_FAILURE'), 'error');
+							}
+							$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+							
+							$app->redirect($url);
+							break;
 					}
 					break;
 				default:
