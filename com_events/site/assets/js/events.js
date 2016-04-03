@@ -1,28 +1,4 @@
 
-	
-// register an attendee to an event
-function createTeam()
-{
-	var details = {};
-	jQuery("#details :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-	details["title"] = document.getElementById('title').value;
-	details["body"] = document.getElementById('body').value;
-    console.log(details);
-	
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=team&format=raw&tmpl=component&type=addteam',
-		type:'POST', 
-		data:details,
-		dataType:'JSON',
-		success:function(data)
-		{
-			window.location.href = data.redirect;
-		}
-    });
-}
-	
 // Stuff for getting internet data
 var localdata = {};
 var invocation = new XMLHttpRequest();
@@ -348,28 +324,6 @@ function updateOptionTeamLeader()
 		{
 			jQuery("#details").replaceWith(data.html);
 			jQuery("#buttons").replaceWith(data.buttons);
-		}
-    });
-}
-
-function deleteTeam()
-{
-	var team = document.getElementById('teamid').value;
-	var attendeeInfo = {};
-	jQuery("#bookForm :input").each(function(idx,ele){
-		attendeeInfo[jQuery(ele).attr('name')] = jQuery(ele).val();
-	});
-    
-	jQuery.ajax({
-		url:'index.php?option=com_events&controller=delete&format=raw&tmpl=component&type=team&id=' + team, 
-		type:'POST',
-		data:attendeeInfo,
-		dataType:'JSON',
-		success:function(data)
-		{
-			window.location.replace(data.html);
-			//jQuery("#details").replaceWith(data.html);
-			//jQuery("#buttons").replaceWith(data.buttons);
 		}
     });
 }
