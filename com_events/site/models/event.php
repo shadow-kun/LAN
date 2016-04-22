@@ -42,7 +42,7 @@
 					$query = $db->getQuery(true)
 					->select(
 						$this->getState(
-							'item.select', 'a.id, a.title, a.alias, a.category_id, a.body, a.terms, a.published, a.language, a.params, a.details, a.players_max, a.players_current, ' .
+							'item.select', 'a.id, a.title, a.alias, a.category_id, a.access, a.body, a.terms, a.published, a.language, a.params, a.details, a.players_max, a.players_current, ' .
 							'a.players_confirmed, a.created_user_id, a.created_time, a.players_prepaid, a.players_prepay, a.event_start_time, a.event_end_time, a.details'
 						)
 					);

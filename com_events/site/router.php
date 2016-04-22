@@ -198,6 +198,9 @@
 				
 				switch($segments[2])
 				{
+					case 'test':
+						$vars['layout'] = 'test';
+						break;
 					case 'attendees':
 						$vars['layout'] = 'attendees';
 						break;

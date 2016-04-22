@@ -9,4 +9,7 @@
 		<action name="core.edit" title="JACTION_EDIT" description="JACTION_EDIT_COMPONENT_DESC" />	
 		<action name="core.edit.state" title="JACTION_EDITSTATE" description="JACTION_EDITSTATE_COMPONENT_DESC" />			
 	</section>
+	<section name="event">
+		<action name="core.view" title="JACTION_VIEW" description="COM_EVENTS_ACCESS_EVENT_VIEW_DESC" />
+	</section>
 </access>

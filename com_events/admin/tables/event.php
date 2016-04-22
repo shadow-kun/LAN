@@ -47,7 +47,14 @@ class EventsTableEvent extends JTable
 			$registry->loadArray($array['params']);
 			$array['params'] = (string) $registry;
 		}
-
+		
+		// Bind the rules
+		if (isset($array['access']) && is_array($array['access']))
+		{
+			$rules = new JAccessRules($array['access']);
+			$this->setRules($rules);
+		}
+	
 		return parent::bind($array, $ignore);
 	}
 

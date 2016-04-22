@@ -10,6 +10,8 @@
 			class="readonly"
 			size="10"
 			readonly="true"  />
+			
+		<field name="asset_id" type="hidden" filter="unset" /> 
 
 		<field name="category_id"
 			type="category"
@@ -104,6 +106,7 @@
 			description="JFIELD_ACCESS_DESC"
 			class="inputbox"
 			size="1" />
+		
 
 		<field name="language"
 			type="contentlanguage"

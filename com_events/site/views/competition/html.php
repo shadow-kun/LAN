@@ -50,6 +50,18 @@
 			//$this->_terms = EventsHelpersView::load('event','_terms','phtml');
 			//$this->_terms->event = $id;
 			
+			
+			if ((int) $this->competition->published <= 0)
+			{
+				JError::raiseError(404, JText::_('COM_EVENTS_ERROR_COMPETITION_NOT_FOUND'));
+			}
+			
+			// If in the access level that is allowed to view this event, otherwise 403 error		
+			if(!(in_array($this->competition->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))))
+			{
+				JError::raiseError(403, JText::_('COM_EVENTS_ERROR_COMPETITION_FOBBIDDEN'));
+			}
+			
 			//display
 			return parent::render();
 		}

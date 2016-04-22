@@ -42,7 +42,7 @@
 					$query = $db->getQuery(true)
 					->select(
 						$this->getState(
-							'item.select', 'a.id, a.title, a.alias, a.body, a.published, a.language, a.params, ' .
+							'item.select', 'a.id, a.title, a.alias, a.access, a.body, a.published, a.language, a.params, ' .
 							'a.created_user_id, a.created_time'
 						)
 					);

@@ -50,7 +50,7 @@
 				}
 				else
 				{
-					JError::raiseError(403, "Fobidden");
+					JError::raiseError(403, JText::_('COM_EVENTS_ERROR_STORE_FOBBIDDEN'));
 				}
 			}
 			else
@@ -59,7 +59,17 @@
 				$this->groups = $this->model->getGroups($id);
 			}
 			
+			// If this event is viewable show, else 404 error
+			if ((int) $this->store->published <= 0)
+			{
+				JError::raiseError(404, JText::_('COM_EVENTS_ERROR_STORE_NOT_FOUND'));
+			}
 			
+			// If in the access level that is allowed to view this event, otherwise 403 error		
+			if(!(in_array($this->store->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))))
+			{
+				JError::raiseError(403, JText::_('COM_EVENTS_ERROR_STORE_FOBBIDDEN'));
+			}
 			
 			//display
 			return parent::render();

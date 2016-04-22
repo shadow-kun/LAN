@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `#__events_competitions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `asset_id` INT(255) UNSIGNED NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL,
   `title` varchar(100) CHARACTER SET 'utf8' NOT NULL,
   `alias` varchar(100) NOT NULL,
@@ -45,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `#__events_competition_teams` (
 
 CREATE TABLE IF NOT EXISTS `#__events_events` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `asset_id` INT(255) UNSIGNED NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL,
   `title` varchar(100) CHARACTER SET 'utf8' NOT NULL,
   `alias` varchar(100) NOT NULL,
@@ -118,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `#__events_settings` (
 
 CREATE TABLE IF NOT EXISTS `#__events_teams` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `asset_id` INT(255) UNSIGNED NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL,
   `title` varchar(100) CHARACTER SET 'utf8' NOT NULL,
   `alias` varchar(100) NOT NULL,

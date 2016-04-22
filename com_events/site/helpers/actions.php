@@ -23,18 +23,44 @@
 		 * @since	0.0
 		 */
 		 
-		public static function load()
+		public static function load($type = null, $id = 0)
 		{
+			jimport('jooma.access.access');
 			$user 	= JFactory::getUser();
 			$result	= new JObject;
 			
-			$actions = array(
-				'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete');
-				
+			// Global Settings
+			if($type == 'event' && $id > 0)
+			{
+				$assetName = 'com_events.event.' . (int) $id;
+			}
+			else 
+			{
+				$assetName = 'com_events';
+			}
+			
+			$actions = JAccess::getActions('com_events', 'component');
+			
 			foreach ($actions as $action)
 			{
-				$result->set($action, $user->authorise($action, 'com_events'));
+				$result->set($action->name, $user->authorise($action->name, $assetName));
 			}
+			
+			
+			
+			/*else
+			{
+				$actions = array(
+					'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete');
+					
+				foreach ($actions as $action)
+				{
+					$result->set($action, $user->authorise($action, 'com_events'));
+				}
+			}*/
+			
+			
+			
 			
 			return $result;
 		}
