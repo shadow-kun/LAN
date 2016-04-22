@@ -109,6 +109,9 @@
 				$query->where('a.language = '.$db->quote($language));
 			}
 			
+			// Filters by user's groups verses the access level set on each event
+			$query->where('a.access IN (' . implode(',', JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)) . ')');
+			
 			// Add the list ordering clause.
 			/*$orderCol 		= $this->state->get('list.ordering');
 			$orderDirn		= $this->state->get('list.direction');
@@ -120,6 +123,8 @@
 			
 			$query->order($db->escape('event_end_time' . ' ' . 'desc'));
 			//echo nl2br(str_replace('#__','joom_',$query));
+			
+			
 			
 			// Runs query
 			

@@ -26,7 +26,7 @@
 	<?php
 		echo '<p>' . var_dump(JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)) . '</p>';
 		echo '<p>' . $this->event->access . '</p>';
-		
+		echo '<p>' . implode(',', JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)) . '</p>';
 		if(in_array($this->event->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)))
 		{
 			echo '<p>YAY</p>';
