@@ -31,8 +31,16 @@
 				
 				$store = intval(JRequest::getVar('id'));
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				
-				if($model->storeOrder($store))
+				// If not logged in, fail with login error
+				if($app->getUser()->guest)
+				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('store','_result-neworder-failure','phtml');
+					
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
+				else if($model->storeOrder($store))
 				{
 					$return['success'] = true;
 					$renderView = EventsHelpersView::load('store','_result-neworder-success','phtml');
@@ -51,7 +59,7 @@
 				$status = intval(JRequest::getInt('status'));
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
 				
-				if(JFactory::getUser()->authorise('core.edit.state','com_events'))
+				if(JFactory::getUser()->authorise('core.edit.state','com_events') && !$app->getUser()->guest)
 				{
 					if($model->updateOrder($order, $status))
 					{

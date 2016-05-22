@@ -22,6 +22,13 @@
 			$eventView = null;
 			
 			///// Needs permission checks
+			if($app->getUser()->guest)
+			{
+				
+					$return['success'] = false;
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+			}		
+			else 
 			{
 				$paymentModel = new EventsModelsPayment();
 				$checkinModel = new EventsModelsCheckin();
@@ -34,6 +41,7 @@
 					// If variables are set
 					if(isset($type) == true && isset($id) == true)
 					{
+						
 						// Get player details
 						$player = $checkinModel->getPlayer($id);
 						

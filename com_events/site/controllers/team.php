@@ -31,23 +31,32 @@
 				
 			// if calling from the event view.if($type == 'showteamleader')
 			
+			
 			switch($layout)
 			{
 				case 'create':
-					// returns whole page
-					$title = JRequest::getVar('title');
-					$body = JRequest::getVar('body');
-					$return = $model->storeTeam($title, $body);
-					
-					if($return === false)
+					// If not logged in, fail with login error
+					if($app->getUser()->guest)
 					{
 						$renderView = EventsHelpersView::load('teams','result_failure','html');
-						
 					}
 					else
 					{
-						$vars = (object) ['team' => $return];
-						$renderView = EventsHelpersView::load('teams','result_success','html', $vars);
+						// returns whole page
+						$title = JRequest::getVar('title');
+						$body = JRequest::getVar('body');
+						$return = $model->storeTeam($title, $body);
+						
+						if($return === false)
+						{
+							$renderView = EventsHelpersView::load('teams','result_failure','html');
+							
+						}
+						else
+						{
+							$vars = (object) ['team' => $return];
+							$renderView = EventsHelpersView::load('teams','result_success','html', $vars);
+						}
 					}
 					ob_start();
 					echo $renderView->render();

@@ -14,6 +14,15 @@
 		public function execute()
 		{
 			$app = JFactory::getApplication();
+			
+			if($app->getUser()->guest)
+			{
+				$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+				$url = (JRoute::_('index.php?option=com_events&view=internet', false));
+				
+				$app->redirect($url);
+			}
+			
 			#text "? (192.168.0.26) at bc:ae:c5:12:6e:13 [ether] on eth0"
 			$return = array("success" => false);
 			

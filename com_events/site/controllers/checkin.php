@@ -31,48 +31,74 @@
 			{
 				case 'search':
 					
-					switch($action)
+					if($app->getUser()->guest)
 					{
-						case 'barcode': 
-							$id = JRequest::getInt('id');
-							$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id, false)); 
-							$app->redirect($url);
-							break;
-						case 'registration': 
-							$id = JRequest::getInt('id');
-							$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id, false)); 
-							$app->redirect($url);
-							break;
-						case 'user': 
-							// Resolves player registration id
-							$userid = $model->getUserName(JRequest::getVar('user'));
-							
-							if($userid == 0)
-							{
-								$app->enqueueMessage(JText::_('COM_EVENTS_CHECKIN_USER_NOT_FOUND'), 'warning');
-								$url = (JRoute::_('index.php?option=com_events&view=checkin', false));
-							}
-							else
-							{
-								$id = $model->getPlayerID($userid, JRequest::getInt('event'));
-							
-								$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id , false)); 
-							}
-							$app->redirect($url);
-							break;
-					}		
-					break;
+						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
+						
+						$app->redirect($url);
+					}
+					else
+					{
+						switch($action)
+						{
+							case 'barcode': 
+								$id = JRequest::getInt('id');
+								$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id, false)); 
+								$app->redirect($url);
+								break;
+							case 'registration': 
+								$id = JRequest::getInt('id');
+								$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id, false)); 
+								$app->redirect($url);
+								break;
+							case 'user': 
+								// Resolves player registration id
+								$userid = $model->getUserName(JRequest::getVar('user'));
+								
+								if($userid == 0)
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_CHECKIN_USER_NOT_FOUND'), 'warning');
+									$url = (JRoute::_('index.php?option=com_events&view=checkin', false));
+								}
+								else
+								{
+									$id = $model->getPlayerID($userid, JRequest::getInt('event'));
+								
+									$url = (JRoute::_('index.php?option=com_events&view=checkin&id=' . (int) $id , false)); 
+								}
+								$app->redirect($url);
+								break;
+						}		
+						break;
+					}
 				// Paying user but not checking in
 				case 'payonly':
-					$url = JRoute::_('index.php?option=com_events&view=checkin' , false);
+					if($app->getUser()->guest)
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
+						
+						$app->redirect($url);
+					}
+					else
+					{
+						$url = JRoute::_('index.php?option=com_events&view=checkin' , false);
 					
-					$app->redirect($url);
+						$app->redirect($url);
+					}
 					break;
 				// Checking in users
 				case 'confirm':
 				
 					$id = JRequest::getInt('id',NULL);
 					
+					
+					if($app->getUser()->guest)
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
+					}
 					if($model->setCheckinUser($id))
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_CHECKIN_CONFIRM_SUCCESSFUL'), 'message');

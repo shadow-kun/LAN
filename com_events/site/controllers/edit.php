@@ -30,11 +30,19 @@
 			$renderView = null;
 			$renderButtons = null;
 			
+			
 			switch($view)
 			{
 				case 'team':
 					// Sets the model to team
 					$model = new EventsModelsTeam();
+					if($app->getUser()->guest)
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+						$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+						
+						$app->redirect($url);
+					}
 					
 					switch($layout)
 					{

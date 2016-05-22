@@ -22,7 +22,7 @@
 			$view = $app->input->get('view', 'event');
 			$renderView = null;
 			$renderButtons = null;
-			
+						
 			// if calling from the event view.
 			if($view == 'mail')
 			{
@@ -40,8 +40,17 @@
 				
 				$id = JRequest::getInt('id');
 				
+				// If not logged in, fail with login error
+				if($app->getUser()->guest)
+				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('event','result_failure','html');
+					
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
 				// Detects if there is an entry already
-				if($model->getCurrentUser())
+				else if($model->getCurrentUser())
 				{
 					
 					$return['success'] = false;
@@ -52,6 +61,8 @@
 				else if($model->storeAttendee($id))
 				{
 					// If adding to the event is successful
+					
+					// If requiring pre-payment, prop'd for pre-payment
 					if(intval($model->getEvent($id)->params->prepay) == 2)
 					{
 						$return['success'] = true;
@@ -102,7 +113,16 @@
 					$return['msg'] = JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE');
 				}*/
 				
-				if($model->storeTeamMember($team, $user, 0))
+				// If not logged in, fail with login error
+				if($app->getUser()->guest)
+				{
+					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+				}
+				else if($app->getUser()->guest)
+				{
+					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+				}
+				else if($model->storeTeamMember($team, $user, 0))
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_SUCCESS'), 'message'); 
 				}
@@ -122,7 +142,16 @@
 				$type 			= JRequest::getVar('type');
 				$user			= JFactory::getUser()->id;
 				
-				if($type == 'team')
+				// If not logged in, fail with login error
+				if($app->getUser()->guest)
+				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('event','result_failure','html');
+					
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
+				else if($type == 'team')
 				{
 					// If adding to the competition is successful
 					if($model->storeCompetitionTeam($competition, $team))
@@ -139,7 +168,7 @@
 						//$renderView = EventsHelpersView::load('competition','_details','phtml');
 						
 						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
-						$renderView = EventsHelpersView::load('event','result_failure','html');
+						$renderView = EventsHelpersView::load('competition','result_failure','html');
 					}
 				}
 				else
@@ -160,7 +189,7 @@
 						//$renderView = EventsHelpersView::load('competition','_details','phtml');
 						
 						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
-						$renderView = EventsHelpersView::load('event','result_failure','html');
+						$renderView = EventsHelpersView::load('competition','result_failure','html');
 						
 					}
 				}

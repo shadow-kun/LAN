@@ -32,8 +32,17 @@
 				// Gets the current user that is logged in
 				$currentUser = $model->getCurrentUser();
 				
+				// If not logged in, fail with login error
+				if($app->getUser()->guest)
+				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('event','result_failure','html');
+					
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				if(isset($currentUser->status) && (int) $currentUser->status <= 2)
+				else if(isset($currentUser->status) && (int) $currentUser->status <= 2)
 				{
 					if($model->deleteAttendee())
 					{
@@ -56,8 +65,12 @@
 				$team = JRequest::getInt('id');
 				$user = (int) JFactory::getUser()->id;				
 				
+				if($app->getUser()->guest)
+				{
+					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+				}
 				// Remove user from team if not the team leader. Team leader must delete the group.
-				if($model->getTeamUserStatus($team, JFactory::getUser()->id) != 4 && $model->deleteTeamMember($team, $user))
+				else if($model->getTeamUserStatus($team, JFactory::getUser()->id) != 4 && $model->deleteTeamMember($team, $user))
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_SUCCESS'), 'message'); 
 				}
@@ -77,7 +90,15 @@
 				$type 			= JRequest::getVar('type');
 				$user 			= (int) JFactory::getUser()->id;
 				
-				if($type == 'team')
+				if($app->getUser()->guest)
+				{
+					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('competition','result_failure','html');
+					
+					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
+				else if($type == 'team')
 				{
 					// Removes user from competition signup
 					if(strtotime($model->getCompetition($competition)->competition_start) > time())
