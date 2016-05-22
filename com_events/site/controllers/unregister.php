@@ -33,7 +33,7 @@
 				$currentUser = $model->getCurrentUser();
 				
 				// If not logged in, fail with login error
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					
 					$return['success'] = false;
@@ -65,7 +65,7 @@
 				$team = JRequest::getInt('id');
 				$user = (int) JFactory::getUser()->id;				
 				
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 				}
@@ -90,7 +90,7 @@
 				$type 			= JRequest::getVar('type');
 				$user 			= (int) JFactory::getUser()->id;
 				
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					
 					$return['success'] = false;

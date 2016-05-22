@@ -22,7 +22,7 @@
 			$eventView = null;
 			
 			///// Needs permission checks
-			if($app->getUser()->guest)
+			if(JFactory::getUser()->guest)
 			{
 				
 					$return['success'] = false;

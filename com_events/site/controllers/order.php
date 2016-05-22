@@ -32,7 +32,7 @@
 				$store = intval(JRequest::getVar('id'));
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
 				// If not logged in, fail with login error
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					
 					$return['success'] = false;
@@ -59,7 +59,7 @@
 				$status = intval(JRequest::getInt('status'));
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
 				
-				if(JFactory::getUser()->authorise('core.edit.state','com_events') && !$app->getUser()->guest)
+				if(JFactory::getUser()->authorise('core.edit.state','com_events') && !JFactory::getUser()->guest)
 				{
 					if($model->updateOrder($order, $status))
 					{

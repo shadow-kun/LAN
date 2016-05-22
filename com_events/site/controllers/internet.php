@@ -15,7 +15,7 @@
 		{
 			$app = JFactory::getApplication();
 			
-			if($app->getUser()->guest)
+			if(JFactory::getUser()->guest)
 			{
 				$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 				$url = (JRoute::_('index.php?option=com_events&view=internet', false));

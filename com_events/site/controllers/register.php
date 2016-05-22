@@ -41,7 +41,7 @@
 				$id = JRequest::getInt('id');
 				
 				// If not logged in, fail with login error
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					
 					$return['success'] = false;
@@ -114,7 +114,7 @@
 				}*/
 				
 				// If not logged in, fail with login error
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 				}
@@ -143,7 +143,7 @@
 				$user			= JFactory::getUser()->id;
 				
 				// If not logged in, fail with login error
-				if($app->getUser()->guest)
+				if(JFactory::getUser()->guest)
 				{
 					
 					$return['success'] = false;

@@ -45,7 +45,7 @@
 							
 							// Gets required variables for update.
 							$team = JRequest::getInt('id');
-							if($app->getUser()->guest || empty($team))
+							if(JFactory::getUser()->guest || empty($team))
 							{
 								$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false));							

@@ -31,7 +31,7 @@
 			{
 				case 'search':
 					
-					if($app->getUser()->guest)
+					if(JFactory::getUser()->guest)
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
@@ -74,7 +74,7 @@
 					}
 				// Paying user but not checking in
 				case 'payonly':
-					if($app->getUser()->guest)
+					if(JFactory::getUser()->guest)
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
@@ -94,7 +94,7 @@
 					$id = JRequest::getInt('id',NULL);
 					
 					
-					if($app->getUser()->guest)
+					if(JFactory::getUser()->guest)
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 						$url = JRoute::_('index.php?option=com_events&view=checkin&id=' . $id , false);
