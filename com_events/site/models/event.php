@@ -483,8 +483,8 @@
 			
 			// Gathers sender information from joomla
 			$sender = array( 
-				$config->get('config.mailfrom'),
-				$config->get('config.fromname'));
+				$config->get('mailfrom'),
+				$config->get('fromname'));
 			 
 			$mailer->setSender($sender);
 			// Sends email to the users address

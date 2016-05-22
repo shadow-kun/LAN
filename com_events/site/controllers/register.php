@@ -66,7 +66,7 @@
 					if(intval($model->getEvent($id)->params->prepay) == 2)
 					{
 						$return['success'] = true;
-						$renderView = EventsHelpersView::load('event','_prepay','phtml');
+						$renderView = EventsHelpersView::load('event','prepay','html');
 					}
 					else
 					{
