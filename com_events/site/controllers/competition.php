@@ -27,7 +27,8 @@
 			
 			// Sets the model to competition
 			$model = new EventsModelsCompetition();
-				
+			
+			
 			// if calling from the event view.if($type == 'showteamleader')
 			if($type == 'showteamdetails')
 			{

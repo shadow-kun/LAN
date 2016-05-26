@@ -36,9 +36,18 @@
 				case 'team':
 					// Sets the model to team
 					$model = new EventsModelsTeam();
+					
+					$team = JRequest::getInt('id');
+							
 					if(JFactory::getUser()->guest)
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+						$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
+						
+						$app->redirect($url);
+					}
+					else if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
+					{
 						$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team, false));
 						
 						$app->redirect($url);
@@ -53,7 +62,6 @@
 							}*/
 							
 							// Gets required variables for update.
-							$team = JRequest::getInt('id');
 							$body = JRequest::getVar('body');
 							$title = JRequest::getVar('title');
 
@@ -70,7 +78,6 @@
 							$app->redirect($url);
 							break;
 						case 'leader':
-							$team		= JRequest::getInt('id');
 							$newLeader	= JRequest::getInt('user');
 							$user		= JFactory::getUser()->id;
 															
@@ -92,7 +99,6 @@
 							$app->redirect($url);
 							break;
 						case 'approve':
-							$team		= JRequest::getInt('id');
 							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 							
 							// Checks to see if the member is awaiting to be approved / rejected
@@ -117,7 +123,6 @@
 							$app->redirect($url);
 							break;
 						case 'reject':
-							$team		= JRequest::getInt('id');
 							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 														
 							// Checks to see if the member is awaiting to be approved / rejected
@@ -142,7 +147,6 @@
 							$app->redirect($url);
 							break;
 						case 'remove':
-							$team		= JRequest::getInt('id');
 							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 														
 							// Checks to see if the member is awaiting to be approved / rejected
@@ -167,7 +171,6 @@
 							$app->redirect($url);
 							break;
 						case 'update':
-							$team		= JRequest::getInt('id');
 							$user		= $model->getTeamUserId(JRequest::getInt('user'));
 							$action		= JRequest::getVar('action');
 							$status 	= null;

@@ -27,12 +27,12 @@
 				
 					$return['success'] = false;
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
-			}		
+			}	
 			else 
 			{
 				$paymentModel = new EventsModelsPayment();
 				$checkinModel = new EventsModelsCheckin();
-					
+				
 				{
 					// Get variables
 					$type = JRequest::getVar('type',NULL);

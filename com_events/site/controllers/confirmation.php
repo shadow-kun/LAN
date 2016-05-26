@@ -30,15 +30,23 @@
 				// Gets the current user that is logged in
 				$event = $model->getEvent($id);
 				$currentUser = $model->getCurrentUser();
-					
-				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				if(isset($currentUser->status) && ((int) $currentUser->status == 1)) 
+				
+				if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 				
 				{
-					// If adding to the event is successful
-					if($model->setConfirmAttendee())
+					// If the user has signed up for the event and isn't paid then allow it to be removed.
+					if(isset($currentUser->status) && ((int) $currentUser->status == 1)) 
 					{
-						$return['success'] = true;
-						$eventView = EventsHelpersView::load('event','result_success','html');
+						// If adding to the event is successful
+						if($model->setConfirmAttendee())
+						{
+							$return['success'] = true;
+							$eventView = EventsHelpersView::load('event','result_success','html');
+						}
+						else
+						{
+							$return['success'] = false;
+							$eventView = EventsHelpersView::load('event','result_failure','html');
+						}
 					}
 					else
 					{
@@ -46,7 +54,18 @@
 						$eventView = EventsHelpersView::load('event','result_failure','html');
 					}
 				}
+				else
+				{					
+					$return['success'] = false;
+					$eventView = EventsHelpersView::load('event','result_failure','html');
+				}
 			}
+			else
+			{
+				$return['success'] = false;
+				$eventView = EventsHelpersView::load('event','result_failure','html');
+			}
+			
 			ob_start();
 			echo $eventView->render();
 			$html = ob_get_contents();

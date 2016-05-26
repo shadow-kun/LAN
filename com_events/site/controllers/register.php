@@ -57,29 +57,40 @@
 					$renderView = EventsHelpersView::load('event','result_failure','html');
 					
 					$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_DUPLICATE');
-				}
-				else if($model->storeAttendee($id))
+				} 
+				// Does an access requirement check to verify access level is appropriate
+				else if(in_array($model->getEvent($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)))
 				{
-					// If adding to the event is successful
-					
-					// If requiring pre-payment, prop'd for pre-payment
-					if(intval($model->getEvent($id)->params->prepay) == 2)
+					if($model->storeAttendee($id))
 					{
-						$return['success'] = true;
-						$renderView = EventsHelpersView::load('event','prepay','html');
-					}
-					else
-					{
-						if($model->sendTicket($id))
+						// If adding to the event is successful
+						
+						// If requiring pre-payment, prop'd for pre-payment
+						if(intval($model->getEvent($id)->params->prepay) == 2)
 						{
 							$return['success'] = true;
-							$renderView = EventsHelpersView::load('event','result_success','html');
+							$renderView = EventsHelpersView::load('event','prepay','html');
 						}
 						else
 						{
-							$return['success'] = false;
-							$renderView = EventsHelpersView::load('event','result_failure','html');
+							if($model->sendTicket($id))
+							{
+								$return['success'] = true;
+								$renderView = EventsHelpersView::load('event','result_success','html');
+							}
+							else
+							{
+								$return['success'] = false;
+								$renderView = EventsHelpersView::load('event','result_failure','html');
+							}
 						}
+					}
+					else
+					{
+						$return['success'] = false;
+						$renderView = EventsHelpersView::load('event','result_failure','html');
+						
+						$return['msg'] = JText::_('COM_EVENTS_EVENT_REGISTER_FAILURE');
 					}
 				}
 				else
@@ -122,9 +133,17 @@
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 				}
-				else if($model->storeTeamMember($team, $user, 0))
-				{
-					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_SUCCESS'), 'message'); 
+				// Does an access requirement check to verify access level is appropriate
+				else if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
+				{	
+					if($model->storeTeamMember($team, $user, 0))
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_SUCCESS'), 'message'); 
+					}
+					else 
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_REGISTER_FAILURE'), 'error');
+					}
 				}
 				else
 				{
@@ -151,47 +170,56 @@
 					
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
 				}
-				else if($type == 'team')
+				// Does an access requirement check to verify access level is appropriate
+				else if(in_array($model->getCompetition($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))
 				{
-					// If adding to the competition is successful
-					if($model->storeCompetitionTeam($competition, $team))
+					if($type == 'team')
 					{
-						$return['success'] = true;
-						//$renderView = EventsHelpersView::load('competition','_details','phtml');
-						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						$renderView = EventsHelpersView::load('competition','result_success','html');
+						// If adding to the competition is successful
+						if($model->storeCompetitionTeam($competition, $team))
+						{
+							$return['success'] = true;
+							//$renderView = EventsHelpersView::load('competition','_details','phtml');
+							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+							$renderView = EventsHelpersView::load('competition','result_success','html');
+						}
+						else
+						{
+							$return['success'] = false;
+							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+							//$renderView = EventsHelpersView::load('competition','_details','phtml');
+							
+							//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+							$renderView = EventsHelpersView::load('competition','result_failure','html');
+						}
 					}
 					else
 					{
-						$return['success'] = false;
-						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						//$renderView = EventsHelpersView::load('competition','_details','phtml');
 						
-						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
-						$renderView = EventsHelpersView::load('competition','result_failure','html');
+						// If adding to the competition is successful
+						if($model->storeCompetitionUser($competition, $user))
+						{
+							$return['success'] = true;
+							//$renderView = EventsHelpersView::load('competition','_details','phtml');
+							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+							$renderView = EventsHelpersView::load('competition','result_success','html');
+						}
+						else
+						{
+							$return['success'] = false;
+							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+							//$renderView = EventsHelpersView::load('competition','_details','phtml');
+							
+							//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
+							$renderView = EventsHelpersView::load('competition','result_failure','html');
+							
+						}
 					}
 				}
 				else
 				{
-					
-					// If adding to the competition is successful
-					if($model->storeCompetitionUser($competition, $user))
-					{
-						$return['success'] = true;
-						//$renderView = EventsHelpersView::load('competition','_details','phtml');
-						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						$renderView = EventsHelpersView::load('competition','result_success','html');
-					}
-					else
-					{
-						$return['success'] = false;
-						//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						//$renderView = EventsHelpersView::load('competition','_details','phtml');
-						
-						//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_REGISTER_FAILURE');
-						$renderView = EventsHelpersView::load('competition','result_failure','html');
-						
-					}
+					$return['success'] = true;
+					$renderView = EventsHelpersView::load('competition','result_failure','html');
 				}
 			}
 			ob_start();

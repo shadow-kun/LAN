@@ -41,21 +41,33 @@
 					
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
 				}
-				// If the user has signed up for the event and isn't paid then allow it to be removed.
-				else if(isset($currentUser->status) && (int) $currentUser->status <= 2)
+				else if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 				{
-					if($model->deleteAttendee())
+					// If the user has signed up for the event and isn't paid then allow it to be removed.
+					if(isset($currentUser->status) && (int) $currentUser->status <= 2)
 					{
-						$return['success'] = true;
-						$renderView = EventsHelpersView::load('event','result_success','html');
+						if($model->deleteAttendee())
+						{
+							$return['success'] = true;
+							$renderView = EventsHelpersView::load('event','result_success','html');
+						}
+						else
+						{
+							$return['success'] = false;
+							$renderView = EventsHelpersView::load('event','result_failure','html');
+						}	
 					}
 					else
 					{
 						$return['success'] = false;
 						$renderView = EventsHelpersView::load('event','result_failure','html');
 					}
-					
-				}	
+				}
+				else
+				{					
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('event','result_failure','html');
+				}
 			}
 			else if($view == 'team')
 			{
@@ -69,11 +81,17 @@
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
 				}
-				// Remove user from team if not the team leader. Team leader must delete the group.
-				else if($model->getTeamUserStatus($team, JFactory::getUser()->id) != 4 && $model->deleteTeamMember($team, $user))
+				else if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 				{
-					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_SUCCESS'), 'message'); 
-				}
+					// Remove user from team if not the team leader. Team leader must delete the group.
+					if($model->getTeamUserStatus($team, JFactory::getUser()->id) != 4 && $model->deleteTeamMember($team, $user))
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_SUCCESS'), 'message'); 
+					}
+					else
+					{
+						$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE'), 'error');
+					}
 				else
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE'), 'error');
@@ -98,90 +116,101 @@
 					
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
 				}
-				else if($type == 'team')
+				else if(in_array($model->getCompetition($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 				{
-					// Removes user from competition signup
-					if(strtotime($model->getCompetition($competition)->competition_start) > time())
+					else if($type == 'team')
 					{
-						if($model->deleteCompetitionTeam($competition, $team))
+						// Removes user from competition signup
+						if(strtotime($model->getCompetition($competition)->competition_start) > time())
 						{
-							$return['success'] = true;
-							//$renderView = EventsHelpersView::load('competition','_details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							$renderView = EventsHelpersView::load('competition','result_success','html');
+							if($model->deleteCompetitionTeam($competition, $team))
+							{
+								$return['success'] = true;
+								//$renderView = EventsHelpersView::load('competition','_details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								$renderView = EventsHelpersView::load('competition','result_success','html');
+							}
+							else
+							{
+								$return['success'] = false;
+								//$renderView = EventsHelpersView::load('competition','details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								
+								//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
+								$renderView = EventsHelpersView::load('competition','result_failure','html');
+							}
 						}
 						else
 						{
-							$return['success'] = false;
-							//$renderView = EventsHelpersView::load('competition','details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							
-							//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
-							$renderView = EventsHelpersView::load('competition','result_failure','html');
+							// Sets forfeit status for user 
+							if($model->setCompetitionTeamStatus($competition, $team, -2))
+							{
+								$return['success'] = true;
+								//$renderView = EventsHelpersView::load('competition','_details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								$renderView = EventsHelpersView::load('competition','result_success','html');
+							}
+							else
+							{
+								$return['success'] = false;
+								//$renderView = EventsHelpersView::load('competition','details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								
+								//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
+								$renderView = EventsHelpersView::load('competition','result_failure','html');
+							}
 						}
 					}
 					else
 					{
-						// Sets forfeit status for user 
-						if($model->setCompetitionTeamStatus($competition, $team, -2))
+						// Removes user from competition signup
+						if(strtotime($model->getCompetition($competition)->competition_start) > time())
 						{
-							$return['success'] = true;
-							//$renderView = EventsHelpersView::load('competition','_details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							$renderView = EventsHelpersView::load('competition','result_success','html');
+							if($model->deleteCompetitionUser($competition, $user))
+							{
+								$return['success'] = true;
+								//$renderView = EventsHelpersView::load('competition','_details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								
+								$renderView = EventsHelpersView::load('competition','result_success','html');
+							}
+							else
+							{
+								$return['success'] = false;
+								//$renderView = EventsHelpersView::load('competition','details','phtml');
+								//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								
+								//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
+								$renderView = EventsHelpersView::load('competition','result_failure','html');
+							}
 						}
 						else
 						{
-							$return['success'] = false;
-							//$renderView = EventsHelpersView::load('competition','details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							
-							//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
-							$renderView = EventsHelpersView::load('competition','result_failure','html');
+							// Sets forfeit status for user 
+							if($model->setCompetitionEntrantStatus($competition, $user, -2))
+							{
+								$return['success'] = true;
+								$renderView = EventsHelpersView::load('competition','_details','phtml');
+								$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+							}
+							else
+							{
+								$return['success'] = false;
+								$renderView = EventsHelpersView::load('competition','details','phtml');
+								$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+								
+								$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
+							}
 						}
 					}
 				}
 				else
 				{
-					// Removes user from competition signup
-					if(strtotime($model->getCompetition($competition)->competition_start) > time())
-					{
-						if($model->deleteCompetitionUser($competition, $user))
-						{
-							$return['success'] = true;
-							//$renderView = EventsHelpersView::load('competition','_details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							
-							$renderView = EventsHelpersView::load('competition','result_success','html');
-						}
-						else
-						{
-							$return['success'] = false;
-							//$renderView = EventsHelpersView::load('competition','details','phtml');
-							//$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							
-							//$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
-							$renderView = EventsHelpersView::load('competition','result_failure','html');
-						}
-					}
-					else
-					{
-						// Sets forfeit status for user 
-						if($model->setCompetitionEntrantStatus($competition, $user, -2))
-						{
-							$return['success'] = true;
-							$renderView = EventsHelpersView::load('competition','_details','phtml');
-							$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-						}
-						else
-						{
-							$return['success'] = false;
-							$renderView = EventsHelpersView::load('competition','details','phtml');
-							$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
-							
-							$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
-						}
-					}
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('competition','details','phtml');
+					$renderButtons = EventsHelpersView::load('competition','_buttons','phtml');
+					
+					$return['msg'] = JText::_('COM_EVENTS_COMPETITION_UNREGISTER_FAILURE');
 				}
 			}
 			ob_start();

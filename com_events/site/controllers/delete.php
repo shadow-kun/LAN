@@ -42,23 +42,31 @@
 							{
 								return JError::raiseError(403, JText::_('COM_EVENTS_ERROR_TEAM_ACTION_FORBIDDEN'));
 							}*/
-							
 							// Gets required variables for update.
 							$team = JRequest::getInt('id');
-							if(JFactory::getUser()->guest || empty($team))
+							
+							// Does a security check to verify access is allowed to this team
+							if(in_array($model->getTeam($team)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 							{
-								$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
-								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false));							
-							}
-							else if($model->deleteTeam($team))
-							{
-								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=success', false)); 
+							
+								if(JFactory::getUser()->guest || empty($team))
+								{
+									$app->enqueueMessage(JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED'), 'error');
+									$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false));							
+								}
+								else if($model->deleteTeam($team))
+								{
+									$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=success', false)); 
+								}
+								else
+								{
+									$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false)); 
+								}
 							}
 							else
 							{
 								$url = (JRoute::_('index.php?option=com_events&view=team&id=' . (int) $team . '&layout=delete&action=failure', false)); 
 							}
-
 							$app->redirect($url);
 							break;
 					}

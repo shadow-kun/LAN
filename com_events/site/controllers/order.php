@@ -30,6 +30,7 @@
 				$model = new EventsModelsStore();
 				
 				$store = intval(JRequest::getVar('id'));
+				
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
 				// If not logged in, fail with login error
 				if(JFactory::getUser()->guest)
@@ -39,6 +40,11 @@
 					$renderView = EventsHelpersView::load('store','_result-neworder-failure','phtml');
 					
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
+				}
+				else if(in_array($model->getStore($store)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
+				{
+					$return['success'] = false;
+					$renderView = EventsHelpersView::load('store','_result-neworder-failure','phtml');
 				}
 				else if($model->storeOrder($store))
 				{
@@ -59,7 +65,7 @@
 				$status = intval(JRequest::getInt('status'));
 				// If the user has signed up for the event and isn't paid then allow it to be removed.
 				
-				if(JFactory::getUser()->authorise('core.edit.state','com_events') && !JFactory::getUser()->guest)
+				if(JFactory::getUser()->authorise('core.edit.state','com_events') && !JFactory::getUser()->guest && in_array($model->getStore($store)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)))
 				{
 					if($model->updateOrder($order, $status))
 					{
