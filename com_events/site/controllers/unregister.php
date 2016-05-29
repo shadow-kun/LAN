@@ -29,6 +29,8 @@
 			{
 				$model = new EventsModelsEvent();
 				
+				$id = JRequest::getInt('id');
+				
 				// Gets the current user that is logged in
 				$currentUser = $model->getCurrentUser();
 				
@@ -41,7 +43,7 @@
 					
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
 				}
-				else if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
+				else if(in_array($model->getEvent($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 				{
 					// If the user has signed up for the event and isn't paid then allow it to be removed.
 					if(isset($currentUser->status) && (int) $currentUser->status <= 2)
@@ -92,6 +94,7 @@
 					{
 						$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE'), 'error');
 					}
+				}
 				else
 				{
 					$app->enqueueMessage(JText::_('COM_EVENTS_TEAM_UNREGISTER_FAILURE'), 'error');
@@ -118,7 +121,7 @@
 				}
 				else if(in_array($model->getCompetition($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 
 				{
-					else if($type == 'team')
+					if($type == 'team')
 					{
 						// Removes user from competition signup
 						if(strtotime($model->getCompetition($competition)->competition_start) > time())

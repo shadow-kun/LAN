@@ -31,7 +31,7 @@
 				$event = $model->getEvent($id);
 				$currentUser = $model->getCurrentUser();
 				
-				if(in_array($model->getTeam($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 				
+				if(in_array($model->getEvent($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))) 				
 				{
 					// If the user has signed up for the event and isn't paid then allow it to be removed.
 					if(isset($currentUser->status) && ((int) $currentUser->status == 1)) 

@@ -171,7 +171,7 @@
 					$return['msg'] = JText::_('COM_EVENTS_ERROR_LOGIN_REQUIRED');
 				}
 				// Does an access requirement check to verify access level is appropriate
-				else if(in_array($model->getCompetition($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id))
+				else if(in_array($model->getCompetition($id)->access, JAccess::getAuthorisedViewLevels(JFactory::getUser()->id)))
 				{
 					if($type == 'team')
 					{
